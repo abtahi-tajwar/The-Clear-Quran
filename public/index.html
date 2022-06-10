@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+      
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="/src/css/intlInputPhone.css" rel="stylesheet" />
+    <link href="/src/css/style.css" rel="stylesheet" />
+    <script src="/src/intlInputPhone.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-firestore.js"></script>
+    <script src="https://kit.fontawesome.com/7a9ed4f4db.js" crossorigin="anonymous"></script>
+
+
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCN6ZQrC1PLJRvuJekx5vOOXI7vdAgOUio",
+            authDomain: "the-clear-quran.firebaseapp.com",
+            databaseURL: "https://the-clear-quran.firebaseio.com",
+            projectId: "the-clear-quran",
+            storageBucket: "the-clear-quran.appspot.com",
+            messagingSenderId: "513382340628",
+            appId: "1:513382340628:web:1fd8840668bf857e"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        firebase.auth().useDeviceLanguage();
+    </script>
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>The Clear Quran</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+
+    <script src="/src/intlInputPhone.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.input-phone').intlInputPhone();
+            $('.input-phone button').click();
+            $('input#phoneNumber').focus();
+        })
+
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+        //window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('contact-us-btn', {
+        //    'size': 'invisible',
+        //    'callback': function (response) {
+        //        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        //        onSignInSubmit();
+        //    }
+        //});
+
+        //window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+
+        var confirmation_Result;
+
+        function sendOTP() {
+            var countryCode = "+" + $("#carrierCode").val();// "+91";
+            var phone = $("#phoneNumber").val();
+            var phoneNumber = countryCode + phone;// "+919963602686";// getPhoneNumberFromUserInput();
+            //console.log(phoneNumber);
+            if (countryCode && phone) {
+                var appVerifier = window.recaptchaVerifier;
+                firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+                    .then(function (confirmationResult) {
+                        // SMS sent. Prompt user to type the code from the message, then sign the
+                        // user in with confirmationResult.confirm(code).
+                        this.confirmation_Result = confirmationResult;
+                        //console.log(confirmationResult)
+                        $("#hiddenCountryCode").val(countryCode);
+                        $("#hiddenPhoneNumber").val(phone);
+                        $("#recaptcha-container").hide();
+                        $("#contact-us-btn").removeClass("hidden");
+                        $("#divOTP").removeClass("hidden");
+                        $("#divOTPBtn").addClass("hidden");
+
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Code sent to your mobile number',
+                            icon: 'success',
+                            position: 'top-right',
+                        })
+                        //console.log('sms sent')
+
+                    }).catch(function (error) {
+                        // Error; SMS not sent
+                        // ...
+                    });
+            }
+            else {
+                $.toast({
+                    heading: 'Warning',
+                    text: 'Please enter phone number',
+                    icon: 'warning',
+                    position: 'top-right',
+                })
+                return false;
+            }
+        }
+
+        function confirmOTP() {
+            var result = false;
+            if (confirmation_Result) {
+            } else {
+                return result;
+            }
+            var code = $("#otp").val();
+            if (code && confirmation_Result) {
+                try {
+                    this.confirmation_Result.confirm(code).then(function (callback_result) {
+                        // User signed in successfully.
+                        //var user = callback_result.user;
+                        //alert(user)
+                        //alert('otp verified')
+                        result = true;
+                        $("#divSubmitBtn").html('<button type="submit" class="btn btn-default" id="signINBtn" style="display:none;" >Sign in</button>');
+                        $("#signINBtn").click();
+                        // ...
+                    }).catch(function (error) {
+                        // User couldn't sign in (bad verification code?)
+                        // ..
+                        //$("#otp").val('');
+                        $.toast({
+                            heading: 'Warning',
+                            text: 'Please enter valid verification code',
+                            icon: 'warning',
+                            position: 'top-right',
+                        });
+                        result = false;
+                    });
+
+                } catch (e) {
+                    $.toast({
+                        heading: 'Warning',
+                        text: 'please get your otp',
+                        icon: 'warning',
+                        position: 'top-right',
+                    });
+                    result = false;
+                }
+            }
+            else {
+                $.toast({
+                    heading: 'Warning',
+                    text: 'Please enter otp',
+                    icon: 'warning',
+                    position: 'top-right',
+                })
+                result = false;
+            }
+
+            return result;
+        }
+
+    </script>
+  </body>
+</html>

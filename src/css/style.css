@@ -1,0 +1,1747 @@
+/*@font-face {
+    font-family: myFirstFont;
+    src: url(..css/trajanpro-bold.otf);
+}*/
+
+
+@font-face {
+    font-family: 'TrajanPro-Regular';
+    src: url('/css/webfont/TrajanPro-Regular.eot') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TrajanPro-Regular';
+    src: url('/css/webfont/TrajanPro-Regular.woff') format('woff'), url('/css/webfont/TrajanPro-Regular.ttf') format('truetype'), url('/css/webfont/TrajanPro-Regular.svg#TrajanPro-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Uthmanic-Hafs';
+    src: url('webfont/uthmanichafs1 ver09 (1).otf') format('opentype');
+}
+
+body {
+    background: #461E27;
+}
+
+a {
+    color: black;
+    text-decoration: none !important;
+}
+
+    a:hover {
+        color: #461e27;
+    }
+
+.quran h6 {
+    text-transform: uppercase;
+    letter-spacing: 22px;
+    color: #F8F682;
+    font-family: Trajan Pro;
+    font-size: 35px;
+}
+
+.quran h1 {
+    color: #F8F682;
+    text-transform: uppercase;
+    font-size: 84px;
+    font-weight: 600;
+    letter-spacing: 10px;
+    font-family: Trajan Pro;
+}
+
+.quran {
+    padding: 41px;
+    margin: 37px 7px;
+}
+
+.share {
+    background: #F8F682;
+    width: 58px;
+    border-radius: 100%;
+    height: 58px;
+    margin: 17px 0px 0px -17px;
+}
+
+.sura {
+    position: absolute;
+    top: 44px;
+    left: 14px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.search {
+    position: absolute;
+    top: 41px;
+    left: 6px;
+    text-transform: uppercase;
+}
+
+.menu-icon p {
+    color: black;
+    bottom: 25px;
+    position: relative;
+    margin: 0px 13px;
+}
+
+
+
+.profile {
+    position: absolute;
+    top: 43px;
+    left: 81px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.profile-1 {
+    position: absolute;
+    top: 41px;
+    left: 165px;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.notes {
+    position: relative;
+    right: 53px;
+    text-transform: uppercase;
+    top: 24px;
+    font-size: 13px;
+}
+
+.notes1 {
+    position: relative;
+    right: 60px;
+    text-transform: uppercase;
+    top: 23px;
+    font-size: 13px;
+}
+
+.buy {
+    position: relative;
+    right: 60px;
+    text-transform: uppercase;
+    top: 24px;
+}
+
+/*.fa.fa-search {
+    font-size: 22px;
+    width: 12%;
+    height: 75px;
+    text-align: center;
+    line-height: 72px;
+    border-radius: 5px;
+    min-width: 78px;
+}*/
+
+.seaerch {
+    position: absolute;
+    top: 45px;
+    left: 11px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+/*.fa.fa-bookmark-o {
+    font-size: 40px;
+    background: white;
+    width: 12%;
+    height: 75px;
+    text-align: center;
+    line-height: 52px;
+    border-radius: 5px;
+    min-width: 78px;
+}*/
+
+.bookmark {
+    position: relative;
+    top: 21px;
+    right: 74px;
+    text-transform: uppercase;
+}
+
+.saurabh {
+    font-size: 25px !important;
+    background: white;
+    width: 12% !important;
+    height: 70px !important;
+    text-align: center;
+    line-height: 52px !important;
+    border-radius: 5px !important;
+    min-width: 68px !important;
+    box-shadow: 0px 1px 6px #877a7a !important;
+}
+
+    .saurabh:hover {
+        box-shadow: 0px 4px 10px #877a7a !important;
+    }
+
+.icon-menu img {
+    position: absolute;
+    right: 0;
+    top: 140px;
+}
+
+.majid-bg {
+    position: relative;
+    top: 62px;
+    float: right;
+    left: 67px;
+}
+
+.majid-bg1 {
+    position: relative;
+    top: 81px;
+    float: right;
+    left: 109px;
+}
+
+.masjid1-bg {
+    position: relative;
+    top: 99px;
+    float: right;
+    left: 119px;
+}
+/**
+.icon-menu {
+    background-image: url(./images/masjid.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    float: right;
+    background-position: right;
+    background-size: contain;
+    width: 79%;
+    height: auto;
+	
+}
+**/
+
+
+
+.circle {
+    position: absolute;
+    top: 29%;
+    left: 54%;
+    transform: translate(-50%,-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+    .circle .share {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        line-height: 50px;
+        text-align: center;
+        color: #000;
+        background: #F8F682;
+        border-radius: 50%;
+        z-index: 1;
+        box-shadow: 0 0 0 2px #112833;
+    }
+
+    .circle ul {
+        position: absolute;
+        top: -32px;
+        left: -68px;
+        margin: 0px;
+        padding: 0px;
+        width: 150px;
+        height: 150px;
+        background: #fff;
+        border-radius: 50%;
+        transition: .5s;
+        box-shadow: 0 0 0 2px #1b3646, 0 0 0 4px #fff;
+        transition: 1s;
+        transform: scale(.3) rotate(-180deg);
+        z-index: -1;
+    }
+
+    .circle:hover ul {
+        transform: scale(1) rotate(0deg);
+        ;
+    }
+
+    .circle ul li {
+        position: absolute;
+        list-style: none;
+    }
+
+        .circle ul li:nth-child(1) {
+            top: 15px;
+            left: 72px;
+            transform: translateX(-50%);
+        }
+
+        .circle ul li:nth-child(2) {
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .circle ul li:nth-child(3) {
+            top: 44%;
+            left: 17px;
+            transform: translateX(-50%);
+        }
+
+        .circle ul li:nth-child(4) {
+            top: 45%;
+            right: 11px;
+            transform: translateX(-50%);
+        }
+
+        .circle ul li a .fa {
+            transition: .5s;
+            color: #112833;
+        }
+
+        .circle ul li:hover a .fa {
+            color: #f44336;
+            transform: scale(1.5);
+        }
+
+    .circle ul:before {
+        content: '';
+        position: absolute;
+        top: calc(50% - 1px);
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #112833;
+        transform: rotate(45deg);
+    }
+
+    .circle ul:after {
+        content: '';
+        position: absolute;
+        top: calc(50% - 1px);
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #112833;
+        transform: rotate(-45deg);
+    }
+
+.fa.fa-share-alt {
+    line-height: 50px;
+}
+
+
+
+/**  surabh page css start  **/
+.surah-search {
+    font-size: 19px !important;
+    background: none !important;
+    width: 0% !important;
+    height: 0px !important;
+    text-align: center;
+    line-height: 2px !important;
+    border-radius: 0px !important;
+    min-width: 14px !important;
+}
+
+.surah {
+    background: white;
+    width: 100%;
+    height: 117px;
+    padding: 4px;
+}
+
+
+.surah-count {
+    background: red;
+    width: 30%;
+    height: 88px;
+    padding: 7px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+    .surah-count p {
+        color: white;
+    }
+
+    .surah-count p {
+        color: white;
+        position: absolute;
+        background: black;
+        width: 100%;
+        left: 0;
+        top: 64px;
+        text-align: center;
+        font-weight: 600;
+        font-family: Sans-serif;
+    }
+
+    .surah-count h3 {
+        color: white;
+        font-weight: 600;
+    }
+
+.fa.fa-home {
+    position: absolute;
+    bottom: 24px;
+    right: 0px;
+    left: 52px;
+    background: green;
+    width: 66%;
+    height: 22px;
+    padding: 1px;
+    text-align: center;
+    border-radius: 100%;
+}
+
+.surah h4 {
+    color: red;
+    text-align: center;
+}
+
+.surah p {
+    text-align: center;
+}
+
+.surah span {
+    text-align: center;
+}
+
+.bg-dark {
+    background-color: #461E27 !important;
+}
+
+.fa.fa-arrow-left {
+    font-size: 28px;
+}
+
+.blog-col-2 .blog-item:nth-child(2n+1) {
+    clear: left;
+}
+
+.blog-col-2 .blog-item {
+    width: 50%;
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.blog-item {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    padding: 0 0 30px;
+    padding-right: 0px;
+    padding-left: 0px;
+    position: relative;
+}
+
+.blog-item-container {
+    width: 100%;
+    display: block;
+    position: relative;
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 1px 1px 8px 3px #ddd;
+    height: 105px;
+}
+
+.blog-item-meta span {
+    padding: 0;
+    font-size: 13px;
+    margin: 10px 0 0;
+    line-height: 13px;
+    position: relative;
+    display: inline-block;
+    vertical-align: bottom;
+    letter-spacing: .3px;
+}
+
+    .blog-item-meta span.item-meta-format a i {
+        float: left;
+        width: 40px;
+        height: 40px;
+        display: block;
+        color: #fff;
+        line-height: 40px;
+        text-align: center;
+        background-color: #2791d8;
+        -webkit-transition: margin .3s ease-in-out;
+        transition: margin .3s ease-in-out;
+        bottom: 75px;
+        position: absolute;
+        right: 0px;
+    }
+
+.blog-item-meta span {
+    padding: 0;
+    font-size: 13px;
+    margin: 10px 0 0;
+    line-height: 13px;
+    position: relative;
+    display: inline-block;
+    vertical-align: bottom;
+    letter-spacing: .3px;
+}
+
+.img-icon img {
+    width: 10%;
+}
+
+.img-icon {
+    float: left;
+    width: 28%;
+    height: 69px;
+    display: block;
+    color: #000;
+    line-height: 40px;
+    text-align: center;
+    background-color: #fff;
+    -webkit-transition: margin .3s ease-in-out;
+    transition: margin .3s ease-in-out;
+    bottom: 55px;
+    position: absolute;
+    left: -5px;
+    box-shadow: 5px 4px 4px 5px #ddd;
+    min-width: 91px;
+    border-radius: 3px;
+}
+
+    .img-icon h4 {
+        color: black;
+        float: left;
+        padding: 3px;
+        margin: 0px;
+        font-weight: 600;
+    }
+
+.image-icon {
+    background: #ddd;
+    width: 31px;
+    float: left;
+    position: relative;
+    left: 36px;
+    border-radius: 100%;
+    height: 31px;
+    line-height: 24px;
+    top: 3px;
+}
+
+    .image-icon img {
+        width: 50%
+    }
+
+.image-icon-p {
+    background: #461E27;
+    height: 25px;
+    position: relative;
+    top: 60px;
+    border-radius: 2px;
+}
+
+    .image-icon-p p {
+        color: white;
+        position: relative;
+        top: -43px;
+        text-align: center;
+        float: left;
+        font-size: 15px;
+        font-weight: bold;
+        text-transform: uppercase;
+        left: 5px;
+        line-height: 42px;
+    }
+
+.surah-content span {
+    color: #461e27;
+    text-align: center;
+    padding: 8px;
+    position: relative;
+    left: 71px;
+    font-weight: 600;
+}
+
+.surah-content h4 {
+    color: red;
+}
+
+.surah-content h4 {
+    color: black;
+    text-align: center;
+    position: relative;
+    left: 18px;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.surah-content p {
+    color: black;
+    text-align: left;
+    position: relative;
+    left: 109px;
+}
+
+.bg-body {
+    background: #fff;
+}
+
+.navbar-nav h4 {
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: TrajanPro-Regular;
+    line-height: 38px;
+    position: relative;
+    top: 6px;
+    font-size: 30px;
+}
+
+.surah-content img {
+    width: 7%;
+    float: right;
+    position: relative;
+    bottom: 25px;
+    padding: 2px;
+}
+
+.navbar-nav p {
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: Trajan Pro;
+    line-height: 38px;
+    position: absolute;
+    top: 35px;
+    float: left;
+    left: 47px;
+}
+/**  surabh page css End  **/
+
+
+/**  profile page start  **/
+.profile-img {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 13px;
+    height: auto;
+    width: 100%;
+    box-shadow: 0px 9px 7px 0px #ddd;
+}
+
+    .profile-img img {
+        vertical-align: middle;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        position: relative;
+        top: -59px;
+    }
+
+.profile-content h4 {
+    margin-bottom: 6px;
+}
+
+.profile-phone {
+    float: left;
+    margin: 1px 43px;
+    text-align: center;
+}
+
+.profile-email {
+    float: right;
+    padding: 0px;
+    margin: 1px 50px;
+    text-align: center;
+}
+
+.profile-about-us {
+    border: 1px solid #ddd;
+    width: 100%;
+    height: auto;
+    padding: 17px;
+    box-shadow: 0px 9px 7px 0px #ddd;
+    border-radius: 5px;
+}
+
+.profile-about-bar {
+    background: #461e27;
+    width: 21%;
+    height: 8px;
+    position: relative;
+    bottom: 17px;
+    left: -17px;
+    overflow: hidden;
+    z-index: 999;
+    min-width: 176px;
+}
+
+.profile-about-us h4 {
+    color: black;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.profile-about-us p {
+    color: #000;
+}
+
+.profile-bookmarks {
+    border: 1px solid #ddd;
+    text-align: center;
+    width: 100%;
+    height: 124px;
+    box-shadow: 0px 9px 7px 0px #ddd;
+}
+
+.profile-notes {
+    border: 1px solid #ddd;
+    text-align: center;
+    width: 100%;
+    height: 124px;
+    box-shadow: 0px 9px 7px 0px #ddd;
+}
+
+.profile-bookmarks p {
+    font-size: 19px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: black;
+    margin: 25px;
+}
+
+.profile-notes p {
+    font-size: 19px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: black;
+    margin: 25px;
+}
+/**  profile page start  **/
+
+/** about us page start **/
+
+.about-us-page {
+    border: 1px solid #ddd;
+    padding: 13px;
+    color: black;
+    box-shadow: 0px 2px 9px 3px #ddd;
+}
+
+    .about-us-page h4 {
+        font-weight: 600;
+        font-size: 26px;
+        color: #461e27;
+    }
+
+    .about-us-page p {
+        color: black;
+        /*overflow: auto;
+        width: 100%;
+        height: 300px;*/
+        margin: 17px 0px;
+        text-align: justify;
+        text-justify: inter-word;
+    }
+/**about us page end**/
+
+/** contact us page start**/
+
+.contact-form {
+    width: 100%;
+    padding: 30px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 1px 11px 5px #ddd;
+    background: linear-gradient(to top left, #461e27 0%, #f8f682 100%);
+}
+
+#contact-us-btn {
+    background: #461e27;
+    color: #F8F682;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 600;
+    width: 24%;
+    min-width: 120px;
+}
+
+.contact-form h4 {
+    color: #461e27;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+/**contact us page end**/
+
+/** single-surah-contern start **/
+.surah-icon-box {
+    background: red;
+    width: 32%;
+    height: 35px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 3px;
+    color: white;
+    font-size: 48px;
+}
+
+    .surah-icon-box h5 {
+        color: white;
+        font-size: 21px;
+        font-weight: 600;
+    }
+
+.single-surah-design {
+    border: 1px solid #ddd;
+    padding: 9px;
+    box-shadow: 0px 2px 5px 4px #ddd;
+}
+
+    .single-surah-design h4 {
+        color: #461e27;
+        text-transform: capitalize;
+        font-weight: 600;
+        letter-spacing: 1px;
+        font-size: 23px;
+    }
+
+.single-surah-design-header-bg {
+    background: #461e27;
+    width: 21%;
+    height: 6px;
+    position: relative;
+    top: -9px;
+    left: -9px;
+    min-width: 129px;
+}
+
+.content-surah-1-5 {
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0px 0px 3px 1px #ddd;
+}
+
+.surah-icon-box-1 {
+    background: #927178;
+    width: 125%;
+    height: auto;
+    padding: 0px;
+    text-align: center;
+    border-radius: 3px;
+    color: #461e27;
+}
+
+    .surah-icon-box-1 h5 {
+        color: #461e27;
+        font-weight: 600;
+    }
+
+.content-surah-1-5 h4 {
+    color: #461e27;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.surah-1-5-bg {
+    background: #461e27;
+    width: 40%;
+    height: 7px;
+    position: relative;
+    top: -10px;
+    left: -10px;
+}
+
+.single-surah-bookmark-icon {
+    font-size: 16px !important;
+    margin: 0px -20px;
+}
+
+.surah-single-icon {
+    float: right;
+    position: relative;
+    /*bottom: 15px;*/
+    
+}
+
+hr {
+    width: 100%;
+}
+
+.content-surah-arebic-1-5 {
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0px 0px 3px 1px #ddd;
+    height: auto;
+    
+}
+
+.arabic-ayah {
+    font-family: Uthmanic-Hafs;
+    font-size: 26px;
+    line-height: 38px;
+    direction: rtl;
+    color: #000;
+    text-align: start;
+}
+
+#paraMode .arabic-ayah {
+    padding-right: 15px !important;
+    padding-left: 0 !important;
+    margin: 0px 15px;
+}
+
+
+#nonParaMode .arabic-ayah{
+    background-color:#f3f3f3;
+    padding:15px;
+}
+
+.surah-single-arebic-bg {
+    background: #461e27;
+    position: relative;
+    float: right;
+    bottom: 10px;
+    left: 10px;
+    width: 40%;
+    height: 7px;
+}
+
+.add-model img {
+    width: 50%;
+    cursor: pointer;
+}
+
+.add-model {
+    position: absolute;
+    bottom: 5px;
+    left: 3px;
+}
+
+.modal-title-2 {
+    float: right;
+    padding: 0px;
+    margin: 0px auto;
+    text-transform: uppercase;
+}
+
+.modal-title-1 {
+    text-transform: uppercase;
+}
+
+#add-note-cancel {
+    background: #461e27;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 100%;
+    border: 1px solid #461e27;
+    border-radius: 100px;
+    font-weight: bold;
+    line-height: 25px;
+    text-align: center;
+}
+
+#add-note-save {
+    background: #461e27;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 100%;
+    border: 1px solid #461e27;
+    border-radius: 100px;
+    font-weight: bold;
+    line-height: 25px;
+    text-align: center;
+}
+
+/**single-surah-contern end **/
+
+/**note css start**/
+
+.note-icon-box {
+    background: #461e27;
+    width: 100%;
+    height: auto;
+    /*height: 35px;*/
+    padding: 3px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+    .note-icon-box h5 {
+        color: #fff;
+        font-weight: 600;
+    }
+
+.fa.fa-pencil-square-o {
+    font-size: 24px;
+    margin: 13px 0px;
+    cursor: pointer;
+}
+/**note css end **/
+
+/**bookmarks css start**/
+
+.bookmarks-box {
+    background: #461e27;
+    width: 100%;
+    height: auto;
+    /*height: 35px;*/
+    padding: 3px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+    .bookmarks-box h5 {
+        color: #fff;
+        font-weight: 600;
+    }
+
+.content-bookmark-1-5 h4 {
+    color: #461e27;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.content-bookmark-1-5 {
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0px 0px 3px 1px #ddd;
+}
+
+.fa.fa-bookmark {
+    font-size: 24px;
+    margin: 13px 0px;
+    cursor: pointer;
+    color: #461e27;
+}
+
+
+.content-bookmark-1-5 p {
+    color: #461e27;
+    font-weight: 600;
+}
+/**bookmarks css end**/
+
+/** new-index page design start**/
+
+.tcq-button{
+    background: #461e27;
+    color: #F8F682;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 600;
+    width: 24%;
+    min-width: 120px;
+}
+    .tcq-button:hover {
+        color: #F8F682;
+    }
+
+.new-quran {
+    padding: 12% 0 0 12%;
+}
+
+.get-paid-message {
+    margin-top: 10%;
+}
+
+    .get-paid-message p {
+        color: #efefef;
+        margin-bottom: 0;
+    }
+
+    .get-paid-message a:hover {
+        color: white;
+        cursor: pointer;
+    }
+
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.masjid-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin-bottom:10px;
+}
+
+.new-quran > h1, h3, h4, h6 {
+    color: #F8F682;
+    text-transform: uppercase;
+    font-family: TrajanPro-Regular;
+    position: relative;
+    margin: 0;
+}
+
+
+@media screen and (max-width: 1023px) {
+    .new-quran h6 {
+        font-size: 22px;
+        letter-spacing: 12px;
+    }
+
+    .new-quran h1 {
+        font-size: 45px;
+        font-weight: 600;
+        letter-spacing: 11px;
+    }
+
+    .new-quran h4 {
+        font-size: 12px;
+        letter-spacing: 10px;
+    }
+
+    .new-quran h3 {
+        font-size: 10px;
+        font-weight: 200;
+        letter-spacing: 6px;
+    }
+
+    .get-paid-message p {
+        font-size:12px;
+    }
+    
+}
+
+@media screen and (min-width: 1024px){
+    .new-quran h6 {
+        font-size: 44px;
+        letter-spacing: 17px;
+    }
+
+    .new-quran h1 {
+        font-size: 90px;
+        font-weight: 600;
+        letter-spacing: 11px;
+    }
+
+    .new-quran h4 {
+        font-size: 24px;
+        letter-spacing: 16px;
+    }
+
+    .new-quran h3 {
+        font-size: 24px;
+        font-weight: 200;
+        letter-spacing: 6px;
+    }
+}
+
+.circle {
+    position: absolute;
+    /*top: 127px;*/
+    left: 37%;
+    transform: translate(-50%,-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.new-icon-menu {
+    font-size: 21px;
+    color: #121111;
+    float: right;
+    position: relative;
+    /*left: 119px;
+    top: 170px;*/
+}
+
+.new-icon-menu1 {
+    font-size: 21px;
+    color: #121111;
+    float: right;
+    position: relative;
+    /*top: 175px;
+    left: 115px;*/
+}
+
+.new-icon-menu2 {
+    font-size: 21px;
+    color: #121111;
+    float: right;
+    position: relative;
+    /*left: 75px;
+    top: 180px;*/
+}
+
+.saurabh-img {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+
+.home-tile{
+    float:right;
+    margin:5px;
+    padding:10px;
+    background: white;
+    width: 75px;
+    text-align: center;
+    border-radius: 5px !important;
+    box-shadow: 0px 1px 6px #877a7a !important;
+}
+    .home-tile:hover {
+        box-shadow: 0px 4px 10px #877a7a !important;
+    }
+
+.home-tile i{
+    font-size:25px;
+}
+    
+.home-tile span {
+    font-weight: 600;
+    font-size:13px;
+    text-transform:uppercase;
+}
+
+@media only screen (min-width: 300px) and (max-width: 600px) {
+    .new-icon-menu {
+        font-size: 21px;
+        color: #121111;
+        float: right;
+        position: relative;
+        left: 12px;
+        /*top: 241px;*/
+    }
+
+    .new-icon-menu1 {
+        font-size: 21px;
+        color: #121111;
+        float: right;
+        position: relative;
+        /*top: 252px;*/
+        left: 8px;
+    }
+
+    .new-icon-menu2 {
+        font-size: 21px;
+        color: #121111;
+        float: right;
+        position: relative;
+        left: -31px;
+        /*top: 264px;*/
+    }
+
+    .new-quran h1 {
+        font-size: 24px;
+        /*top: 24px;*/
+        /*font-weight: 600;*/
+    }
+
+    .new-quran h6 {
+        color: #F8F682;
+        text-transform: uppercase;
+        font-family: TrajanPro-Regular;
+        font-size: 32px;
+        letter-spacing: 17px;
+        position: relative;
+        top: 29px;
+    }
+
+    .circle {
+        position: absolute;
+        top: 18px;
+        left: 27%;
+        transform: translate(-50%,-50%);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+    .saurabh-img {
+        position: absolute;
+        right: 0px;
+        top: 406px;
+    }
+}
+
+.new-surah-nre {
+    position: absolute;
+    top: 42px;
+    right: 135px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.new-profile-nre {
+    position: relative;
+    right: 58px;
+    top: 23px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.new-search-nre {
+    position: relative;
+    right: 58px;
+    top: 23px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.new-bookm-nre {
+    position: relative;
+    right: 58px;
+    top: 23px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.new-note-nre {
+    position: relative;
+    right: 58px;
+    top: 23px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.new-surah1-nre {
+    position: absolute;
+    right: 203px;
+    top: 42px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.new-surah2-nre {
+    position: absolute;
+    right: 125px;
+    top: 40px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.new-surah3-nre {
+    position: relative;
+    right: 56px;
+    top: 22px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.new-surah4-nre {
+    position: absolute;
+    top: 44px;
+    text-transform: uppercase;
+    font-size: 13px;
+    left: 13px;
+}
+
+.new-surah5-nre {
+    position: absolute;
+    top: 44px;
+    text-transform: uppercase;
+    font-size: 13px;
+    left: 78px;
+}
+
+.new-surah6-nre {
+    position: absolute;
+    top: 44px;
+    text-transform: uppercase;
+    font-size: 13px;
+    left: 170px;
+}
+
+.new-surah7-nre {
+    position: absolute;
+    top: 44px;
+    text-transform: uppercase;
+    font-size: 13px;
+    left: 234px;
+}
+
+body {
+    background-image: url(../images/masjid.png);
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    /*background-size:35%;
+    height:auto;*/
+    background-attachment: fixed;
+    overflow: no-display;
+    overflow-y: hidden;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /*background-size: contain;
+    margin: -150px 0px 0px auto;
+    height: 474px;*/
+}
+
+/** new- index page design end**/
+
+/**social media sharing option start**/
+
+.share-on-social-media {
+    padding: 17px;
+    font-size: 46px;
+}
+
+.modal-content1 {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 53%;
+    pointer-events: auto;
+    background-color: #230f13;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+    top: 133px;
+    opacity: 0.9;
+}
+
+.fa.fa-share-alt {
+    line-height: 50px;
+    cursor: pointer;
+}
+/**socail media sharing option end**/
+.already-member {
+    position: relative;
+    float: right;
+}
+
+.contact-form-login {
+    /*width: 100%;*/
+    float: right;
+    padding: 30px;
+    /*border: 1px solid #ddd;
+    box-shadow: 0px 1px 11px 5px #ddd;
+    background: wheat;*/
+}
+
+.bg-body-sign {
+    background-image: url(../images/quran.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.contact-form-login h4 {
+    color: #461e27;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.contact-form-sign-up {
+    width: 100%;
+    padding: 30px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 1px 11px 5px #ddd;
+    background: wheat;
+    opacity: 0.9;
+}
+
+    .contact-form-sign-up h4 {
+        color: #461e27;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 1px;
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+
+.logout p {
+    color: white;
+}
+
+.surah-content-1 h4 {
+    /*text-align: center;*/
+    position: absolute;
+    font-size: 18px;
+    font-weight: 600;
+    float: right;
+    left: 114px;
+}
+
+.surah-content1 p {
+    /*text-align: center;*/
+    position: relative;
+    top: 27px;
+    left: 100px;
+}
+
+.surah-content1 span {
+    text-align: center;
+    padding: 8px;
+    position: relative;
+    left: 94px;
+    font-weight: 600;
+    top: 35px;
+}
+
+.surah-content-1 img {
+    width: 7%;
+    float: right;
+    position: relative;
+    bottom: 0px;
+    padding: 2px;
+    left: 12px;
+    top: 2px;
+}
+
+.surah-content-1 a {
+    color: #461e27;
+}
+
+    .surah-content-1 a:hover {
+        text-decoration: none;
+        color: #461e27;
+    }
+/* search css start here*/
+
+.searchbar {
+    margin-bottom: auto;
+    margin-top: 42px;
+    height: 60px;
+    background-color: #461e27;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+.search_input {
+    color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color: transparent;
+    line-height: 40px;
+    transition: width 0.4s linear;
+}
+
+.searchbar:hover > .search_input {
+    padding: 0 10px;
+    width: 450px;
+    caret-color: red;
+    transition: width 0.4s linear;
+}
+
+.searchbar:hover > .search_icon {
+    background: white;
+    color: #e74c3c;
+}
+
+.search_icon {
+    height: 40px;
+    width: 40px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: white;
+}
+/*search css end here*/
+
+/*sidebar onclick start */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    /*background-color: #eae0e0;*/
+    background-color:wheat;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+}
+
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #000;
+        display: block;
+        transition: 0.3s;
+    }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: 35px;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+        float: right;
+    }
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+}
+/*sidebar onclick end*/
+
+/*side bar style start */
+.fontsize h4 {
+    color: #461e27;
+    letter-spacing: 1px;
+    font-family: robotic;
+    height: 44px;
+    line-height: 37px;
+    font-size: large;
+    text-decoration: overline;
+    margin-bottom:10px;
+}
+
+.fontsize {
+    margin-top: 50px;
+    text-align: center;
+    border-bottom: 1px solid antiquewhite;
+}
+
+
+
+/*side bar style end*/
+
+/*header css start*/
+.navbar.navbar-expand-md.navbar-dark.bg-dark.mb-3 {
+    background: #461e27 !important;
+    height: 77px;
+}
+/*header css end*/
+
+
+.translation h4 {
+    color: #461e27;
+    height: 44px;
+    text-align: center;
+    line-height: 38px;
+    font-family: robotic;
+    letter-spacing: 1px;
+    font-size:large;
+    text-decoration:overline;
+}
+
+.form-check-label {
+    text-transform: capitalize;
+    padding-left: 9px;
+}
+
+.reading-mode h4 {
+    background: #461e27;
+    height: 44px;
+    text-align: center;
+    text-transform: capitalize;
+    line-height: 40px;
+    color: white;
+    font-family: robotic;
+}
+
+.reading-mode {
+    margin-top: 40px;
+}
+
+.translation {
+    margin-top: 28px;
+    border-bottom: 1px solid antiquewhite;
+    padding: 15px 15px 30px 15px;
+    color: black;
+    text-align: center;
+}
+
+.font-size-button {
+    margin-bottom: 20px;
+}
+
+    .font-size-button button {
+        background: black;
+        color: white;
+        font-size: 16px;
+        width: 18%;
+        height: 30px;
+        border: 1px solid black;
+        font-family: robotic;
+        font-weight: bold;
+    }
+
+.share-on-social-media img {
+    width: 65px;
+    padding: 6px;
+}
+
+.surah-rem-text span {
+    color: #461e27;
+}
+
+.surah-rem-text p {
+    color: #461e27;
+}
+
+.surah-rem-text a {
+    text-decoration: none;
+}
+
+.search-surah {
+    margin-bottom: 45px;
+}
+
+.arebic1 {
+    list-style: none;
+    direction: rtl;
+    float: right;
+    position: relative;
+    bottom: 10px;
+}
+
+.arbs {
+    padding: 24px;
+    list-style: none;
+}
+
+.btnOtp {
+    font-size: 1rem;
+    background: 0 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin-left: -4px;
+    margin-top: 25px;
+    line-height: 2.5rem;
+    padding: 0;
+    position: absolute;
+    float: right;
+    right: 1.5rem;
+    top: 0;
+}
+
+.cut-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 150px;
+    height: 1.2em;
+    white-space: nowrap;
+}
+
+.modal-dialog-footnote {
+    position: absolute;
+    top: 50% !important;
+    transform: translate(0, -50%) !important;
+    -ms-transform: translate(0, -50%) !important;
+    -webkit-transform: translate(0, -50%) !important;
+    margin: auto 30%;
+    width: 40%;
+    height: 40%;
+}
