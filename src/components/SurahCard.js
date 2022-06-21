@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 function SurahCard() {
   return (
-    <Link to="/"><Wrapper>
+    <Link to="/surah-single"><Wrapper>
         <div className="info-card">
             <p className="count">1</p>
             <div className="class"><img src={MeccaIcon} /></div>

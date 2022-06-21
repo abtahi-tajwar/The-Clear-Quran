@@ -12,7 +12,16 @@ function Surah() {
           <Grid width="350px" gap="30px">
             <SurahCard />
             <SurahCard />
+            <SurahCard />  
+            <SurahCard />
+            <SurahCard />
+            <SurahCard />  
+            <SurahCard />
+            <SurahCard />
             <SurahCard />            
+            <SurahCard />
+            <SurahCard />
+            <SurahCard />  
           </Grid>
         </Container>
     </Wrapper>
