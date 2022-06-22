@@ -6,22 +6,17 @@ import SurahCard from "../../components/SurahCard";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/react";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 
 function Surah() {
   const [load, setLoad] = useState(true);
-  const [data, setData] = useState([]);
+  const data = useSelector(data => data.surah)
 
-  let body = {
-    userID: 2,
-    LastUpdatedTimeTicks: 0,
-  };
-
-  const getChapters = () => {
-    axios.post(`http://122.175.33.146:7070/api/GetChapters`, body).then((res) => {
-      setData(res.data.response.chapters);
+  React.useEffect(() => {
+    if(data.length > 0) {
       setLoad(false);
-    });
-  };
+    }
+  }, [data])
 
   const override = css`
     margin: 0 auto;
@@ -29,10 +24,6 @@ function Surah() {
     left: 50%;
     top: 50%;
   `;
-
-  useEffect(() => {
-    getChapters();
-  }, []);
 
   return (
     <Wrapper>

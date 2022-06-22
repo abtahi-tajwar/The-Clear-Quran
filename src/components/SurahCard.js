@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function SurahCard({ data }) {
   return (
-    <Link to="/surah-single"><Wrapper>
+    <Link to={"/surah-single/"+data.chapterId}><Wrapper>
         <div className="info-card">
           <p className="count">{data.chapterId}</p>
           <div className="class">
