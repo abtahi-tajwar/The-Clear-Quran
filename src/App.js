@@ -7,6 +7,7 @@ import Surah from './pages/surah/Surah'
 import SurahSingle from './pages/surah-single/SurahSingle'
 import { useDispatch } from 'react-redux/es/exports';
 import { init } from './redux/surahSlice';
+import Contact from './pages/contact/Contact';
 
 function App() {
   const [data, setData] = React.useState([])
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/" exact element={<Home />} />
                 <Route path="/surah" element={<Surah />} />
                 <Route path="/surah-single/:id" element={<SurahSingle />} /> 
+                <Route path="/contact" element={<Contact />} />
             </Routes>
         </React.Fragment>
     </BrowserRouter>

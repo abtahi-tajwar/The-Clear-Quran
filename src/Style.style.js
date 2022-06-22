@@ -23,3 +23,23 @@ export const Grid = styled.div`
     grid-gap: ${props => props.gap ? props.gap : '10px'};
     grid-template-rows: auto;
 `
+export const ButtonLink = styled.button`
+    text-decoration: none;
+    padding: 6px 16px;
+    background-color: ${props => props.bgColor ? props.bgColor : colors.base };
+    color: ${props => props.color ? props.color : 'white'};
+    border-radius: 5px;
+`
+
+export const Buttonbtn = styled.button`
+    border: none;
+    outline: none;
+    padding: 9px 16px;
+    background-color: ${props => props.bgColor ? props.bgColor : colors.base };
+    color: ${props => props.color ? props.color : 'white'};
+    border-radius: 5px;
+    transition: background .2s ease-out;
+    &:hover {
+        background-color: ${props => props.hoverBgColor ? props.hoverBgColor : colors.baseLight };
+    }
+`

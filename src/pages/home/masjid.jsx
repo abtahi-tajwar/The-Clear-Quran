@@ -13,11 +13,11 @@ export default function Masjid() {
             <br />
             <span>profile</span>
           </a>
-          <a className={`home-tile`}>
+          <Link className={`home-tile`} to="/surah">
             <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
             <br />
-            <Link to="/surah"><span>surah</span></Link>
-          </a>
+            <span>surah</span>
+          </Link>
         </div>
       </div>
       <div className={`row`}>
@@ -56,11 +56,11 @@ export default function Masjid() {
             <br />
             <span>buy</span>
           </a>
-          <a className={`home-tile`}>
+          <Link className={`home-tile`} to="/contact">
             <i className={`fa fa-phone`} aria-hidden="true"></i>
             <br />
             <span>contact</span>
-          </a>
+          </Link>
           <a className={`home-tile`}>
             <i className={`fa fa-user-circle`} aria-hidden="true"></i>
             <br />
