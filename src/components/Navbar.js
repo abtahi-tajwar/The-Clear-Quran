@@ -60,5 +60,14 @@ const Wrapper = styled.div`
       flex: 1;
     }
   }
+
+  @media only screen and (max-width: 680px) {
+    .search-container {
+      display: none;
+    }
+    h1 {
+      font-size: 4vw;
+    }
+  }
 `
 export default Navbar

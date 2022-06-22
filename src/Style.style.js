@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 export const colors = {
     base: '#461E27',
+    baseLight: '#692937',
     dark: '#210F13'
 }
 export const Container = styled.div`

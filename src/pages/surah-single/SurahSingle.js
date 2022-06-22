@@ -54,7 +54,7 @@ function SurahSingle() {
                     <div><Link to="/surah" className="go-back"><i class="fa-solid fa-circle-arrow-left"></i> Go Back </Link></div>
                     <div>
                         <button className="action-button"><i class="fa-solid fa-bookmark"></i> Bookmark </button>
-                        <button className="action-button"><i class="fa-solid fa-note"></i> Add Note</button>
+                        <button className="action-button"><i class="fa-solid fa-pen-to-square"></i> Add Note</button>
                     </div>
                 </div>
                 <div className="content">
@@ -95,6 +95,22 @@ const Wrapper = styled.div`
         overflow-y: scroll;
         padding-bottom: 100px;
         transition: transform .2s ease-out;
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: ${colors.base};
+            border-radius: 20px;
+        }
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: ${colors.baseLight};
+        }
         .selector {
             aspect-ratio: 1/1;
             background-color: white;
@@ -116,11 +132,12 @@ const Wrapper = styled.div`
             padding: 20px;
             display: grid;
             grid-gap: 15px;
-            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
             grid-template-rows: auto;  
             .completed {
                 background-color: #D9D9D9;
             }            
+            
             .reading {
                 background-color: ${colors.base} !important;
                 color: white !important;
@@ -137,15 +154,27 @@ const Wrapper = styled.div`
             margin-top: 30px;
             display: flex;
             justify-content: space-between;
+            & > div {
+                display: flex;
+                gap: 5px;
+            }
             .action-button {
                 padding: 5px 10px;
                 color: white;
                 background-color: ${colors.base};
+                border: none;
+                outline: none;
+                border-radius: 5px;
+                transition: background .2s ease-out;
+                &:hover {
+                    background-color: ${colors.baseLight};
+                }
             }
         }
         .content {
             margin-top: 50px;
             overflow: auto;
+            
             & > div {
                 padding: 30px;
                 border-bottom: 1px solid black;
