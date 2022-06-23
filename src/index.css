@@ -53,6 +53,22 @@ a {
 a:hover {
   color: #461e27;
 }
+body::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+body::-webkit-scrollbar-track {
+  background: #210f13;
+}
+/* Handle */
+body::-webkit-scrollbar-thumb {
+  background-color: #692937;
+  border-radius: 20px;
+}
+/* Handle on hover */
+body::-webkit-scrollbar-thumb:hover {
+  background: #692937;
+}
 
 .quran h6 {
   text-transform: uppercase;
@@ -1368,7 +1384,6 @@ h6 {
 
 body {
   overflow: no-display;
-  overflow-y: hidden;
   overflow-x: hidden;
 }
 .home-page {
