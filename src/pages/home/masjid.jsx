@@ -77,13 +77,18 @@ export default function Masjid() {
       .catch((error) => {
         // User couldn't sign in (bad verification code?)
         // ...
+        console.log(error);
       });
   };
 
   const registerUser = () => {
+    console.log("Here");
+
+    let uCountryCode = countryCode.value;
+    let code = uCountryCode.replace("+", "");
     let body = {
       userId: 0,
-      countryCode: countryCode,
+      countryCode: code,
       phoneNumber: mobileNo,
     };
 
