@@ -1,13 +1,107 @@
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
-import Input from "../../input";
+import { useState, useEffect } from "react";
+import Select from "react-select";
+import data from "./countries.json";
+import { firebase } from "../../config/firebase";
+import axios from "axios";
+
 export default function Masjid() {
-  const astyle = {
-    textAlign: `center`,
+  let loggedIn = localStorage.getItem("user") ? true : false;
+
+  const [countryCode, setCountryCode] = useState([]);
+  const [country, setCountry] = useState([]);
+  const [mobileNo, setMobileNo] = useState("");
+  const [otp, setOtp] = useState(!loggedIn);
+  const [menu, setMenu] = useState(loggedIn);
+  const [input, setInput] = useState(false);
+  const [mInput, setMInput] = useState(true);
+  const [code, setCode] = useState("");
+
+  const getCountryCode = () => {
+    let x = country;
+    data.map((e) => {
+      x.push({ value: e.dial_code, label: e.flag + e.dial_code, flag: e.flag, code: e.code, dial_code: e.dial_code });
+    });
+    setCountry(x);
   };
+
+  useEffect(() => {
+    getCountryCode();
+  }, []);
+
+  const configureCaptcha = () => {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("sign-in-button", {
+      size: "invisible",
+      callback: (response) => {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        sendOtp();
+        console.log("Recaptca varified:", response);
+      },
+      defaultCountry: "IN",
+    });
+  };
+
+  const sendOtp = (e) => {
+    e.preventDefault();
+    configureCaptcha();
+    const phoneNumber = countryCode.value + mobileNo;
+    console.log(phoneNumber);
+    const appVerifier = window.recaptchaVerifier;
+    firebase
+      .auth()
+      .signInWithPhoneNumber(phoneNumber, appVerifier)
+      .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        window.confirmationResult = confirmationResult;
+        setMInput(false);
+        setInput(true);
+      })
+      .catch((error) => {
+        console.log("SMS not sent:", error);
+      });
+  };
+
+  const submitOTP = (e) => {
+    const otpCode = code;
+    e.preventDefault();
+    window.confirmationResult
+      .confirm(otpCode)
+      .then((result) => {
+        // User signed in successfully.
+        const user = result.user;
+        localStorage.setItem("uid", JSON.stringify(user));
+        registerUser();
+      })
+      .catch((error) => {
+        // User couldn't sign in (bad verification code?)
+        // ...
+      });
+  };
+
+  const registerUser = () => {
+    let body = {
+      userId: 0,
+      countryCode: countryCode,
+      phoneNumber: mobileNo,
+    };
+
+    axios.post(`http://122.175.33.146:7070/api/RegisterUser`, body).then((res) => {
+      localStorage.setItem("user", JSON.stringify(res.data));
+      setOtp(false);
+      setMenu(true);
+    });
+  };
+
+  const guest = () => {
+    setOtp(false);
+    setMenu(true);
+  };
+
   return (
     <div className={`masjid-container`}>
-      {false && (
+      {menu && (
         <>
           <div className={`row`}>
             <div className={`col-md-12 col-sm-12`}>
@@ -73,43 +167,59 @@ export default function Masjid() {
         </>
       )}
 
-      <div class="row">
-        <div className={`col-md-12 col-sm-12`}>
-          <div className={`contact-form-login`}>
-            <h4 style={astyle}>Log in</h4>
-            <form asp-controller="Login" asp-action="Index" method="post" id="login-form">
-              <div id="recaptcha-container"></div>
-              <div id="firebaseui-auth-container"></div>
-              <div className={`form-group`}>
-                <label for="phoneNumber">Phone Number:</label>
-                <div className={`input-phone`}>
-                  <Input />
-                </div>
-              </div>
+      {otp && (
+        <div class="row">
+          <div className={`col-md-12 col-sm-12`}>
+            <div className={`contact-form-login`}>
+              <h4>Log in</h4>
 
-              <div className={`form-group`} id="divOTPBtn" style={astyle}>
-                <button type="button" id="get-otp-btn-login" className={`btn tcq-button`} onclick="sendOTP()">
-                  Get OTP
-                </button>
-              </div>
+              {mInput && (
+                <>
+                  <div className={`form-group`}>
+                    <label for="phoneNumber">Phone Number:</label>
+                    <div className={`input-phone`}>
+                      <Select
+                        name="colors"
+                        options={country}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(e) => setCountryCode(e)}
+                      />
+                      <input type="text" onChange={(e) => setMobileNo(e.target.value)} />
+                    </div>
+                  </div>
 
-              <div className={`form-group hidden`} id="divOTP">
-                <label for="password">OTP:</label>
-                <input type="password" className={`form-control`} id="otp" placeholder="Enter otp" name="otp" required />
-              </div>
-              <div style={astyle}>
-                <button type="button" className={`btn btn-default hidden tcq-button`} id="contact-us-btn" onclick="confirmOTP()">
-                  Sign in
-                </button>
-              </div>
-              <input type="hidden" asp-for="CountryCode" id="hiddenCountryCode" />
-              <input type="hidden" asp-for="PhoneNumber" id="hiddenPhoneNumber" />
+                  <div className={`form-group`}>
+                    <button type="button" className={`btn tcq-button`} onClick={(e) => sendOtp(e)}>
+                      <div id="sign-in-button"></div>
+                      Get OTP
+                    </button>
+                  </div>
+                  <button type="button" className={`btn tcq-button`} onClick={guest}>
+                    Guest
+                  </button>
+                </>
+              )}
 
-              <div id="divSubmitBtn"></div>
-            </form>
+              {input && (
+                <>
+                  <div className={`form-group hidden`} id="divOTP">
+                    <label for="password">OTP:</label>
+                    <input type="password" className={`form-control`} placeholder="Enter otp" onChange={(e) => setCode(e.target.value)} />
+                  </div>
+                  <div>
+                    <button type="button" className={`btn btn-default hidden tcq-button`} id="contact-us-btn" onClick={(e) => submitOTP(e)}>
+                      Sign in
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {/* </form> */}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
