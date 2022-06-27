@@ -5,10 +5,13 @@ import Select from "react-select";
 import data from "./countries.json";
 import { firebase } from "../../config/firebase";
 import axios from "axios";
+import { routes } from "../../routes";
+import { useDispatch } from "react-redux/es/exports";
+import { init } from "../../redux/userSlice";
 
 export default function Masjid() {
+  const dispatch = useDispatch()
   let loggedIn = localStorage.getItem("user") ? true : false;
-
   const [countryCode, setCountryCode] = useState([]);
   const [country, setCountry] = useState([]);
   const [mobileNo, setMobileNo] = useState("");
@@ -92,7 +95,7 @@ export default function Masjid() {
       phoneNumber: mobileNo,
     };
 
-    axios.post(`http://122.175.33.146:7070/api/RegisterUser`, body).then((res) => {
+    axios.post(routes.registerUser, body).then((res) => {
       localStorage.setItem("user", JSON.stringify(res.data));
       setOtp(false);
       setMenu(true);
@@ -127,11 +130,11 @@ export default function Masjid() {
           <div className={`row`}>
             <div className={`col-md-12 col-sm-12`}>
               <div className="home-tile-row">
-                <a className={`home-tile`}>
+                <Link className={`home-tile`} to="/notes">
                   <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
                   <br />
                   <span>notes</span>
-                </a>
+                </Link>
                 <a className={`home-tile`}>
                   <i className={`fa fa-bookmark-o`} aria-hidden="true"></i>
                   <br />

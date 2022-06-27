@@ -5,18 +5,34 @@ import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { colors } from '../../Style.style'
+import { routes } from '../../routes'
+import Modal from '../../components/Modal'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import AddIcon from '@mui/icons-material/Add';
+import axios from 'axios'
+import ConfirmationPopup from '../../components/ConfirmationPopup'
 
 function SurahSingle() {
     const {id} = useParams()
     const [surah, setSurah] = React.useState()
     const [verses, setVerses] = React.useState()
+    const [currentParagraph, setCurrentParagraph] = React.useState()
+    const [addNoteModalOpen, setAddNoteModalOpen] = React.useState(false)
     const [leftNavOpen, setLeftNavOpen] = React.useState(false)
+    const [note, setNote] = React.useState()
+    const [ confirmationPopup, setConfirmationPopup ] = React.useState({
+        isOpen: false,
+        text: "",
+        error: false
+    })
     const data = useSelector(data => data.surah)
-    
+    const userId = useSelector(data => data.user.userId)
     React.useEffect(() => {
         const singleSurah = data.find(item => item.chapterId === parseInt(id))
         setSurah(singleSurah)
         // Load the first paragraph when user enter
+        setCurrentParagraph(singleSurah.paragraphs[0])
         manageSurahView(singleSurah.paragraphs[0].fromVerseId, singleSurah.paragraphs[0].toVerseId, singleSurah )
     }, [data])
     const manageSurahView = (from, to, currentSurah) => {
@@ -27,6 +43,7 @@ function SurahSingle() {
         setVerses(current)
     }
     const handleParagraphSelector = (id, from, to) => {
+        if(surah) setCurrentParagraph(surah.paragraphs.find(item => item.id === id))        
         document.querySelectorAll(".selector").forEach(item => item.classList.remove('reading'))
         document.getElementById(`surah-paragraph-selector-${id}`).classList.add('completed')
         document.getElementById(`surah-paragraph-selector-${id}`).classList.add('reading')
@@ -35,15 +52,77 @@ function SurahSingle() {
     const handleNavToggle = () => {
         setLeftNavOpen(!leftNavOpen)
     }
+    const handleAddNoteModalOpen = () => setAddNoteModalOpen(true) 
+    const handleAddNoteModalClose = () => setAddNoteModalOpen(false)
+    const handleNote = (e) => {
+        setNote(e.target.value)
+    }
+    const handleAddNote = () => {
+        console.log({
+            id: 0,
+            chapterId: surah.chapterId,
+            paragraphId: currentParagraph.id,
+            userId: userId,
+            note
+        })
+        axios.post(routes.createNote, {
+            id: 0,
+            chapterId: surah.chapterId,
+            paragraphId: currentParagraph.id,
+            userId: userId,
+            note
+        }).then(response => {
+            setNote("")
+            setAddNoteModalOpen(false)
+            if (response.data.status === "Success") {
+                setConfirmationPopup({ 
+                    isOpen: true,
+                    text: "Note added successfully",
+                    error: false
+                })
+            } else {
+                setConfirmationPopup({ 
+                    isOpen: true,
+                    text: "Something went wrong",
+                    error: false
+                })
+            }
+        })
+    }
+    
     return (
         <Wrapper>
+            {/* Modal to add notes for surah paragraphs */}
+            { currentParagraph && 
+                <Modal 
+                    open={addNoteModalOpen} 
+                    handleClose={handleAddNoteModalClose}
+                    title={`Add Note to verse (${currentParagraph.fromVerseId} to ${currentParagraph.toVerseId}) at ${surah.titleInAurabic}`}
+                > 
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Write your note here"
+                        multiline
+                        rows={4}
+                        value={note}
+                        onChange={handleNote}
+                        style={{ width: '100%'}}
+                    />
+                    <Button 
+                        variant="contained" 
+                        style={{ marginTop: '15px', backgroundColor: colors.base }}
+                        endIcon={<AddIcon />}
+                        onClick={handleAddNote}
+                    > Add </Button>
+                </Modal>
+            }
             <Navbar />
             <button className={leftNavOpen ? 'collapse-toggle' : 'collapse-toggle collapse-toggle-closed'} onClick={handleNavToggle}><i class="fa-solid fa-bars"></i></button> 
             <div className={leftNavOpen ? 'navigation' : 'navigation navigation-closed'}>                                               
                 <div className="nav-container">                     
                     <Link className="go-back" to="/surah"><i class="fa-solid fa-circle-arrow-left"></i> Go Back</Link>
                     {surah && surah.paragraphs.map(p => 
-                        <div className="selector" id={`surah-paragraph-selector-${p.id}`} onClick={() => handleParagraphSelector(p.id, p.fromVerseId, p.toVerseId)}>
+                        <div className="selector" id={`surah-paragraph-selector-${p.id}`} key={p.id} onClick={() => handleParagraphSelector(p.id, p.fromVerseId, p.toVerseId)}>
                             {p.fromVerseId !== p.toVerseId ?  <span>{p.fromVerseId} - {p.toVerseId}</span> : p.fromVerseId }
                         </div>
                     )}
@@ -54,17 +133,18 @@ function SurahSingle() {
                     <div><Link to="/surah" className="go-back"><i class="fa-solid fa-circle-arrow-left"></i> Go Back </Link></div>
                     <div>
                         <button className="action-button"><i class="fa-solid fa-bookmark"></i> Bookmark </button>
-                        <button className="action-button"><i class="fa-solid fa-pen-to-square"></i> Add Note</button>
+                        <button className="action-button" onClick={handleAddNoteModalOpen}><i class="fa-solid fa-pen-to-square"></i> Add Note</button>
                     </div>
                 </div>
                 <div className="content">
                     { verses && 
-                    verses.map(verse => <div>
+                    verses.map(verse => <div key={verse.verseId}>
                         <div className="arabic"><span className="ayat-marking">{verse.verseId}</span> {verse.verseInAurabic} </div>
                         <div className="english">{verse.verseInEnglish}</div>
                     </div>) }
                 </div>
             </div>
+            <ConfirmationPopup show={confirmationPopup.isOpen} text={confirmationPopup.text} error={confirmationPopup.error} />
         </Wrapper>
     )
 }
