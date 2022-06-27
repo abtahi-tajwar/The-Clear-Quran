@@ -18,8 +18,7 @@ function App() {
   const userInfo = JSON.parse(localStorage.getItem("user")).response
   // dispatch(init(userInfo))
   const dispatch = useDispatch()
-  React.useEffect(() => {
-    
+  React.useEffect(() => {    
     if (userInfo) {
       // Get chapters data
       dispatch(userInit(userInfo))
