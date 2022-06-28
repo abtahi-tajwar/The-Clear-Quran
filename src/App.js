@@ -10,7 +10,7 @@ import { init } from './redux/surahSlice';
 import { init as userInit } from './redux/userSlice';
 import { init as notesInit } from './redux/notesSlice';
 import Contact from './pages/contact/Contact';
-import { routes } from './routes'
+import { routes, headers } from './routes'
 import { useSelector } from 'react-redux/es/exports';
 import Notes from './pages/notes/Notes';
 
@@ -25,6 +25,8 @@ function App() {
       axios.post(routes.getChapters, {
         userID: userInfo.userId,
         LastUpdatedTimeTicks: 0,
+      }, {
+        headers: headers
       }).then((res) => {
         console.log(res.data.response)
         dispatch(init(res.data.response.chapters));
@@ -35,6 +37,8 @@ function App() {
       axios.post(routes.getAllNotes, {
         UserId: userInfo.userId,
         LastUpdatedTimeTicks: 0
+      }, {
+        headers: headers
       }).then(result => {
           console.log("Notes", result.data)
           dispatch(notesInit(result.data.response.notes))

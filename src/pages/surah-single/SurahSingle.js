@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { colors } from '../../Style.style'
-import { routes } from '../../routes'
+import { routes, headers } from '../../routes'
 import Modal from '../../components/Modal'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
@@ -71,7 +71,9 @@ function SurahSingle() {
             paragraphId: currentParagraph.id,
             userId: userId,
             note
-        }).then(response => {
+        }, {
+            headers: headers
+          }).then(response => {
             setNote("")
             setAddNoteModalOpen(false)
             if (response.data.status === "Success") {

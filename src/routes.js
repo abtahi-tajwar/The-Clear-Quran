@@ -3,5 +3,9 @@ export const routes = {
     getChapters: `${base}/GetChapters`,
     registerUser: `${base}/RegisterUser`,
     createNote: `${base}/CreateNote`,
-    getAllNotes: `${base}/GetAllNotes`
+    getAllNotes: `${base}/GetAllNotes`,
+    updateNote: `${base}/UpdateNote`
+}
+export const headers = {
+    'Content-Security-Policy': 1
 }
