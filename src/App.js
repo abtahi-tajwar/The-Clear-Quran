@@ -15,7 +15,8 @@ import { useSelector } from 'react-redux/es/exports';
 import Notes from './pages/notes/Notes';
 
 function App() {
-  const userInfo = JSON.parse(localStorage.getItem("user")).response
+  let loggedIn = localStorage.getItem("user") ? true : false;
+  const userInfo = loggedIn ? JSON.parse(localStorage.getItem("user")).response : null
   // dispatch(init(userInfo))
   const dispatch = useDispatch()
   React.useEffect(() => {    
