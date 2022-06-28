@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 import NoteCard from '../../components/NoteCard'
-import { routes } from '../../routes'
+import { routes, headers } from '../../routes'
 import { useSelector } from 'react-redux/es/exports'
 import Navbar from '../../components/Navbar'
 import ClipLoader from "react-spinners/ClipLoader"
@@ -14,12 +14,12 @@ import TextField from '@mui/material/TextField'
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch } from 'react-redux/es/exports'
 import { replace } from '../../redux/notesSlice'
+import { init as notesInit } from '../../redux/notesSlice'
 
 function Notes() {
     const data = useSelector(data => data)
     const dispatch = useDispatch()
-    const notes = data.notes
-    const userId = data.user.userId
+    
     const [load, setLoad] = React.useState(true);
     const [addNoteModalOpen, setAddNoteModalOpen] = React.useState(false)
     const [note, setNote] = React.useState("")
@@ -31,11 +31,11 @@ function Notes() {
     const handleNote = e => setNote(e.target.value) 
     const handleUpdateNote = () => {
         setEditLoad(true)
-        if (userId) {
+        if (data.user.userId) {
             axios.post(routes.updateNote, {
                 id: currentNote.id,
                 chapterId: currentNote.chapterId,
-                userId: userId,
+                userId: data.user.userId,
                 note
             }).then(res => {
                 if (res.data.status === 'Success') {
@@ -57,11 +57,12 @@ function Notes() {
         setNote(current_note.note)
     }
     React.useEffect(() => {
-        console.log(notes)
-        if (notes.length > 0 ) {
-            setLoad(false)
-        }
-    }, [notes])
+        if (data) {
+            if (data.notes.length > 0 ) {
+                setLoad(false)
+            }
+        } 
+    }, [data])
   return (
     <div>
         <Navbar />
@@ -90,7 +91,7 @@ function Notes() {
         </Modal> }
         <Container>
             {!load ? 
-                <React.Fragment>{notes.map(data => <NoteCard key={data.id} data={data} action={handleSelectNoteToEdit} />)}</React.Fragment> :
+                <React.Fragment>{data.notes.map(data => <NoteCard key={data.id} data={data} action={handleSelectNoteToEdit} />)}</React.Fragment> :
                 <ClipLoader />
             }
         </Container>

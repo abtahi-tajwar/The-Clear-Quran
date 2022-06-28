@@ -5,9 +5,9 @@ import Select from "react-select";
 import data from "./countries.json";
 import { firebase } from "../../config/firebase";
 import axios from "axios";
-import { routes } from "../../routes";
+import { headers, routes } from "../../routes";
 import { useDispatch } from "react-redux/es/exports";
-import { init } from "../../redux/userSlice";
+import { init as userInit } from "../../redux/userSlice";
 
 export default function Masjid() {
   const dispatch = useDispatch()
@@ -95,8 +95,12 @@ export default function Masjid() {
       phoneNumber: mobileNo,
     };
 
-    axios.post(routes.registerUser, body).then((res) => {
-      localStorage.setItem("user", JSON.stringify(res.data));
+    axios.post(routes.registerUser, body, {
+      headers: headers
+    }).then((res) => {
+      const userData =  JSON.stringify(res.data)
+      localStorage.setItem("user", userData);
+      dispatch(userInit(userData))
       setOtp(false);
       setMenu(true);
     });
@@ -113,11 +117,11 @@ export default function Masjid() {
         <>
           <div className={`row`}>
             <div className={`col-md-12 col-sm-12`}>
-              <a className={`home-tile`}>
+              <Link className={`home-tile`} to="/profile">
                 <i className={`fa fa-user-o`} aria-hidden="true"></i>
                 <br />
                 <span>profile</span>
-              </a>
+              </Link>
               <a className={`home-tile`}>
                 <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
                 <br />

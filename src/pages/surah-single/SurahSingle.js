@@ -28,6 +28,7 @@ function SurahSingle() {
     })
     const data = useSelector(data => data.surah)
     const userId = useSelector(data => data.user.userId)
+    
     React.useEffect(() => {
         const singleSurah = data.find(item => item.chapterId === parseInt(id))
         setSurah(singleSurah)
@@ -58,13 +59,6 @@ function SurahSingle() {
         setNote(e.target.value)
     }
     const handleAddNote = () => {
-        console.log({
-            id: 0,
-            chapterId: surah.chapterId,
-            paragraphId: currentParagraph.id,
-            userId: userId,
-            note
-        })
         axios.post(routes.createNote, {
             id: 0,
             chapterId: surah.chapterId,
@@ -86,7 +80,28 @@ function SurahSingle() {
                 setConfirmationPopup({ 
                     isOpen: true,
                     text: "Something went wrong",
+                    error: true
+                })
+            }
+        })
+    }
+
+    const addBookmark = () => {
+        axios.post(routes.addBookmark, {
+            paragraphId: currentParagraph.id,
+            userId: userId
+        }).then(response => {
+            if (response.data.status === "Success") {
+                setConfirmationPopup({ 
+                    isOpen: true,
+                    text: "Bookmark Added",
                     error: false
+                })
+            } else {
+                setConfirmationPopup({ 
+                    isOpen: true,
+                    text: "Something went wrong",
+                    error: true
                 })
             }
         })
@@ -134,7 +149,7 @@ function SurahSingle() {
                 <div className="action-buttons">
                     <div><Link to="/surah" className="go-back"><i class="fa-solid fa-circle-arrow-left"></i> Go Back </Link></div>
                     <div>
-                        <button className="action-button"><i class="fa-solid fa-bookmark"></i> Bookmark </button>
+                        <button className="action-button" onClick={addBookmark}><i class="fa-solid fa-bookmark"></i> Bookmark </button>
                         <button className="action-button" onClick={handleAddNoteModalOpen}><i class="fa-solid fa-pen-to-square"></i> Add Note</button>
                     </div>
                 </div>

@@ -4,7 +4,8 @@ export const routes = {
     registerUser: `${base}/RegisterUser`,
     createNote: `${base}/CreateNote`,
     getAllNotes: `${base}/GetAllNotes`,
-    updateNote: `${base}/UpdateNote`
+    updateNote: `${base}/UpdateNote`,
+    addBookmark: `${base}/Bookmark`
 }
 export const headers = {
     'Content-Security-Policy': 1

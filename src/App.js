@@ -13,40 +13,42 @@ import Contact from './pages/contact/Contact';
 import { routes, headers } from './routes'
 import { useSelector } from 'react-redux/es/exports';
 import Notes from './pages/notes/Notes';
+import Profile from './pages/profile/Profile';
 
 function App() {
   let loggedIn = localStorage.getItem("user") ? true : false;
-  const userInfo = loggedIn ? JSON.parse(localStorage.getItem("user")).response : null
-  // dispatch(init(userInfo))
+  const userState = useSelector(data => data.user)
+
   const dispatch = useDispatch()
-  React.useEffect(() => {    
-    if (userInfo) {
-      // Get chapters data
+  React.useEffect(() => {
+    if (!userState && loggedIn) {
+      const userInfo = loggedIn ? JSON.parse(localStorage.getItem("user")).response : null
       dispatch(userInit(userInfo))
+    } else if (userState) {
+      // Get chapters data
       axios.post(routes.getChapters, {
-        userID: userInfo.userId,
+        userID: userState.userId,
         LastUpdatedTimeTicks: 0,
       }, {
         headers: headers
       }).then((res) => {
-        console.log(res.data.response)
         dispatch(init(res.data.response.chapters));
       });
       ///////////////
 
       // Get notes data
       axios.post(routes.getAllNotes, {
-        UserId: userInfo.userId,
+        UserId: userState.userId,
         LastUpdatedTimeTicks: 0
       }, {
         headers: headers
       }).then(result => {
-          console.log("Notes", result.data)
           dispatch(notesInit(result.data.response.notes))
       })
       ///////
-    }  
-  }, [])
+    }
+  }, [userState])
+
   return (
     <BrowserRouter>      
         <React.Fragment>
@@ -56,6 +58,7 @@ function App() {
                 <Route path="/surah-single/:id" element={<SurahSingle />} /> 
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/notes" element={<Notes />} />
+                <Route path="/profile" element={<Profile />} />
             </Routes>
         </React.Fragment>
     </BrowserRouter>

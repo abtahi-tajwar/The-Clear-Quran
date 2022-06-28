@@ -2,7 +2,8 @@ import styled from 'styled-components'
 export const colors = {
     base: '#461E27',
     baseLight: '#692937',
-    dark: '#210F13'
+    dark: '#210F13',
+    gray: '#7d7d7d'
 }
 export const Container = styled.div`
     width: 90%;
