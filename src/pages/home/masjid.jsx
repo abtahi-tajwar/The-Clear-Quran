@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux/es/exports";
 import { init as userInit } from "../../redux/userSlice";
 
 export default function Masjid() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   let loggedIn = localStorage.getItem("user") ? true : false;
   const [countryCode, setCountryCode] = useState([]);
   const [country, setCountry] = useState([]);
@@ -85,26 +85,25 @@ export default function Masjid() {
   };
 
   const registerUser = () => {
-    console.log("Here");
-
     let uCountryCode = countryCode.value;
     let code = uCountryCode.replace("+", "");
     let body = {
       userId: 0,
       countryCode: code,
       phoneNumber: mobileNo,
-
     };
 
-    axios.post(routes.registerUser, body, {
-      headers: headers
-    }).then((res) => {
-      const userData =  JSON.stringify(res.data)
-      localStorage.setItem("user", userData);
-      dispatch(userInit(userData))
-      setOtp(false);
-      setMenu(true);
-    });
+    axios
+      .post(routes.registerUser, body, {
+        headers: headers,
+      })
+      .then((res) => {
+        const userData = JSON.stringify(res.data);
+        localStorage.setItem("user", userData);
+        dispatch(userInit(userData));
+        setOtp(false);
+        setMenu(true);
+      });
   };
 
   const guest = () => {

@@ -1,68 +1,82 @@
-import React from 'react'
+import React from "react";
 import axios from "axios";
-import './App.css'
-import Home from './pages/home/home'
-import { Route, Routes, BrowserRouter } from 'react-router-dom'
-import Surah from './pages/surah/Surah'
-import SurahSingle from './pages/surah-single/SurahSingle'
-import { useDispatch } from 'react-redux/es/exports';
-import { init } from './redux/surahSlice';
-import { init as userInit } from './redux/userSlice';
-import { init as notesInit } from './redux/notesSlice';
-import Contact from './pages/contact/Contact';
-import { routes, headers } from './routes'
-import { useSelector } from 'react-redux/es/exports';
-import Notes from './pages/notes/Notes';
-import Profile from './pages/profile/Profile';
+import "./App.css";
+import Home from "./pages/home/home";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Surah from "./pages/surah/Surah";
+import SurahSingle from "./pages/surah-single/SurahSingle";
+import { useDispatch } from "react-redux/es/exports";
+import { init } from "./redux/surahSlice";
+import { init as userInit } from "./redux/userSlice";
+import { init as notesInit } from "./redux/notesSlice";
+import Contact from "./pages/contact/Contact";
+import { routes, headers } from "./routes";
+import { useSelector } from "react-redux/es/exports";
+import Notes from "./pages/notes/Notes";
+import Profile from "./pages/profile/Profile";
+import Payment from "./pages/payment/Payment";
 
 function App() {
   let loggedIn = localStorage.getItem("user") ? true : false;
-  const userState = useSelector(data => data.user)
+  const userState = useSelector((data) => data.user);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   React.useEffect(() => {
     if (!userState && loggedIn) {
-      const userInfo = loggedIn ? JSON.parse(localStorage.getItem("user")).response : null
-      dispatch(userInit(userInfo))
+      const userInfo = loggedIn ? JSON.parse(localStorage.getItem("user")).response : null;
+      dispatch(userInit(userInfo));
     } else if (userState) {
       // Get chapters data
-      axios.post(routes.getChapters, {
-        userID: userState.userId,
-        LastUpdatedTimeTicks: 0,
-      }, {
-        headers: headers
-      }).then((res) => {
-        dispatch(init(res.data.response.chapters));
-      });
+      axios
+        .post(
+          routes.getChapters,
+          {
+            userID: userState.userId,
+            LastUpdatedTimeTicks: 0,
+          },
+          {
+            headers: headers,
+          }
+        )
+        .then((res) => {
+          dispatch(init(res.data.response.chapters));
+        });
       ///////////////
 
       // Get notes data
-      axios.post(routes.getAllNotes, {
-        UserId: userState.userId,
-        LastUpdatedTimeTicks: 0
-      }, {
-        headers: headers
-      }).then(result => {
-          dispatch(notesInit(result.data.response.notes))
-      })
+      axios
+        .post(
+          routes.getAllNotes,
+          {
+            UserId: userState.userId,
+            LastUpdatedTimeTicks: 0,
+          },
+          {
+            headers: headers,
+          }
+        )
+        .then((result) => {
+          dispatch(notesInit(result.data.response.notes));
+        });
       ///////
     }
-  }, [userState])
+  }, [userState]);
 
   return (
-    <BrowserRouter>      
-        <React.Fragment>
-            <Routes>
-                <Route path="/" exact element={<Home />} />
-                <Route path="/surah" element={<Surah />} />
-                <Route path="/surah-single/:id" element={<SurahSingle />} /> 
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/notes" element={<Notes />} />
-                <Route path="/profile" element={<Profile />} />
-            </Routes>
-        </React.Fragment>
+    <BrowserRouter>
+      <React.Fragment>
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/surah" element={<Surah />} />
+          <Route path="/surah-single/:id" element={<SurahSingle />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/notes" element={<Notes />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/payment" element={<Payment />} />
+        </Routes>
+      </React.Fragment>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
