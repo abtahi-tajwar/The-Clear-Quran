@@ -93,6 +93,7 @@ export default function Masjid() {
       userId: 0,
       countryCode: code,
       phoneNumber: mobileNo,
+
     };
 
     axios.post(routes.registerUser, body, {
@@ -207,9 +208,9 @@ export default function Masjid() {
                       Get OTP
                     </button>
                   </div>
-                  <button type="button" className={`btn tcq-button`} onClick={guest}>
+                  {/* <button type="button" className={`btn tcq-button`} onClick={guest}>
                     Guest
-                  </button>
+                  </button> */}
                 </>
               )}
 
