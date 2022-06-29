@@ -14,18 +14,26 @@ import { routes, headers } from './routes'
 import { useSelector } from 'react-redux/es/exports';
 import Notes from './pages/notes/Notes';
 import Profile from './pages/profile/Profile';
+import fullQuranData from './quranData.json';
+import EditProfile from './pages/profile/EditProfile';
 
 function App() {
   let loggedIn = localStorage.getItem("user") ? true : false;
   const userState = useSelector(data => data.user)
-
+  const quranData = fullQuranData
   const dispatch = useDispatch()
+  // dispatch(init(quranData.response.chapters));
+
+  
   React.useEffect(() => {
     if (!userState && loggedIn) {
-      const userInfo = loggedIn ? JSON.parse(localStorage.getItem("user")).response : null
+      const userInfo = loggedIn ? JSON.parse(localStorage.getItem("user")) : null
+      console.log(loggedIn, JSON.parse(localStorage.getItem("user")))
       dispatch(userInit(userInfo))
     } else if (userState) {
       // Get chapters data
+      console.log(userState)
+      dispatch(init(quranData.response.chapters))
       axios.post(routes.getChapters, {
         userID: userState.userId,
         LastUpdatedTimeTicks: 0,
@@ -59,6 +67,7 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/notes" element={<Notes />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/edit-profile" element={<EditProfile />} />
             </Routes>
         </React.Fragment>
     </BrowserRouter>

@@ -26,15 +26,19 @@ function SurahSingle() {
         text: "",
         error: false
     })
-    const data = useSelector(data => data.surah)
-    const userId = useSelector(data => data.user.userId)
+    const allData = useSelector(data => data)
+    const data = allData.surah ? allData.surah : null
+    const userId = allData.user ? allData.user.userId : null
     
     React.useEffect(() => {
-        const singleSurah = data.find(item => item.chapterId === parseInt(id))
-        setSurah(singleSurah)
-        // Load the first paragraph when user enter
-        setCurrentParagraph(singleSurah.paragraphs[0])
-        manageSurahView(singleSurah.paragraphs[0].fromVerseId, singleSurah.paragraphs[0].toVerseId, singleSurah )
+        if (data.length > 0) {
+            console.log("Data", data)
+            const singleSurah = data.find(item => item.chapterId === parseInt(id))
+            setSurah(singleSurah)
+            // Load the first paragraph when user enter
+            setCurrentParagraph(singleSurah.paragraphs[0])
+            manageSurahView(singleSurah.paragraphs[0].fromVerseId, singleSurah.paragraphs[0].toVerseId, singleSurah )
+        }        
     }, [data])
     const manageSurahView = (from, to, currentSurah) => {
         let current = [] 

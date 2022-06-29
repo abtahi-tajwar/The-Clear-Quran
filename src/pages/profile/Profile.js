@@ -6,14 +6,20 @@ import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { useSelector } from 'react-redux/es/exports';
 import { ClipLoader } from 'react-spinners';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import EditIcon from '@mui/icons-material/Edit';
+import { Link } from 'react-router-dom';
 
 function Profile() {
     const data = useSelector(data => data)
     const user = data.user
     const notes = data.notes.length
+
   return (
     <Wrapper>
         <div className="background"></div>
+        <Link className="go-home link-btn" to="/"><ArrowBackIcon /></Link>
+        <Link className="edit-profile link-btn"to="/edit-profile"><EditIcon /></Link>
         { user ? <div className="details">
             <div className="main-info">
                 <div className="top-part">
@@ -29,7 +35,7 @@ function Profile() {
             </div>
             <div className="about-yourself">
                 <h2>About Yourself</h2>
-                <p>Tell us something about yourself</p>
+                <p>{user.aboutUs ? user.aboutUs : "Tell us something about yourself"}</p>
             </div>
             <div className="info-box">
                 <div className="box"><span>0</span><span>BOOKMARKS</span></div>
@@ -44,6 +50,30 @@ const Wrapper = styled.div`
     * {
         margin: 0;
         padding: 0;
+    }
+    .link-btn {
+        position: absolute;
+        top: 20px;
+        background: transparent;
+        color: white;
+        font-size: 1.3rem;
+        text-decoration: none;
+        height: 32px;
+        width: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        transition: background .2s ease-out;
+        &:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    }
+    .go-home {
+        left: 20px;
+    }
+    .edit-profile {
+        right: 20px;
     }
     .background {
         height: 400px;
@@ -81,6 +111,7 @@ const Wrapper = styled.div`
                         height: 95%;
                         width: 95%;
                         border-radius: 50%;
+                        object-fit: cover;
                     }                    
                 }                
                 & > h2 {

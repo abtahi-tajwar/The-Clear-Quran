@@ -5,14 +5,26 @@ import { Container } from '../../Style.style'
 import TextField from '@mui/material/TextField';
 import { Buttonbtn } from '../../Style.style';
 import emailjs from '@emailjs/browser';
+import axios from 'axios';
+import { routes } from '../../routes';
+import { useSelector } from 'react-redux/es/exports';
+import ConfirmationPopup from '../../components/ConfirmationPopup';
 
 function Contact() {
     const form = React.useRef();
+    const user = useSelector(data => data.user)
+    const userId = user ? user.userId : -1
     const [input, setInput] = React.useState({
         name: "",
         email: "",
         phone: "",
         message: ""
+    })
+    const [loading, setLoading] = React.useState(false)
+    const [ confirmationPopup, setConfirmationPopup ] = React.useState({
+        isOpen: false,
+        text: "",
+        error: false
     })
     const handleInput = e => {
         setInput({
@@ -22,12 +34,41 @@ function Contact() {
     }
     const handleSend = e => {
         e.preventDefault()
-        emailjs.sendForm('clearqurantest_101', 'template_juo37fb', form.current, 'NxWbGthDPCvRUE81g')
-            .then((result) => {
-                console.log(result.text);
-            }, (error) => {
-                console.log(error.text);
-        });
+        setLoading(true)
+        axios.post(routes.contactUs, {
+            UserId: userId,
+            Name: input.name,
+            PhoneNumber: input.phone,
+            email: input.email,
+            description: input.message
+        }).then(res => {
+            setLoading(false)
+            if(res.data.status === 'Success') {
+                setConfirmationPopup({
+                    isOpen: true,
+                    text: "Thanks for reaching us out! You'll get response soon inshallah",
+                    error: false
+                })
+                setInput({
+                    name: "",
+                    email: "",
+                    phone: "",
+                    message: ""
+                })
+            } else {
+                setConfirmationPopup({
+                    isOpen: true,
+                    text: "Sorry! Something went wrong.",
+                    error: true
+                })
+            }
+        })
+        // emailjs.sendForm('clearqurantest_101', 'template_juo37fb', form.current, 'NxWbGthDPCvRUE81g')
+        //     .then((result) => {
+        //         console.log(result.text);
+        //     }, (error) => {
+        //         console.log(error.text);
+        // });
     }
   return (
     <Wrapper>
@@ -70,9 +111,10 @@ function Contact() {
                     value={input.message}
                     onChange={handleInput}
                 />
-                <Buttonbtn type="submit" value="Send">Send</Buttonbtn>
+                <Buttonbtn type="submit" disabled={loading} value="Send">Send</Buttonbtn>
             </form>                       
         </div>
+        <ConfirmationPopup show={confirmationPopup.isOpen} text={confirmationPopup.text} error={confirmationPopup.error} />
     </Wrapper>
   )
 }

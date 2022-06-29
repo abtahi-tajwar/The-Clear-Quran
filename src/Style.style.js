@@ -40,6 +40,10 @@ export const Buttonbtn = styled.button`
     color: ${props => props.color ? props.color : 'white'};
     border-radius: 5px;
     transition: background .2s ease-out;
+    ${props => props.disabled && `
+        pointer-events: none; 
+        color: gray;
+    `};
     &:hover {
         background-color: ${props => props.hoverBgColor ? props.hoverBgColor : colors.baseLight };
     }

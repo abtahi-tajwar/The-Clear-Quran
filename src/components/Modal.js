@@ -11,10 +11,13 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: '90%',
   maxWidth: 600,
+  maxHeight: '90vh',
+  overflowY: 'auto',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  zIndex: 30001
 };
 
 export default function Modal({ open, handleClose, children, title }) {

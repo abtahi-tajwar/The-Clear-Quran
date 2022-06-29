@@ -98,9 +98,9 @@ export default function Masjid() {
     axios.post(routes.registerUser, body, {
       headers: headers
     }).then((res) => {
-      const userData =  JSON.stringify(res.data)
+      const userData =  JSON.stringify(res.data.response)
       localStorage.setItem("user", userData);
-      dispatch(userInit(userData))
+      dispatch(userInit(res.data.response))
       setOtp(false);
       setMenu(true);
     });
@@ -164,11 +164,11 @@ export default function Masjid() {
                 <br />
                 <span>buy</span>
               </a>
-              <a className={`home-tile`}>
+              <Link className={`home-tile`} to="/contact">
                 <i className={`fa fa-phone`} aria-hidden="true"></i>
                 <br />
                 <span>contact</span>
-              </a>
+              </Link>
               <a className={`home-tile`}>
                 <i className={`fa fa-user-circle`} aria-hidden="true"></i>
                 <br />

@@ -2,10 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Container, Flex, colors } from '../Style.style'
 import styled from 'styled-components'
+import QuranInfo from './QuranInfo'
 
 function Navbar() {
+  const [isInfoOpen, setIsInfoOpen] = React.useState(false)
   return (
-    <Wrapper>
+    <React.Fragment>
+    <Wrapper>      
       <Container>
         <Flex gap="30px" className="full-size">
           <Link to="/"><i className="fa-solid fa-house"></i></Link>
@@ -17,11 +20,13 @@ function Navbar() {
           <Flex className="menu-link" gap="10px">
             <Link to="/"><i className="fa-solid fa-user"></i></Link>
             <Link to="/"><i className="fa-solid fa-notes"></i></Link>
-            <Link to="/"><i className="fa-solid fa-basket-shopping"></i></Link>
+            <div className="quran_info" onClick={() => setIsInfoOpen(true)}><i class="fa-solid fa-circle-info"></i></div>
           </Flex>          
         </Flex>
-      </Container>
+      </Container>      
     </Wrapper>
+    <QuranInfo open={isInfoOpen} handleClose={() => setIsInfoOpen(false)} />
+    </React.Fragment>
   )
 }
 const Wrapper = styled.div`
@@ -29,15 +34,20 @@ const Wrapper = styled.div`
   height: 94px;
   background-color: ${colors.base};
   color: white;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 900;
   h1 {
     font-family: "TrajanPro-Regular";
     line-height: 0px;
     margin-bottom: 0px;
     font-size: 2vw;
   }
-  a {
+  a, .quran_info {
     color: white;
     font-size: 1.5rem;
+    cursor: pointer;
   }
   & > div {
     height: 100%;
