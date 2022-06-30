@@ -1,4 +1,4 @@
-const base = 'http://122.175.33.146:7070/api'
+const base = "http://122.175.33.146:7070/api";
 export const routes = {
     getChapters: `${base}/GetChapters`,
     registerUser: `${base}/RegisterUser`,
@@ -10,5 +10,5 @@ export const routes = {
     contactUs: `${base}/AddContactUs`
 }
 export const headers = {
-    'Content-Security-Policy': 1
-}
+  "Content-Security-Policy": 1,
+};

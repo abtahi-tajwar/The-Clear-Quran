@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import axios from "axios";
 import './App.css'
 import Home from './pages/home/home'
@@ -16,6 +16,7 @@ import Notes from './pages/notes/Notes';
 import Profile from './pages/profile/Profile';
 import fullQuranData from './quranData.json';
 import EditProfile from './pages/profile/EditProfile';
+import Payment from './pages/payment/Payment'
 
 function App() {
   let loggedIn = localStorage.getItem("user") ? true : false;
@@ -45,17 +46,23 @@ function App() {
       ///////////////
 
       // Get notes data
-      axios.post(routes.getAllNotes, {
-        UserId: userState.userId,
-        LastUpdatedTimeTicks: 0
-      }, {
-        headers: headers
-      }).then(result => {
-          dispatch(notesInit(result.data.response.notes))
-      })
+      axios
+        .post(
+          routes.getAllNotes,
+          {
+            UserId: userState.userId,
+            LastUpdatedTimeTicks: 0,
+          },
+          {
+            headers: headers,
+          }
+        )
+        .then((result) => {
+          dispatch(notesInit(result.data.response.notes));
+        });
       ///////
     }
-  }, [userState])
+  }, [userState]);
 
   return (
     <BrowserRouter>      
@@ -68,10 +75,11 @@ function App() {
                 <Route path="/notes" element={<Notes />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/edit-profile" element={<EditProfile />} />
+                <Route path="/payment" element={<Payment />} />
             </Routes>
         </React.Fragment>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
