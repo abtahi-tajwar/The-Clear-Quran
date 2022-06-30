@@ -142,11 +142,11 @@ export default function Masjid() {
                   <br />
                   <span>bookm.</span>
                 </a>
-                <a className={`home-tile`}>
+                <Link className={`home-tile`} to="/search">
                   <i className={`fa fa-search`} aria-hidden="true"></i>
                   <br />
                   <span>search</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

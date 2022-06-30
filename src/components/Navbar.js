@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom'
 import { Container, Flex, colors } from '../Style.style'
 import styled from 'styled-components'
 import QuranInfo from './QuranInfo'
+import InfoIcon from '@mui/icons-material/Info';
+import NoteAltIcon from '@mui/icons-material/NoteAlt';
+import PersonIcon from '@mui/icons-material/Person';
+import HomeIcon from '@mui/icons-material/Home';
 
 function Navbar() {
   const [isInfoOpen, setIsInfoOpen] = React.useState(false)
@@ -11,16 +15,16 @@ function Navbar() {
     <Wrapper>      
       <Container>
         <Flex gap="30px" className="full-size">
-          <Link to="/"><i className="fa-solid fa-house"></i></Link>
+          <Link to="/"><HomeIcon /></Link>
           <h1>THE CLEAR QURAN</h1>
           <div className='search-container'>
               <i className="fa-solid fa-magnifying-glass"></i>
               <input type="text" className="nav-search" placeholder='Search...' />
           </div>
           <Flex className="menu-link" gap="10px">
-            <Link to="/"><i className="fa-solid fa-user"></i></Link>
-            <Link to="/"><i className="fa-solid fa-notes"></i></Link>
-            <div className="quran_info" onClick={() => setIsInfoOpen(true)}><i class="fa-solid fa-circle-info"></i></div>
+            <Link to="/"><PersonIcon /></Link>
+            <Link to="/"><NoteAltIcon /></Link>
+            <div className="quran_info" onClick={() => setIsInfoOpen(true)}><InfoIcon /></div>
           </Flex>          
         </Flex>
       </Container>      

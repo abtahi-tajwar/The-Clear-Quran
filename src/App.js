@@ -17,12 +17,14 @@ import Profile from './pages/profile/Profile';
 import fullQuranData from './quranData.json';
 import EditProfile from './pages/profile/EditProfile';
 import Payment from './pages/payment/Payment'
+import Search from "./pages/search/Search";
 
 function App() {
   let loggedIn = localStorage.getItem("user") ? true : false;
   const userState = useSelector(data => data.user)
   const quranData = fullQuranData
   const dispatch = useDispatch()
+  console.log(fullQuranData)
   // dispatch(init(quranData.response.chapters));
 
   
@@ -76,6 +78,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/edit-profile" element={<EditProfile />} />
                 <Route path="/payment" element={<Payment />} />
+                <Route path="/search" element={<Search />} />
             </Routes>
         </React.Fragment>
     </BrowserRouter>
