@@ -6,7 +6,7 @@ import { colors } from '../Style.style';
 
 function NoteCard({ data, action }) {
   return (
-    <Wrapper>
+    <Wrapper id={`notes_${data.id}`}>
         <p className="title">{data.paragraph.title}</p>
         <div className="details">
             <p class="verse-details">Verse {data.paragraph.fromVerseId} - {data.paragraph.toVerseId}</p>
@@ -18,7 +18,7 @@ function NoteCard({ data, action }) {
 }
 const Wrapper = styled.div`
     width: 100%;
-    max-width: 500px;
+    
     box-shadow: 0px 1px 6px 1px rgba(0, 0, 0, 0.09);
     border-radius: 6px;
     box-sizing: border-box;

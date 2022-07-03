@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Container, Flex, colors } from '../Style.style'
 import styled from 'styled-components'
 import QuranInfo from './QuranInfo'
+import GlobalSearch from './GlobalSearch'
 import InfoIcon from '@mui/icons-material/Info';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import PersonIcon from '@mui/icons-material/Person';
@@ -10,6 +11,8 @@ import HomeIcon from '@mui/icons-material/Home';
 
 function Navbar() {
   const [isInfoOpen, setIsInfoOpen] = React.useState(false)
+  const [search, setSearch] = React.useState("")
+  const [globalSearchOpen, setGlobalSearchOpen] = React.useState(false)
   return (
     <React.Fragment>
     <Wrapper>      
@@ -18,18 +21,24 @@ function Navbar() {
           <Link to="/"><HomeIcon /></Link>
           <h1>THE CLEAR QURAN</h1>
           <div className='search-container'>
-              <i className="fa-solid fa-magnifying-glass"></i>
-              <input type="text" className="nav-search" placeholder='Search...' />
+              <i className="fa-solid fa-magnifying-glass" onClick={() => setGlobalSearchOpen(true)}></i>
+              <input 
+                type="text" 
+                className="nav-search" 
+                placeholder='Search...' 
+                onChange={e => setSearch(e.target.value)}
+              />
           </div>
           <Flex className="menu-link" gap="10px">
-            <Link to="/"><PersonIcon /></Link>
-            <Link to="/"><NoteAltIcon /></Link>
+            <Link to="/profile"><PersonIcon /> </Link>
+            <Link to="/notes"><NoteAltIcon /></Link>
             <div className="quran_info" onClick={() => setIsInfoOpen(true)}><InfoIcon /></div>
           </Flex>          
         </Flex>
       </Container>      
     </Wrapper>
     <QuranInfo open={isInfoOpen} handleClose={() => setIsInfoOpen(false)} />
+    <GlobalSearch search={search} open={globalSearchOpen} handleClose={() => setGlobalSearchOpen(false)} />
     </React.Fragment>
   )
 }
@@ -66,6 +75,9 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     gap: 15px;
+    & > i {
+      cursor: pointer;
+    }
     & > input {
       border: none;
       outline: none;

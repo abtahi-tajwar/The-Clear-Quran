@@ -48,8 +48,7 @@ function App() {
       ///////////////
 
       // Get notes data
-      axios
-        .post(
+      axios.post(
           routes.getAllNotes,
           {
             UserId: userState.userId,

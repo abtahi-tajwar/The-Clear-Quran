@@ -7,16 +7,23 @@ import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { TextField } from "@mui/material";
 
 function Surah() {
   const [load, setLoad] = useState(true);
+  const [search, setSearch] = useState("");
   const data = useSelector(data => data.surah)
+  const [resultData, setResultData] = useState([])
 
   React.useEffect(() => {
+    setResultData(data)
     if(data.length > 0) {
       setLoad(false);
     }
   }, [data])
+  React.useEffect(() => {
+    setResultData(data.filter(item => (item.titleInEnglish.includes(search) || item.titleInAurabic.includes(search))))
+  }, [search])
 
   const override = css`
     margin: 0 auto;
@@ -29,8 +36,16 @@ function Surah() {
     <Wrapper>
       <Navbar />
       <Container style={{ marginTop: "30px" }}>
+        <TextField
+              id="outlined-basic"
+              label="Search Chapters"
+              style={{ width: '100%', maxWidth: "500px", marginBottom: "40px" }}
+              variant="outlined"
+              name="search"
+              onChange={e => setSearch(e.target.value)}
+          />
         <Grid width="350px" gap="30px" height={"100%"}>
-          {data && data.map((data, i) => <SurahCard data={data} key={i} />)}
+          {resultData && resultData.map((data, i) => <SurahCard data={data} key={i} />)}
           <ClipLoader loading={load} color={"#210F13"} size={100} css={override} />
         </Grid>
       </Container>
