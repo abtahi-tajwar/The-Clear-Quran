@@ -7,7 +7,8 @@ export const routes = {
     getAllNotes: `${base}/GetAllNotes`,
     updateNote: `${base}/UpdateNote`,
     addBookmark: `${base}/Bookmark`,
-    contactUs: `${base}/AddContactUs`
+    contactUs: `${base}/AddContactUs`,
+    getAboutUs: `${base}/GetAboutUs`
 }
 export const headers = {
   "Content-Security-Policy": 1,

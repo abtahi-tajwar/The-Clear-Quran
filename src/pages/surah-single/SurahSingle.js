@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { colors } from '../../Style.style'
 import { routes, headers } from '../../routes'
+import { add as addBookmarkState } from '../../redux/bookmarkSlice'
+import { addBookmark as addBookmarkToSurah } from '../../redux/surahSlice'
 import Modal from '../../components/Modal'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
@@ -22,6 +24,12 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import Checkbox from '@mui/material/Checkbox';
 import InfoIcon from '@mui/icons-material/Info';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import CheckIcon from '@mui/icons-material/Check';
+import { Buttonbtn } from '../../Style.style'
+import { useDispatch } from 'react-redux/es/hooks/useDispatch'
+import { useSearchParams } from 'react-router-dom'
 
 
 
@@ -39,6 +47,7 @@ function SurahSingle() {
     const [paragraphMode, setParagraphMode] = React.useState(true)
     const [fontSize, setFontSize] = React.useState(16)
     const [showIntro, setShowIntro] = React.useState(true)
+    const [searchParams, setSearchParams] = useSearchParams();
     const [ confirmationPopup, setConfirmationPopup ] = React.useState({
         isOpen: false,
         text: "",
@@ -47,15 +56,32 @@ function SurahSingle() {
     const allData = useSelector(data => data)
     const data = allData.surah ? allData.surah : null
     const userId = allData.user ? allData.user.userId : null
+    const dispatch = useDispatch()
+    
     
     React.useEffect(() => {
         if (data.length > 0) {
-            console.log("Data", data)
             const singleSurah = data.find(item => item.chapterId === parseInt(id))
             setSurah(singleSurah)
+            const queryParagraphId = parseInt(searchParams.get("paragraph"))
+            const queryVerseId = parseInt(searchParams.get("verse"))
             // Load the first paragraph when user enter
-            setCurrentParagraph(singleSurah.paragraphs[0])
+            if (queryParagraphId) {
+                const initParagraph = singleSurah.paragraphs.find(p => p.id === queryParagraphId)
+                setShowIntro(false)
+                setCurrentParagraph(initParagraph)
+                manageSurahView(initParagraph.fromVerseId, initParagraph.toVerseId, singleSurah )
+            } else if(queryVerseId) {
+                console.log(queryVerseId)
+                const initParagraph = singleSurah.paragraphs.find(p => p.fromVerseId <= queryVerseId && queryVerseId <= p.toVerseId )
+                setShowIntro(false)
+                setCurrentParagraph(initParagraph)
+                manageSurahView(initParagraph.fromVerseId, initParagraph.toVerseId, singleSurah )
+            } else {
+                setCurrentParagraph(singleSurah.paragraphs[0])
             manageSurahView(singleSurah.paragraphs[0].fromVerseId, singleSurah.paragraphs[0].toVerseId, singleSurah )
+            }
+            
         }        
     }, [data])
     const manageSurahView = (from, to, currentSurah) => {
@@ -122,6 +148,20 @@ function SurahSingle() {
             userId: userId
         }).then(response => {
             if (response.data.status === "Success") {
+                const currentDate = new Date()
+                const timestamp = currentDate.getTime()
+                const newBookmark = {
+                    id: currentParagraph.id,
+                    surahId: surah.chapterId,
+                    titleInEnglish: surah.titleInEnglish,
+                    titleInAurabic: surah.titleInAurabic,
+                    paragraph: currentParagraph.title,
+                    fromVerseId: currentParagraph.fromVerseId,
+                    toVerseId: currentParagraph.toVerseId,
+                    created_at: timestamp
+                }
+                dispatch(addBookmarkState(newBookmark))
+                dispatch(addBookmarkToSurah(newBookmark))
                 setConfirmationPopup({ 
                     isOpen: true,
                     text: "Bookmark Added",
@@ -238,10 +278,13 @@ function SurahSingle() {
                 { surah && <h1 className="chapter-name">{ surah.titleInAurabic } ({ surah.titleInEnglish })</h1> }
                 <div className="action-buttons">
                     <div><Link to="/surah" className="go-back"><i class="fa-solid fa-circle-arrow-left"></i> Go Back </Link></div>
-                    <div>
-                        <button className="action-button" onClick={addBookmark}><i class="fa-solid fa-bookmark"></i> Bookmark </button>
-                        <button className="action-button" onClick={handleAddNoteModalOpen}><i class="fa-solid fa-pen-to-square"></i> Add Note</button>
-                    </div>
+                    { (currentParagraph && !showIntro) && <div>
+                        { !currentParagraph.isUserBookmarked ? 
+                            <button className="action-button" onClick={addBookmark}><BookmarkIcon /> Bookmark </button> : 
+                            <Buttonbtn disabled><CheckIcon/> Bookmarked </Buttonbtn> 
+                        }
+                        <button className="action-button" onClick={handleAddNoteModalOpen}><NoteAddIcon /> Add Note</button>
+                    </div> }
                 </div>
                 {paragraphMode ? 
                 <React.Fragment>
@@ -310,6 +353,9 @@ function SurahSingle() {
 }
 const Wrapper = styled.div`
     width: 100%;
+    h3 {
+        z-index: -1;
+    }
     .container {
         width: 100%;
     }
@@ -460,6 +506,7 @@ const SettingsContainer = styled.div`
     right: 0px;
     top: 0px;
     bottom: 0px;
+    ${props => !props.open && 'pointer-events: none'};
     .settingsOpenBtn {
         position: fixed;
         right: 20px;
@@ -473,6 +520,7 @@ const SettingsContainer = styled.div`
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        pointer-events: all !important;
     }
     .settings-container {
         height: 100%;
@@ -480,6 +528,7 @@ const SettingsContainer = styled.div`
         background-color: ${colors.lightGray};
         transition: transform .2s ease-out;
         transform: ${props => props.open ? "translateX(0px)": "translateX(300px)"};
+        
         padding-top: 50px;
         h2 {
             text-align: center;

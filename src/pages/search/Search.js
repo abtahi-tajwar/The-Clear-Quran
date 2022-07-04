@@ -40,6 +40,7 @@ function Search() {
                     if (selectedVerses.length > 0) {
                         result.push({
                             chapter: chapter.titleInAurabic,
+                            chapterEnglish: chapter.titleInEnglish,
                             verses: selectedVerses
                         })
                     }

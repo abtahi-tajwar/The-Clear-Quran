@@ -137,11 +137,11 @@ export default function Masjid() {
                   <br />
                   <span>notes</span>
                 </Link>
-                <a className={`home-tile`}>
+                <Link className={`home-tile`} to="/bookmarks">
                   <i className={`fa fa-bookmark-o`} aria-hidden="true"></i>
                   <br />
                   <span>bookm.</span>
-                </a>
+                </Link>
                 <Link className={`home-tile`} to="/search">
                   <i className={`fa fa-search`} aria-hidden="true"></i>
                   <br />
@@ -167,11 +167,11 @@ export default function Masjid() {
                 <br />
                 <span>contact</span>
               </Link>
-              <a className={`home-tile`}>
+              <Link className={`home-tile`} to="/about">
                 <i className={`fa fa-user-circle`} aria-hidden="true"></i>
                 <br />
                 <span>about</span>
-              </a>
+              </Link>
             </div>
           </div>
         </>

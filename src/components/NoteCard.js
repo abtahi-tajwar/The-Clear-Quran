@@ -2,12 +2,15 @@ import React from 'react'
 import styled from "styled-components";
 import EditIcon from '@mui/icons-material/Edit';
 import { colors } from '../Style.style';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
 
 
 function NoteCard({ data, action }) {
+    const surahData = useSelector(data => data.surah)
+    const surah = surahData.find(s => s.chapterId === data.chapterId )
   return (
     <Wrapper id={`notes_${data.id}`}>
-        <p className="title">{data.paragraph.title}</p>
+        <p className="title">{data.paragraph.title} ({ surah.titleInAurabic })</p>
         <div className="details">
             <p class="verse-details">Verse {data.paragraph.fromVerseId} - {data.paragraph.toVerseId}</p>
             <p>{data.note}</p>
