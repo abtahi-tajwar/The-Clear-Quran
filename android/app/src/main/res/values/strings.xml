@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">theclearquran</string>
+    <string name="title_activity_main">theclearquran</string>
+    <string name="package_name">io.ionic.theclearquran</string>
+    <string name="custom_url_scheme">io.ionic.theclearquran</string>
+</resources>
