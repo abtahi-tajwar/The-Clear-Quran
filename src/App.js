@@ -31,11 +31,9 @@ function App() {
   React.useEffect(() => {
     if (!userState && loggedIn) {
       const userInfo = loggedIn ? JSON.parse(localStorage.getItem("user")) : null
-      console.log(loggedIn, JSON.parse(localStorage.getItem("user")))
       dispatch(userInit(userInfo))
     } else if (userState) {
       // Get chapters data
-      console.log(userState)
       dispatch(init(quranData.response.chapters))
       axios.post(routes.getChapters, {
         userID: userState.userId,

@@ -3,7 +3,8 @@ export const colors = {
     base: '#461E27',
     baseLight: '#692937',
     dark: '#210F13',
-    gray: '#7d7d7d'
+    gray: '#7d7d7d',
+    lightGray: '#f7f7f7'
 }
 export const Container = styled.div`
     width: 90%;
