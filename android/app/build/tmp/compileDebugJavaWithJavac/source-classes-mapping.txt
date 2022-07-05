@@ -1,0 +1,4 @@
+io/ionic/theclearquran/MainActivity.java
+ io.ionic.theclearquran.MainActivity
+io/ionic/theclearquran/BuildConfig.java
+ io.ionic.theclearquran.BuildConfig
