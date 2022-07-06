@@ -362,6 +362,16 @@ body::-webkit-scrollbar-thumb:hover {
   line-height: 50px;
 }
 
+@media screen and (max-width: 576px) {
+  .share {
+    margin-top: 100px;
+  }
+
+  .circle ul {
+    top: 48px;
+  }
+}
+
 /**  surabh page css start  **/
 .surah-search {
   font-size: 19px !important;
