@@ -93,15 +93,17 @@ export default function Masjid() {
       phoneNumber: mobileNo,
     };
 
-    axios.post(routes.registerUser, body, {
-      headers: headers
-    }).then((res) => {
-      const userData =  JSON.stringify(res.data.response)
-      localStorage.setItem("user", userData);
-      dispatch(userInit(res.data.response))
-      setOtp(false);
-      setMenu(true);
-    });
+    axios
+      .post(routes.registerUser, body, {
+        headers: headers,
+      })
+      .then((res) => {
+        const userData = JSON.stringify(res.data.response);
+        localStorage.setItem("user", userData);
+        dispatch(userInit(res.data.response));
+        setOtp(false);
+        setMenu(true);
+      });
   };
 
   const guest = () => {
