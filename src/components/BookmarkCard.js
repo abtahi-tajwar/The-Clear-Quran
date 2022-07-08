@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from "styled-components";
-import { colors } from '../Style.style';
+// import { colors } from '../Style.style';
+import { useSelector } from 'react-redux';
 
 function BookmarkCard({ data }) {
+    const colors = useSelector(data => data.settings.colors)
   return (
-    <Wrapper>
+    <Wrapper colors={colors}>
         <p className="title">{data.titleInEnglish} ({data.titleInAurabic})</p>
         <div className="details">
             <p>{data.paragraph} (Verse {data.fromVerseId} - {data.toVerseId})</p>
@@ -25,7 +27,7 @@ const Wrapper = styled.div`
     position: relative;
     .title {
         position: absolute;
-        background-color: ${colors.base};
+        background-color: ${props => props.colors.base};
         color: white;
         left: 10px;
         top: -10px;
@@ -47,11 +49,11 @@ const Wrapper = styled.div`
         height: 32px;
         width: 32px;
         border-radius: 50%;
-        background-color: ${colors.base};
+        background-color: ${props => props.colors.base};
         cursor: pointer;
         transition: background .3s ease-out;
         &:hover {
-            background-color: ${colors.baseLight};
+            background-color: ${props => props.colors.baseLight};
         }
     }
 `

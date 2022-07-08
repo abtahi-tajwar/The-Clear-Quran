@@ -4,6 +4,7 @@ import userSlice from './userSlice'
 import notesSlice from './notesSlice'
 import aboutSlice from './aboutSlice'
 import bookmarkSlice from './bookmarkSlice'
+import settingsSlice from './settingsSlice'
 
 export default configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export default configureStore({
     user: userSlice,
     notes: notesSlice,
     about: aboutSlice,
-    bookmark: bookmarkSlice
+    bookmark: bookmarkSlice,
+    settings: settingsSlice
   },
 })

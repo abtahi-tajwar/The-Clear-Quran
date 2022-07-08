@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { Flex, colors } from "../Style.style";
+import { Flex } from "../Style.style";
 import MeccaIcon from "../images/icons/kaaba-mecca.png";
 import MedinaIcon from "../images/icons/mosque.png";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function SurahCard({ data }) {
+  const colors = useSelector(data => data.settings.colors)
   return (
-    <Link to={"/surah-single/"+data.chapterId} id={`surah_${data.chapterId}`}><Wrapper>
+    <Link to={"/surah-single/"+data.chapterId} id={`surah_${data.chapterId}`}><Wrapper colors={colors}>
         <div className="info-card">
           <p className="count">{data.chapterId}</p>
           <div className="class">
@@ -40,7 +42,7 @@ export const Wrapper = styled.div`
     color: #272727;
   }
   .info {
-    color: ${colors.dark};
+    color: ${props => props.colors.dark};
     font-size: 0.9rem;
     font-weight: bold;
   }
@@ -66,7 +68,7 @@ export const Wrapper = styled.div`
     left: 0px;
     bottom: 0px;
     right: 0px;
-    background-color: ${colors.base};
+    background-color: ${props => props.colors.base};
     color: white;
     font-weight: bold;
     font-size: 0.8rem;

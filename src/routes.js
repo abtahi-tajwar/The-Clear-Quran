@@ -1,4 +1,4 @@
-const base = "http://122.175.33.146:7070/api";
+const base = "https://tcqapp.theclearquran.org/api";
 export const routes = {
     getChapters: `${base}/GetChapters`,
     registerUser: `${base}/RegisterUser`,

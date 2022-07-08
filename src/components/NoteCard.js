@@ -1,15 +1,17 @@
 import React from 'react'
 import styled from "styled-components";
 import EditIcon from '@mui/icons-material/Edit';
-import { colors } from '../Style.style';
+// import { colors } from '../Style.style';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 
 
 function NoteCard({ data, action }) {
-    const surahData = useSelector(data => data.surah)
+    const stateData = useSelector(data => data)
+    const surahData = stateData.surah
+    const colors = stateData.settings.colors
     const surah = surahData.find(s => s.chapterId === data.chapterId )
   return (
-    <Wrapper id={`notes_${data.id}`}>
+    <Wrapper id={`notes_${data.id}`} colors={colors}>
         <p className="title">{data.paragraph.title} ({ surah.titleInAurabic })</p>
         <div className="details">
             <p class="verse-details">Verse {data.paragraph.fromVerseId} - {data.paragraph.toVerseId}</p>
@@ -32,7 +34,7 @@ const Wrapper = styled.div`
     position: relative;
     .title {
         position: absolute;
-        background-color: ${colors.base};
+        background-color: ${props => props.colors.base};
         color: white;
         left: 10px;
         top: -10px;
@@ -54,11 +56,11 @@ const Wrapper = styled.div`
         height: 32px;
         width: 32px;
         border-radius: 50%;
-        background-color: ${colors.base};
+        background-color: ${props => props.colors.base};
         cursor: pointer;
         transition: background .3s ease-out;
         &:hover {
-            background-color: ${colors.baseLight};
+            background-color: ${props => props.colors.baseLight};
         }
     }
 `

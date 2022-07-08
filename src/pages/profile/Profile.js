@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import BlankDisplayPicture from '../../images/blank-dp.png'
-import { colors } from '../../Style.style'
+// import { colors } from '../../Style.style'
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { useSelector } from 'react-redux/es/exports';
@@ -9,14 +9,16 @@ import { ClipLoader } from 'react-spinners';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 function Profile() {
     const data = useSelector(data => data)
     const user = data.user
     const notes = data.notes.length
+    const colors = data.settings.colors
 
   return (
-    <Wrapper>
+    <Wrapper colors={colors}>
         <div className="background"></div>
         <Link className="go-home link-btn" to="/"><ArrowBackIcon /></Link>
         <Link className="edit-profile link-btn"to="/edit-profile"><EditIcon /></Link>
@@ -40,6 +42,11 @@ function Profile() {
             <div className="info-box">
                 <div className="box"><span>0</span><span>BOOKMARKS</span></div>
                 <div className="box"><span>{notes}</span><span>NOTES</span></div>
+            </div>
+            <div className="color-theme">
+                <div className="selector">
+                    <div className="color-selector-preview"></div> Theme <ChevronRightIcon style={{ justifySelf: 'flex-end'}} />
+                </div>
             </div>
         </div> : <ClipLoader />}
     </Wrapper>
@@ -77,7 +84,7 @@ const Wrapper = styled.div`
     }
     .background {
         height: 400px;
-        background-color: ${colors.base};
+        background-color: ${props => props.colors.base};
     }
     .details {
         width: 90%;
@@ -135,7 +142,7 @@ const Wrapper = styled.div`
                         transform: scale(1.2);
                     }
                     & > span {
-                        color: ${colors.gray};
+                        color: ${props => props.colors.gray};
                         font-size: 1rem;
                     }
                     
@@ -162,7 +169,7 @@ const Wrapper = styled.div`
                 top: 0px;
                 height: 7px;
                 width: 150px;
-                background-color: ${colors.base};
+                background-color: ${props => props.colors.base};
                 border-bottom-left-radius: 20px;
                 border-bottom-right-radius: 20px;
             }
@@ -171,7 +178,7 @@ const Wrapper = styled.div`
                 margin-bottom: 10px;
             }
             & > p {
-                color: ${colors.gray};
+                color: ${props => props.colors.gray};
                 font-weight: bold;
                 font-size: 0.8rem;
             }
@@ -194,6 +201,16 @@ const Wrapper = styled.div`
                 font-weight: bold;
                 font-size: 1.2rem;
             }
+        }
+        .color-theme {
+            width: 100%;
+            box-shadow: 0px 1px 6px 1px rgba(0, 0, 0, 0.09);
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
     }
 `
