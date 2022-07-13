@@ -1,4 +1,4 @@
-const base = "https://tcqapp.theclearquran.org/";
+const base = "https://tcqapp.theclearquran.org/api";
 export const routes = {
   getChapters: `${base}/GetChapters`,
   registerUser: `${base}/RegisterUser`,
