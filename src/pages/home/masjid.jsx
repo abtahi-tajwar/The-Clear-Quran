@@ -8,6 +8,8 @@ import axios from "axios";
 import { headers, routes } from "../../routes";
 import { useDispatch } from "react-redux/es/exports";
 import { init as userInit } from "../../redux/userSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Masjid() {
   const dispatch = useDispatch();
@@ -28,6 +30,8 @@ export default function Masjid() {
     });
     setCountry(x);
   };
+
+  const notify = (text) => toast.success(text);
 
   useEffect(() => {
     getCountryCode();
@@ -59,6 +63,7 @@ export default function Masjid() {
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
         setMInput(false);
+        notify("OTP Sent!");
         setInput(true);
       })
       .catch((error) => {
@@ -102,6 +107,7 @@ export default function Masjid() {
         localStorage.setItem("user", userData);
         dispatch(userInit(res.data.response));
         setOtp(false);
+        notify("OTP Verified!");
         setMenu(true);
       });
   };
@@ -113,6 +119,7 @@ export default function Masjid() {
 
   return (
     <div className={`masjid-container`}>
+      <ToastContainer />
       {menu && (
         <>
           <div className={`row`}>

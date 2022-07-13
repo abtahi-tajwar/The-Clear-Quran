@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { Flex, colors } from "../Style.style";
 import MeccaIcon from "../images/icons/kaaba-mecca.png";
 import MedinaIcon from "../images/icons/mosque.png";
+import docIcon from "../images/Doctrine.png";
 import { Link } from "react-router-dom";
 
 function SurahCard({ data }) {
   return (
-    <Link to={"/surah-single/"+data.chapterId} id={`surah_${data.chapterId}`}><Wrapper>
+    <Link to={"/surah-single/" + data.chapterId} id={`surah_${data.chapterId}`}>
+      <Wrapper>
         <div className="info-card">
           <p className="count">{data.chapterId}</p>
           <div className="class">
@@ -15,9 +17,13 @@ function SurahCard({ data }) {
           </div>
           <Flex className="verses">{data.totalVersesCount} Verses</Flex>
         </div>
-        <h2 className="title">{data.titleInEnglish}</h2>
-        <p className="title-arabic">{data.titleInAurabic}</p>
-        <p className="info">{data.paragraphs.length} Paragraph, {data.userNotesCount} Notes</p>
+        <Flex direction="column">
+          <h2 className="title">{data.titleInEnglish}</h2>
+          <p className="title-arabic">{data.titleInAurabic}</p>
+        </Flex>
+        <p className="info">
+          {data.paragraphs.length} Paragraph, {data.userNotesCount} Notes
+        </p>
       </Wrapper>
     </Link>
   );

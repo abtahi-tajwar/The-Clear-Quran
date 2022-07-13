@@ -12,18 +12,19 @@ import { TextField } from "@mui/material";
 function Surah() {
   const [load, setLoad] = useState(true);
   const [search, setSearch] = useState("");
-  const data = useSelector(data => data.surah)
-  const [resultData, setResultData] = useState([])
+  const data = useSelector((data) => data.surah);
+  const [resultData, setResultData] = useState([]);
 
+  console.log(data);
   React.useEffect(() => {
-    setResultData(data)
-    if(data.length > 0) {
+    setResultData(data);
+    if (data.length > 0) {
       setLoad(false);
     }
-  }, [data])
+  }, [data]);
   React.useEffect(() => {
-    setResultData(data.filter(item => (item.titleInEnglish.includes(search) || item.titleInAurabic.includes(search))))
-  }, [search])
+    setResultData(data.filter((item) => item.titleInEnglish.includes(search) || item.titleInAurabic.includes(search)));
+  }, [search]);
 
   const override = css`
     margin: 0 auto;
@@ -37,13 +38,13 @@ function Surah() {
       <Navbar />
       <Container style={{ marginTop: "30px" }}>
         <TextField
-              id="outlined-basic"
-              label="Search Chapters"
-              style={{ width: '100%', maxWidth: "500px", marginBottom: "40px" }}
-              variant="outlined"
-              name="search"
-              onChange={e => setSearch(e.target.value)}
-          />
+          id="outlined-basic"
+          label="Search Chapters"
+          style={{ width: "100%", maxWidth: "500px", marginBottom: "40px" }}
+          variant="outlined"
+          name="search"
+          onChange={(e) => setSearch(e.target.value)}
+        />
         <Grid width="350px" gap="30px" height={"100%"}>
           {resultData && resultData.map((data, i) => <SurahCard data={data} key={i} />)}
           <ClipLoader loading={load} color={"#210F13"} size={100} css={override} />
