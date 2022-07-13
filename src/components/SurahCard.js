@@ -4,6 +4,8 @@ import { Flex, colors } from "../Style.style";
 import MeccaIcon from "../images/icons/kaaba-mecca.png";
 import MedinaIcon from "../images/icons/mosque.png";
 import docIcon from "../images/Doctrine.png";
+import unseenIcon from "../images/Unseen.png";
+import storiesIcon from "../images/Stories.png";
 import { Link } from "react-router-dom";
 
 function SurahCard({ data }) {
@@ -17,9 +19,16 @@ function SurahCard({ data }) {
           </div>
           <Flex className="verses">{data.totalVersesCount} Verses</Flex>
         </div>
-        <Flex direction="column">
-          <h2 className="title">{data.titleInEnglish}</h2>
-          <p className="title-arabic">{data.titleInAurabic}</p>
+        <Flex justify="space-between">
+          <Flex direction="column" align="flex-start">
+            <h2 className="title">{data.titleInEnglish}</h2>
+            <p className="title-arabic">{data.titleInAurabic}</p>
+          </Flex>
+          <Flex className="theme">
+            {data.hasThemeUnseen && <img src={unseenIcon} title="Unseen" />}
+            {data.hasThemeStories && <img src={storiesIcon} title="Stories" />}
+            {data.hasThemeDoctrine && <img src={docIcon} title="Doctrine" />}
+          </Flex>
         </Flex>
         <p className="info">
           {data.paragraphs.length} Paragraph, {data.userNotesCount} Notes
@@ -40,6 +49,15 @@ export const Wrapper = styled.div`
   padding-top: 8px;
   .title {
     font-size: 1.3rem;
+    text-transform: uppercase;
+  }
+  .theme {
+    margin-right: 6px;
+  }
+  .theme img {
+    width: 28px;
+    padding: 3px;
+    position: relative;
   }
   .title-arabic {
     font-size: 0.8rem;

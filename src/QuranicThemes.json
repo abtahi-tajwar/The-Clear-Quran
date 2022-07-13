@@ -1,914 +1,914 @@
 [
-    {
-        "surahNumber": 1,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Opening",
-        "surahName": "Al-Fâtiḥah"
-    },
-    {
-        "surahNumber": 2,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Cow",
-        "surahName": "Al-Baqarah"
-    },
-    {
-        "surahNumber": 3,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Family of ’Imrân",
-        "surahName": "Âli-’Imrân"
-    },
-    {
-        "surahNumber": 4,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Women",
-        "surahName": "An-Nisâ'"
-    },
-    {
-        "surahNumber": 5,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Spread Table",
-        "surahName": "Al-Mâ'idah"
-    },
-    {
-        "surahNumber": 6,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Cattle",
-        "surahName": "Al-An’âm"
-    },
-    {
-        "surahNumber": 7,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Heights",
-        "surahName": "Al-A’râf"
-    },
-    {
-        "surahNumber": 8,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Spoils of War ",
-        "surahName": "Al-Anfâl"
-    },
-    {
-        "surahNumber": 9,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Repentance ",
-        "surahName": "At-Tawbah"
-    },
-    {
-        "surahNumber": 10,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Jonah",
-        "surahName": "Yûnus"
-    },
-    {
-        "surahNumber": 11,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Hûd ",
-        "surahName": "Hûd"
-    },
-    {
-        "surahNumber": 12,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": false,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Joseph",
-        "surahName": "Yûsuf"
-    },
-    {
-        "surahNumber": 13,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Thunder ",
-        "surahName": "Ar-Ra’d"
-    },
-    {
-        "surahNumber": 14,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Abraham ",
-        "surahName": "Ibrâhîm"
-    },
-    {
-        "surahNumber": 15,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Stone Valley ",
-        "surahName": "Al-Ḥijr"
-    },
-    {
-        "surahNumber": 16,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Bees",
-        "surahName": "An-Naḥl"
-    },
-    {
-        "surahNumber": 17,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Night Journey",
-        "surahName": "Al-Isrâ'"
-    },
-    {
-        "surahNumber": 18,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Cave",
-        "surahName": "Al-Kahf"
-    },
-    {
-        "surahNumber": 19,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Mary",
-        "surahName": "Mariam"
-    },
-    {
-        "surahNumber": 20,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Ṭâ-Hâ",
-        "surahName": "Ṭâ-Hâ"
-    },
-    {
-        "surahNumber": 21,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Prophets ",
-        "surahName": "Al-Anbiyâ'"
-    },
-    {
-        "surahNumber": 22,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Pilgrimage",
-        "surahName": "Al-Ḥajj"
-    },
-    {
-        "surahNumber": 23,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Believers",
-        "surahName": "Al-Mu'minûn"
-    },
-    {
-        "surahNumber": 24,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Light",
-        "surahName": "An-Nûr"
-    },
-    {
-        "surahNumber": 25,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Standard",
-        "surahName": "Al-Furqân"
-    },
-    {
-        "surahNumber": 26,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Poets ",
-        "surahName": "Ash-Shu’arâ'"
-    },
-    {
-        "surahNumber": 27,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Ants ",
-        "surahName": "An-Naml"
-    },
-    {
-        "surahNumber": 28,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Whole Story",
-        "surahName": "Al-Qaṣaṣ"
-    },
-    {
-        "surahNumber": 29,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Spider ",
-        "surahName": "Al-’Ankabût"
-    },
-    {
-        "surahNumber": 30,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Romans ",
-        "surahName": "Ar-Rûm"
-    },
-    {
-        "surahNumber": 31,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Luqmân",
-        "surahName": "Luqmân"
-    },
-    {
-        "surahNumber": 32,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Prostration ",
-        "surahName": "As-Sajdah"
-    },
-    {
-        "surahNumber": 33,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Enemy Alliance",
-        "surahName": "Al-Aḥzâb"
-    },
-    {
-        "surahNumber": 34,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Sheba",
-        "surahName": "Saba"
-    },
-    {
-        "surahNumber": 35,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Originator ",
-        "surahName": "Fâṭir"
-    },
-    {
-        "surahNumber": 36,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Yâ-Sĩn ",
-        "surahName": "Yâ-Sĩn"
-    },
-    {
-        "surahNumber": 37,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Those ˹Angels˺ Lined up in Ranks ",
-        "surahName": "Aṣ-Ṣâffât"
-    },
-    {
-        "surahNumber": 38,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Ṣãd",
-        "surahName": "Ṣãd"
-    },
-    {
-        "surahNumber": 39,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The ˹Successive˺ Groups ",
-        "surahName": "Az-Zumar"
-    },
-    {
-        "surahNumber": 40,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Forgiver",
-        "surahName": "Ghâfir"
-    },
-    {
-        "surahNumber": 41,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Verses Perfectly Explained",
-        "surahName": "Fuṣṣilat"
-    },
-    {
-        "surahNumber": 42,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Consultation",
-        "surahName": "Ash-Shûra"
-    },
-    {
-        "surahNumber": 43,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Ornaments",
-        "surahName": "Az-Zukhruf"
-    },
-    {
-        "surahNumber": 44,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Haze ",
-        "surahName": "Ad-Dukhân"
-    },
-    {
-        "surahNumber": 45,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Kneeling ",
-        "surahName": "Al-Jâthiyah"
-    },
-    {
-        "surahNumber": 46,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Sand-Hills ",
-        "surahName": "Al-Aḥqâf"
-    },
-    {
-        "surahNumber": 47,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Muḥammad",
-        "surahName": "Muḥammad"
-    },
-    {
-        "surahNumber": 48,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Triumph",
-        "surahName": "Al-Fatḥ"
-    },
-    {
-        "surahNumber": 49,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Private Quarters ",
-        "surahName": "Al-Ḥujurât"
-    },
-    {
-        "surahNumber": 50,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Qãf ",
-        "surahName": "Qãf"
-    },
-    {
-        "surahNumber": 51,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Scattering Winds",
-        "surahName": "Aⱬ-Ⱬâriyât"
-    },
-    {
-        "surahNumber": 52,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Mount Ṭûr",
-        "surahName": "Aṭ-Ṭûr"
-    },
-    {
-        "surahNumber": 53,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Stars",
-        "surahName": "An-Najm"
-    },
-    {
-        "surahNumber": 54,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Moon ",
-        "surahName": "Al-Qamar"
-    },
-    {
-        "surahNumber": 55,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Most Compassionate ",
-        "surahName": "Ar-Raḥmân"
-    },
-    {
-        "surahNumber": 56,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Inevitable Event ",
-        "surahName": "Al-Wâqi’ah"
-    },
-    {
-        "surahNumber": 57,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Iron ",
-        "surahName": "Al-Ḥadîd"
-    },
-    {
-        "surahNumber": 58,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Pleading Woman",
-        "surahName": "Al-Mujâdilah"
-    },
-    {
-        "surahNumber": 59,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Banishment",
-        "surahName": "Al-Ḥashr"
-    },
-    {
-        "surahNumber": 60,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Test of Faith",
-        "surahName": "Al-Mumtaḥanah"
-    },
-    {
-        "surahNumber": 61,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The ˹Solid˺ Ranks ",
-        "surahName": "Aṣ-Ṣaff"
-    },
-    {
-        "surahNumber": 62,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Friday Congregation",
-        "surahName": "Al-Jumu’ah"
-    },
-    {
-        "surahNumber": 63,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Hypocrites ",
-        "surahName": "Al-Munâfiqûn"
-    },
-    {
-        "surahNumber": 64,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Mutual Loss and Gain",
-        "surahName": "At-Taghâbun"
-    },
-    {
-        "surahNumber": 65,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Divorce",
-        "surahName": "Aṭ-Ṭalâq"
-    },
-    {
-        "surahNumber": 66,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Prohibition",
-        "surahName": "At-Taḥrîm"
-    },
-    {
-        "surahNumber": 67,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "All Authority",
-        "surahName": "Al-Mulk"
-    },
-    {
-        "surahNumber": 68,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Pen ",
-        "surahName": "Al-Qalam"
-    },
-    {
-        "surahNumber": 69,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Inevitable Hour",
-        "surahName": "Al-Ḥâqqah"
-    },
-    {
-        "surahNumber": 70,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Pathways of ˹Heavenly˺ Ascent",
-        "surahName": "Al-Ma’ârij"
-    },
-    {
-        "surahNumber": 71,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Noah",
-        "surahName": "Nûḥ"
-    },
-    {
-        "surahNumber": 72,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Jinn",
-        "surahName": "Al-Jinn"
-    },
-    {
-        "surahNumber": 73,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Wrapped One ",
-        "surahName": "Al-Muzzammil"
-    },
-    {
-        "surahNumber": 74,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The One Covered up",
-        "surahName": "Al-Muddaththir"
-    },
-    {
-        "surahNumber": 75,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The ˹Rising for˺ Judgment ",
-        "surahName": "Al-Qiyamah"
-    },
-    {
-        "surahNumber": 76,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Humans ",
-        "surahName": "Al-Insân"
-    },
-    {
-        "surahNumber": 77,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Those ˹Winds˺ Sent Forth ",
-        "surahName": "Al-Mursalât"
-    },
-    {
-        "surahNumber": 78,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Momentous News ",
-        "surahName": "An-Naba'"
-    },
-    {
-        "surahNumber": 79,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Those ˹Angels˺ Stripping out ˹Souls˺",
-        "surahName": "An-Nâzi’ât"
-    },
-    {
-        "surahNumber": 80,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "He Frowned",
-        "surahName": "’Abasa"
-    },
-    {
-        "surahNumber": 81,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Putting out ˹the Sun˺",
-        "surahName": "At-Takwîr"
-    },
-    {
-        "surahNumber": 82,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The ˹Sky˺ Splitting Open ",
-        "surahName": "Al-Infiṭâr"
-    },
-    {
-        "surahNumber": 83,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Defrauders",
-        "surahName": "Al-Muṭaffifîn"
-    },
-    {
-        "surahNumber": 84,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The ˹Sky˺ Bursting Open ",
-        "surahName": "Al-Inshiqâq"
-    },
-    {
-        "surahNumber": 85,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "Constellations",
-        "surahName": "Al-Burûj"
-    },
-    {
-        "surahNumber": 86,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Nightly Star",
-        "surahName": "Aṭ-Ṭâriq"
-    },
-    {
-        "surahNumber": 87,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Most High ",
-        "surahName": "Al-A’la"
-    },
-    {
-        "surahNumber": 88,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Overwhelming Event ",
-        "surahName": "Al-Ghâshiyah"
-    },
-    {
-        "surahNumber": 89,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Dawn",
-        "surahName": "Al-Fajr"
-    },
-    {
-        "surahNumber": 90,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The City",
-        "surahName": "Al-Balad"
-    },
-    {
-        "surahNumber": 91,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Sun",
-        "surahName": "Ash-Shams"
-    },
-    {
-        "surahNumber": 92,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Night ",
-        "surahName": "Al-Layl"
-    },
-    {
-        "surahNumber": 93,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Morning Sunlight ",
-        "surahName": "Aḍ-Ḍuḥa"
-    },
-    {
-        "surahNumber": 94,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Uplifting the Heart ",
-        "surahName": "Ash-Sharḥ"
-    },
-    {
-        "surahNumber": 95,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Fig",
-        "surahName": "At-Tîn"
-    },
-    {
-        "surahNumber": 96,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Clinging Clot ˹of Blood˺",
-        "surahName": "Al-’Alaq"
-    },
-    {
-        "surahNumber": 97,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Night of Glory",
-        "surahName": "Al-Qadr"
-    },
-    {
-        "surahNumber": 98,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Clear Proof ",
-        "surahName": "Al-Bayyinah"
-    },
-    {
-        "surahNumber": 99,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The ˹Ultimate˺ Quake ",
-        "surahName": "Az-Zalzalah"
-    },
-    {
-        "surahNumber": 100,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Galloping ˹Horses˺ ",
-        "surahName": "Al-’Ȃdiyât"
-    },
-    {
-        "surahNumber": 101,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Striking Disaster ",
-        "surahName": " Al-Qâri’ah"
-    },
-    {
-        "surahNumber": 102,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Competition for More ˹Gains˺",
-        "surahName": "At-Takâthur"
-    },
-    {
-        "surahNumber": 103,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The ˹Passage of˺ Time",
-        "surahName": "Al-’Aṣr"
-    },
-    {
-        "surahNumber": 104,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Backbiters",
-        "surahName": "Al-Humazah"
-    },
-    {
-        "surahNumber": 105,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": false,
-        "hasThemeStories": true,
-        "surahNameTranslation": "The Elephant ",
-        "surahName": "Al-Fîl"
-    },
-    {
-        "surahNumber": 106,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The People of˺ Quraysh",
-        "surahName": "Quraysh"
-    },
-    {
-        "surahNumber": 107,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Simplest˺ Aid",
-        "surahName": "Al-Mâ’ûn"
-    },
-    {
-        "surahNumber": 108,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Abundant Goodness ",
-        "surahName": "Al-Kawthar"
-    },
-    {
-        "surahNumber": 109,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Disbelievers ",
-        "surahName": "Al-Kâfirûn"
-    },
-    {
-        "surahNumber": 110,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The ˹Ultimate˺ Help ",
-        "surahName": "An-Naṣr"
-    },
-    {
-        "surahNumber": 111,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Palm-Fibre Rope",
-        "surahName": "Al-Masad"
-    },
-    {
-        "surahNumber": 112,
-        "hasThemeDoctrine": false,
-        "hasThemeUnseen": true,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Purity of Faith",
-        "surahName": "Al-Ikhlâṣ"
-    },
-    {
-        "surahNumber": 113,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "The Daybreak ",
-        "surahName": "Al-Falaq"
-    },
-    {
-        "surahNumber": 114,
-        "hasThemeDoctrine": true,
-        "hasThemeUnseen": false,
-        "hasThemeStories": false,
-        "surahNameTranslation": "Humankind",
-        "surahName": "An-Nâs"
-    }
+  {
+    "surahNumber": 1,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Opening",
+    "surahName": "Al-Fâtiḥah"
+  },
+  {
+    "surahNumber": 2,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Cow",
+    "surahName": "Al-Baqarah"
+  },
+  {
+    "surahNumber": 3,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Family of ’Imrân",
+    "surahName": "Âli-’Imrân"
+  },
+  {
+    "surahNumber": 4,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Women",
+    "surahName": "An-Nisâ'"
+  },
+  {
+    "surahNumber": 5,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Spread Table",
+    "surahName": "Al-Mâ'idah"
+  },
+  {
+    "surahNumber": 6,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Cattle",
+    "surahName": "Al-An’âm"
+  },
+  {
+    "surahNumber": 7,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Heights",
+    "surahName": "Al-A’râf"
+  },
+  {
+    "surahNumber": 8,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Spoils of War ",
+    "surahName": "Al-Anfâl"
+  },
+  {
+    "surahNumber": 9,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Repentance ",
+    "surahName": "At-Tawbah"
+  },
+  {
+    "surahNumber": 10,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Jonah",
+    "surahName": "Yûnus"
+  },
+  {
+    "surahNumber": 11,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Hûd ",
+    "surahName": "Hûd"
+  },
+  {
+    "surahNumber": 12,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": false,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Joseph",
+    "surahName": "Yûsuf"
+  },
+  {
+    "surahNumber": 13,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Thunder ",
+    "surahName": "Ar-Ra’d"
+  },
+  {
+    "surahNumber": 14,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Abraham ",
+    "surahName": "Ibrâhîm"
+  },
+  {
+    "surahNumber": 15,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Stone Valley ",
+    "surahName": "Al-Ḥijr"
+  },
+  {
+    "surahNumber": 16,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Bees",
+    "surahName": "An-Naḥl"
+  },
+  {
+    "surahNumber": 17,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Night Journey",
+    "surahName": "Al-Isrâ'"
+  },
+  {
+    "surahNumber": 18,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Cave",
+    "surahName": "Al-Kahf"
+  },
+  {
+    "surahNumber": 19,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Mary",
+    "surahName": "Mariam"
+  },
+  {
+    "surahNumber": 20,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Ṭâ-Hâ",
+    "surahName": "Ṭâ-Hâ"
+  },
+  {
+    "surahNumber": 21,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Prophets ",
+    "surahName": "Al-Anbiyâ'"
+  },
+  {
+    "surahNumber": 22,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Pilgrimage",
+    "surahName": "Al-Ḥajj"
+  },
+  {
+    "surahNumber": 23,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Believers",
+    "surahName": "Al-Mu'minûn"
+  },
+  {
+    "surahNumber": 24,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Light",
+    "surahName": "An-Nûr"
+  },
+  {
+    "surahNumber": 25,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Standard",
+    "surahName": "Al-Furqân"
+  },
+  {
+    "surahNumber": 26,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Poets ",
+    "surahName": "Ash-Shu’arâ'"
+  },
+  {
+    "surahNumber": 27,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Ants ",
+    "surahName": "An-Naml"
+  },
+  {
+    "surahNumber": 28,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Whole Story",
+    "surahName": "Al-Qaṣaṣ"
+  },
+  {
+    "surahNumber": 29,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Spider ",
+    "surahName": "Al-’Ankabût"
+  },
+  {
+    "surahNumber": 30,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Romans ",
+    "surahName": "Ar-Rûm"
+  },
+  {
+    "surahNumber": 31,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Luqmân",
+    "surahName": "Luqmân"
+  },
+  {
+    "surahNumber": 32,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Prostration ",
+    "surahName": "As-Sajdah"
+  },
+  {
+    "surahNumber": 33,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Enemy Alliance",
+    "surahName": "Al-Aḥzâb"
+  },
+  {
+    "surahNumber": 34,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Sheba",
+    "surahName": "Saba"
+  },
+  {
+    "surahNumber": 35,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Originator ",
+    "surahName": "Fâṭir"
+  },
+  {
+    "surahNumber": 36,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Yâ-Sĩn ",
+    "surahName": "Yâ-Sĩn"
+  },
+  {
+    "surahNumber": 37,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Those ˹Angels˺ Lined up in Ranks ",
+    "surahName": "Aṣ-Ṣâffât"
+  },
+  {
+    "surahNumber": 38,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Ṣãd",
+    "surahName": "Ṣãd"
+  },
+  {
+    "surahNumber": 39,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The ˹Successive˺ Groups ",
+    "surahName": "Az-Zumar"
+  },
+  {
+    "surahNumber": 40,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Forgiver",
+    "surahName": "Ghâfir"
+  },
+  {
+    "surahNumber": 41,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Verses Perfectly Explained",
+    "surahName": "Fuṣṣilat"
+  },
+  {
+    "surahNumber": 42,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Consultation",
+    "surahName": "Ash-Shûra"
+  },
+  {
+    "surahNumber": 43,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Ornaments",
+    "surahName": "Az-Zukhruf"
+  },
+  {
+    "surahNumber": 44,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Haze ",
+    "surahName": "Ad-Dukhân"
+  },
+  {
+    "surahNumber": 45,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Kneeling ",
+    "surahName": "Al-Jâthiyah"
+  },
+  {
+    "surahNumber": 46,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Sand-Hills ",
+    "surahName": "Al-Aḥqâf"
+  },
+  {
+    "surahNumber": 47,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Muḥammad",
+    "surahName": "Muḥammad"
+  },
+  {
+    "surahNumber": 48,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Triumph",
+    "surahName": "Al-Fatḥ"
+  },
+  {
+    "surahNumber": 49,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Private Quarters ",
+    "surahName": "Al-Ḥujurât"
+  },
+  {
+    "surahNumber": 50,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Qãf ",
+    "surahName": "Qãf"
+  },
+  {
+    "surahNumber": 51,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Scattering Winds",
+    "surahName": "Aⱬ-Ⱬâriyât"
+  },
+  {
+    "surahNumber": 52,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Mount Ṭûr",
+    "surahName": "Aṭ-Ṭûr"
+  },
+  {
+    "surahNumber": 53,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Stars",
+    "surahName": "An-Najm"
+  },
+  {
+    "surahNumber": 54,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Moon ",
+    "surahName": "Al-Qamar"
+  },
+  {
+    "surahNumber": 55,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Most Compassionate ",
+    "surahName": "Ar-Raḥmân"
+  },
+  {
+    "surahNumber": 56,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Inevitable Event ",
+    "surahName": "Al-Wâqi’ah"
+  },
+  {
+    "surahNumber": 57,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Iron ",
+    "surahName": "Al-Ḥadîd"
+  },
+  {
+    "surahNumber": 58,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Pleading Woman",
+    "surahName": "Al-Mujâdilah"
+  },
+  {
+    "surahNumber": 59,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Banishment",
+    "surahName": "Al-Ḥashr"
+  },
+  {
+    "surahNumber": 60,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Test of Faith",
+    "surahName": "Al-Mumtaḥanah"
+  },
+  {
+    "surahNumber": 61,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The ˹Solid˺ Ranks ",
+    "surahName": "Aṣ-Ṣaff"
+  },
+  {
+    "surahNumber": 62,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Friday Congregation",
+    "surahName": "Al-Jumu’ah"
+  },
+  {
+    "surahNumber": 63,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Hypocrites ",
+    "surahName": "Al-Munâfiqûn"
+  },
+  {
+    "surahNumber": 64,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Mutual Loss and Gain",
+    "surahName": "At-Taghâbun"
+  },
+  {
+    "surahNumber": 65,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Divorce",
+    "surahName": "Aṭ-Ṭalâq"
+  },
+  {
+    "surahNumber": 66,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Prohibition",
+    "surahName": "At-Taḥrîm"
+  },
+  {
+    "surahNumber": 67,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "All Authority",
+    "surahName": "Al-Mulk"
+  },
+  {
+    "surahNumber": 68,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Pen ",
+    "surahName": "Al-Qalam"
+  },
+  {
+    "surahNumber": 69,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Inevitable Hour",
+    "surahName": "Al-Ḥâqqah"
+  },
+  {
+    "surahNumber": 70,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Pathways of ˹Heavenly˺ Ascent",
+    "surahName": "Al-Ma’ârij"
+  },
+  {
+    "surahNumber": 71,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Noah",
+    "surahName": "Nûḥ"
+  },
+  {
+    "surahNumber": 72,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Jinn",
+    "surahName": "Al-Jinn"
+  },
+  {
+    "surahNumber": 73,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Wrapped One ",
+    "surahName": "Al-Muzzammil"
+  },
+  {
+    "surahNumber": 74,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The One Covered up",
+    "surahName": "Al-Muddaththir"
+  },
+  {
+    "surahNumber": 75,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The ˹Rising for˺ Judgment ",
+    "surahName": "Al-Qiyamah"
+  },
+  {
+    "surahNumber": 76,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Humans ",
+    "surahName": "Al-Insân"
+  },
+  {
+    "surahNumber": 77,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Those ˹Winds˺ Sent Forth ",
+    "surahName": "Al-Mursalât"
+  },
+  {
+    "surahNumber": 78,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Momentous News ",
+    "surahName": "An-Naba'"
+  },
+  {
+    "surahNumber": 79,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Those ˹Angels˺ Stripping out ˹Souls˺",
+    "surahName": "An-Nâzi’ât"
+  },
+  {
+    "surahNumber": 80,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "He Frowned",
+    "surahName": "’Abasa"
+  },
+  {
+    "surahNumber": 81,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Putting out ˹the Sun˺",
+    "surahName": "At-Takwîr"
+  },
+  {
+    "surahNumber": 82,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The ˹Sky˺ Splitting Open ",
+    "surahName": "Al-Infiṭâr"
+  },
+  {
+    "surahNumber": 83,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Defrauders",
+    "surahName": "Al-Muṭaffifîn"
+  },
+  {
+    "surahNumber": 84,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The ˹Sky˺ Bursting Open ",
+    "surahName": "Al-Inshiqâq"
+  },
+  {
+    "surahNumber": 85,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "Constellations",
+    "surahName": "Al-Burûj"
+  },
+  {
+    "surahNumber": 86,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Nightly Star",
+    "surahName": "Aṭ-Ṭâriq"
+  },
+  {
+    "surahNumber": 87,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Most High ",
+    "surahName": "Al-A’la"
+  },
+  {
+    "surahNumber": 88,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Overwhelming Event ",
+    "surahName": "Al-Ghâshiyah"
+  },
+  {
+    "surahNumber": 89,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Dawn",
+    "surahName": "Al-Fajr"
+  },
+  {
+    "surahNumber": 90,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The City",
+    "surahName": "Al-Balad"
+  },
+  {
+    "surahNumber": 91,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Sun",
+    "surahName": "Ash-Shams"
+  },
+  {
+    "surahNumber": 92,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Night ",
+    "surahName": "Al-Layl"
+  },
+  {
+    "surahNumber": 93,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Morning Sunlight ",
+    "surahName": "Aḍ-Ḍuḥa"
+  },
+  {
+    "surahNumber": 94,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Uplifting the Heart ",
+    "surahName": "Ash-Sharḥ"
+  },
+  {
+    "surahNumber": 95,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Fig",
+    "surahName": "At-Tîn"
+  },
+  {
+    "surahNumber": 96,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Clinging Clot ˹of Blood˺",
+    "surahName": "Al-’Alaq"
+  },
+  {
+    "surahNumber": 97,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Night of Glory",
+    "surahName": "Al-Qadr"
+  },
+  {
+    "surahNumber": 98,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Clear Proof ",
+    "surahName": "Al-Bayyinah"
+  },
+  {
+    "surahNumber": 99,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The ˹Ultimate˺ Quake ",
+    "surahName": "Az-Zalzalah"
+  },
+  {
+    "surahNumber": 100,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Galloping ˹Horses˺ ",
+    "surahName": "Al-’Ȃdiyât"
+  },
+  {
+    "surahNumber": 101,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Striking Disaster ",
+    "surahName": " Al-Qâri’ah"
+  },
+  {
+    "surahNumber": 102,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Competition for More ˹Gains˺",
+    "surahName": "At-Takâthur"
+  },
+  {
+    "surahNumber": 103,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The ˹Passage of˺ Time",
+    "surahName": "Al-’Aṣr"
+  },
+  {
+    "surahNumber": 104,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Backbiters",
+    "surahName": "Al-Humazah"
+  },
+  {
+    "surahNumber": 105,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": false,
+    "hasThemeStories": true,
+    "surahNameTranslation": "The Elephant ",
+    "surahName": "Al-Fîl"
+  },
+  {
+    "surahNumber": 106,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The People of˺ Quraysh",
+    "surahName": "Quraysh"
+  },
+  {
+    "surahNumber": 107,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Simplest˺ Aid",
+    "surahName": "Al-Mâ’ûn"
+  },
+  {
+    "surahNumber": 108,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Abundant Goodness ",
+    "surahName": "Al-Kawthar"
+  },
+  {
+    "surahNumber": 109,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Disbelievers ",
+    "surahName": "Al-Kâfirûn"
+  },
+  {
+    "surahNumber": 110,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The ˹Ultimate˺ Help ",
+    "surahName": "An-Naṣr"
+  },
+  {
+    "surahNumber": 111,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Palm-Fibre Rope",
+    "surahName": "Al-Masad"
+  },
+  {
+    "surahNumber": 112,
+    "hasThemeDoctrine": false,
+    "hasThemeUnseen": true,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Purity of Faith",
+    "surahName": "Al-Ikhlâṣ"
+  },
+  {
+    "surahNumber": 113,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "The Daybreak ",
+    "surahName": "Al-Falaq"
+  },
+  {
+    "surahNumber": 114,
+    "hasThemeDoctrine": true,
+    "hasThemeUnseen": false,
+    "hasThemeStories": false,
+    "surahNameTranslation": "Humankind",
+    "surahName": "An-Nâs"
+  }
 ]

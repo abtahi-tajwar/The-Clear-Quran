@@ -8,6 +8,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { TextField } from "@mui/material";
+import themeData from "../../QuranicThemes.json";
 
 function Surah() {
   const [load, setLoad] = useState(true);
@@ -15,9 +16,20 @@ function Surah() {
   const data = useSelector((data) => data.surah);
   const [resultData, setResultData] = useState([]);
 
-  console.log(data);
+  var newData = [];
+
+  const combine = (data1, data2) => {
+    for (var i = 0; i < data1.length; i++) {
+      //var pushData = data1[i] + data2[i];
+      var pushData = { ...data1[i], ...data2[i] };
+      newData.push(pushData);
+    }
+    console.log(newData);
+    setResultData(newData);
+  };
+
   React.useEffect(() => {
-    setResultData(data);
+    combine(data, themeData);
     if (data.length > 0) {
       setLoad(false);
     }
