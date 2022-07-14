@@ -21,7 +21,7 @@ function SurahCard({ data }) {
         </div>
         <Flex justify="space-between">
           <Flex direction="column" align="flex-start">
-            <h2 className="title">{data.titleInEnglish}</h2>
+            <h2 className="title">{data.titleInEnglish.substring(0, 14)}...</h2>
             <p className="title-arabic">{data.titleInAurabic}</p>
           </Flex>
           <Flex className="theme">

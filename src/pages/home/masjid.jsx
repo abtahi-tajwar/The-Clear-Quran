@@ -80,6 +80,7 @@ export default function Masjid() {
         // User signed in successfully.
         const user = result.user;
         localStorage.setItem("uid", JSON.stringify(user));
+        console.log("here");
         registerUser();
       })
       .catch((error) => {
