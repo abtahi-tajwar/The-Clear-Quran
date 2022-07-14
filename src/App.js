@@ -35,7 +35,6 @@ function App() {
   const dispatch = useDispatch()
   // Exclusively used for saving bookmark to storage if the quran data is fetched from API
   const [isOriginalQuranData, setIsOriginaQuranData] = React.useState(false)
-  console.log(fullQuranData)
   // dispatch(init(quranData.response.chapters));
 
   

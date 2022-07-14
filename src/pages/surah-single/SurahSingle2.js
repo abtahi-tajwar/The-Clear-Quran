@@ -4,21 +4,52 @@ import { useParams } from 'react-router-dom'
 import Navbar from '../../components/Navbar'
 import styled from 'styled-components'
 import IntroductionCard from '../../components/IntroductionCard'
+import AddNoteIcon from '../../images/icons/add-note.png'
+import BookmarkIcon from '../../images/icons/bookmark.png'
+import { routes } from '../../routes'
+import axios from 'axios'
+import Modal from '../../components/Modal'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import AddIcon from '@mui/icons-material/Add'
+import ConfirmationPopup from '../../components/ConfirmationPopup'
+import SettingsIcon from '@mui/icons-material/Settings';
+import CloseIcon from '@mui/icons-material/Close';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import IconButton from '@mui/material/IconButton';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import Checkbox from '@mui/material/Checkbox';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 function SurahSingle2() {
     const { id } = useParams()
     const data = useSelector(data => data)
     const allSurah = data.surah
+    const userId = data.user ? data.user.userId : -1
     const colors = data.settings.colors
 
-    const [surah, setSurah] = React.useState()    
+    const [surah, setSurah] = React.useState()
     const [paragraphWiseVerse, setParagraphWiseVerse] = React.useState()
-    
+    const [note, setNote] = React.useState()
+    const [addNoteModalOpen, setAddNoteModalOpen] = React.useState(false)
+    const [currentParagraph, setCurrentParagraph] = React.useState()
+    const [settingsOpen, setSettingsOpen] = React.useState(false)
+    const [fontSize, setFontSize] = React.useState(16)
+    const [paragraphMode, setParagraphMode] = React.useState(true)
+    const [showAurabic, setShowAurabic] = React.useState(true)
+    const [showEnglish, setShowEnglish] = React.useState(true)
+    const [ confirmationPopup, setConfirmationPopup ] = React.useState({        
+        isOpen: false,
+        text: "",
+        error: false
+    })
     React.useEffect(() => {
         setSurah(allSurah.find(s => s.chapterId === parseInt(id)))
     }, [allSurah])
     React.useEffect(() => {
-        if(surah) {
+        if (surah) {
             let temp = []
             surah.paragraphs.forEach(paragraph => {
                 let temp_verses = []
@@ -36,31 +67,180 @@ function SurahSingle2() {
     React.useEffect(() => {
         console.log("Paragraph Wise Verse", paragraphWiseVerse)
     }, [paragraphWiseVerse])
+
+    const scrollToParagraph = (id) => {
+        if (id === -1) {
+            var element = document.getElementById(`introduction`);
+        } else {
+            var element = document.getElementById(`surah-paragraph-${id}`);
+        }
+        var headerOffset = 180;
+        var elementPosition = element.getBoundingClientRect().top;
+        var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+        });
+
+    }
+    const handleAddNote = () => {
+        axios.post(routes.createNote, {
+            id: 0,
+            chapterId: surah.chapterId,
+            paragraphId: currentParagraph.id,
+            userId: userId,
+            note
+        }).then(response => {
+            setNote("")
+            setAddNoteModalOpen(false)
+            if (response.data.status === "Success") {
+                setConfirmationPopup({ 
+                    isOpen: true,
+                    text: "Note added successfully",
+                    error: false
+                })
+            } else {
+                setConfirmationPopup({ 
+                    isOpen: true,
+                    text: "Something went wrong",
+                    error: true
+                })
+            }
+        })
+    }
+    const addNoteAction = (paragraph) => {
+        setCurrentParagraph(paragraph)
+        setAddNoteModalOpen(true)
+    }
+    const handleTranslation = e => {
+        if (e.target.value === 'both') {
+            setShowAurabic(true)
+            setShowEnglish(true)
+        } else if(e.target.value === 'tcq') {
+            setShowAurabic(false)
+            setShowEnglish(true)
+        } else {
+            setShowAurabic(true)
+            setShowEnglish(false)
+        }
+    }
+    const increaseFontSize = () => {
+        setFontSize(fontSize + 1)
+    }
+    const decreaseFontSize = () => {
+        setFontSize(fontSize - 1)
+    }
     return (
         <div>
-            <Heading colors={colors}>
+            {currentParagraph && <Modal 
+                open={addNoteModalOpen} 
+                handleClose={() => setAddNoteModalOpen(false)}
+                title={`Add Note to verse (${currentParagraph.fromVerseId} to ${currentParagraph.toVerseId}) at ${surah.titleInAurabic}`}
+            > 
+                <TextField
+                    id="outlined-multiline-static"
+                    label="Write your note here"
+                    multiline
+                    rows={4}
+                    value={note}
+                    onChange={e => setNote(e.target.value)}
+                    style={{ width: '100%'}}
+                />
+                <Button 
+                    variant="contained" 
+                    style={{ marginTop: '15px', backgroundColor: colors.base }}
+                    endIcon={<AddIcon />}
+                    onClick={handleAddNote}
+                > Add </Button>
+            </Modal> }
+            {surah && <Heading colors={colors}>
                 <h1 className="surah-name">{surah.titleInEnglish} ({surah.titleInAurabic})</h1>
-            </Heading>
-            {surah && <Container colors={colors}>
-                <div className="section">
-                    <IntroductionCard intro={surah.introduction}/>
-                </div>
-                {paragraphWiseVerse && paragraphWiseVerse.map(paragraph => 
-                    <div id={`surah-paragraph-${paragraph.id}`} className="paragraph">
-                        <div className="verse-card english-verses">
-                            <h2 className="paragraph-title">{paragraph.title}</h2>
-                            {paragraph.verses.map(verse => <span>
-                                <b>({verse.id})</b> {verse.verseInEnglish} &nbsp;
-                            </span>)}
+                { paragraphMode && <div className="paragraph-selector">
+                    <div className="selector" onClick={() => scrollToParagraph(-1)}>i</div>
+                    {surah.paragraphs.map(paragraph =>
+                        <div className="selector" onClick={() => scrollToParagraph(paragraph.id)}>
+                            {paragraph.fromVerseId !== paragraph.toVerseId ? `${paragraph.fromVerseId} - ${paragraph.toVerseId}` : paragraph.fromVerseId}
                         </div>
-                        <div className="verse-card arabic-verses">
-                            {paragraph.verses.map(verse => <span>
-                                &nbsp;{verse.verseInAurabic}<b>({verse.id})</b>
-                            </span>)}
+                    )}
+                </div> }
+            </Heading>}
+            <SettingsContainer open={settingsOpen} colors={colors}>
+                <button className="settingsOpenBtn" onClick={() => setSettingsOpen(true)}><SettingsIcon /></button>
+                <div className="settings-container">
+                    <h2>Settings</h2>
+                    <div className="close-icon" onClick={() => setSettingsOpen(false)}><CloseIcon /></div>
+                    <div className="settings-section">
+                        <p className="section-title">Translations</p>
+                        <div className="section-content">
+                            <RadioGroup
+                                aria-labelledby="demo-radio-buttons-group-label"
+                                defaultValue="both"
+                                name="radio-buttons-group"
+                            >
+                                <FormControlLabel value="both" control={<Radio />} label="Both" onChange={handleTranslation} />
+                                <FormControlLabel value="tcq" control={<Radio />} label="The Clear Quran" onChange={handleTranslation} />
+                                <FormControlLabel value="uthmani" control={<Radio />} label="Uthmani Script" onChange={handleTranslation} />
+                            </RadioGroup>
+                        </div>                        
+                    </div>
+                    <div className="settings-section">
+                        <p className="section-title">Font Size</p>
+                        <div className="section-content font-change">
+                            <IconButton aria-label="decrease" onClick={decreaseFontSize}><RemoveCircleIcon /></IconButton>
+                            {fontSize}
+                            <IconButton aria-label="increase" onClick={increaseFontSize}><AddCircleIcon /></IconButton>
                         </div>
                     </div>
+                    <div className="settings-section">
+                        <p className="section-title">Reading Mode</p>
+                        <div className="section-content">
+                            <FormControlLabel control={<Checkbox defaultChecked />} label="Paragraph Mode" onChange={() => setParagraphMode(!paragraphMode)} />
+                        </div>
+                    </div>
+                </div>
+            </SettingsContainer>
+            {surah && <Container colors={colors} fontSize={fontSize}>
+                <div className="section" id="introduction">
+                    <IntroductionCard intro={surah.introduction} />
+                </div>
+                { paragraphMode ? 
+                <React.Fragment>
+                {paragraphWiseVerse && paragraphWiseVerse.map(paragraph =>
+                    <div id={`surah-paragraph-${paragraph.id}`} className="paragraph">
+                        { showEnglish && <div className="verse-card english-verses">
+                            <h2 className="paragraph-title">{paragraph.title}</h2>
+                            <div className="action-icons">
+                                <button onClick={() => addNoteAction(paragraph)}><img src={AddNoteIcon} /></button>
+                                <button><img src={BookmarkIcon} /></button>
+                            </div>
+                            {paragraph.verses.map(verse => verse && <span>
+                                <b>({verse.verseId})</b> {verse.verseInEnglish} &nbsp;
+                            </span>)}
+                        </div> }
+                        { showAurabic && <div className="verse-card arabic-verses">
+                            { !showEnglish && <React.Fragment>
+                                <h2 className="paragraph-title" style={{ textAlign: 'left'}}>{paragraph.title}</h2>
+                                <div className="action-icons">
+                                    <button onClick={() => addNoteAction(paragraph)}><img src={AddNoteIcon} /></button>
+                                    <button><img src={BookmarkIcon} /></button>
+                                </div></React.Fragment> }
+                            {paragraph.verses.map(verse => verse && <span>
+                                &nbsp; {verse.verseInAurabic}<b>({verse.verseId})</b>
+                            </span>)}
+                        </div> }
+                    </div>
                 )}
+                </React.Fragment> :
+                <div className="no-paragraph">
+                    {surah.verses.map(verse => 
+                    <div>
+                        { showEnglish && <div className="verse english-verse">{verse.verseId}. {verse.verseInEnglish}</div> }
+                        { showAurabic && <div className="verse arabic-verse">{verse.verseInAurabic} .{verse.verseId}</div> }
+                    </div>)}
+                </div>
+                }
             </Container>}
+            <ConfirmationPopup show={confirmationPopup.isOpen} text={confirmationPopup.text} error={confirmationPopup.error} />
         </div>
     )
 }
@@ -68,10 +248,58 @@ const Heading = styled.div`
     background-color: ${props => props.colors.base};
     box-sizing: border-box;
     padding: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 900;
     .surah-name {
         text-align: center;
         font-family: "TrajanPro-Regular";
         color: white;
+    }
+    @media screen and (max-width: 800px) {
+        .surah-name {
+            font-size: 1.8rem;
+        }
+    }
+    .paragraph-selector {
+        width: 90%;
+        max-width: 960px;
+        margin: 0 auto;
+        margin-top: 10px;
+        height: 80px;
+        display: flex;
+        gap: 5px;
+        overflow-x: scroll;
+        .selector {
+            height: 100%;
+            aspect-ratio: 1/1;
+            font-size: 0.8rem;
+            background-color: rgba(255,255,255,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(255,255,255,0.7);
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 2px;
+        }
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: ${props => props.colors.dark};
+            border-radius: 10px;
+        }
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: black;
+        }
     }
 `
 const Container = styled.div`
@@ -79,6 +307,7 @@ const Container = styled.div`
     max-width: 960px;
     margin: 0 auto;
     margin-top: 7px;
+    font-size: ${props => props.fontSize}px;
     .section {
         margin-top: 7px;
         margin-bottom: 7px;
@@ -109,20 +338,110 @@ const Container = styled.div`
                 font-size: 1.5rem;
                 margin-bottom: 15px;
             }
+            .action-icons {
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                display: flex;
+                gap: 15px;                
+                button {
+                    border: none;
+                    outline: none;
+                    background: none;
+                    cursor: pointer;
+                    img {
+                        height: 25px;
+                    }
+                }
+            }
         }
         .arabic-verses {
             text-align: right;
+            font-family: "Uthmanic-Hafs";
             &::before {            
                 left: unset;
                 right: 20px;            
             }
         }
     }
-    
-    
-    @media screen and (max-width: 800px) {
-        .surah-name {
-            font-size: 1.8rem;
+    .no-paragraph {
+        .verse {
+            box-sizing: border-box;
+            padding: 10px;
+        }
+        .arabic-verse {
+            font-family: "Uthmanic-Hafs";
+            text-align: right;
+            background-color: ${props => props.colors.lightGray};
+        }
+    }
+`
+const SettingsContainer = styled.div`
+    position: fixed;
+    z-index: 1001;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    ${props => !props.open && 'pointer-events: none'};
+    .settingsOpenBtn {
+        position: fixed;
+        right: 20px;
+        bottom: 30px;
+        height: 50px;
+        width: 50px;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        pointer-events: all !important;
+    }
+    .settings-container {
+        height: 100%;
+        width: 300px;
+        background-color: ${props => props.colors.lightGray};
+        transition: transform .2s ease-out;
+        transform: ${props => props.open ? "translateX(0px)": "translateX(300px)"};
+        
+        padding-top: 50px;
+        h2 {
+            text-align: center;
+        }
+        .close-icon {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            height: 32px;
+            width: 32px;
+            color: white;
+            background-color: ${props => props.colors.base};
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .settings-section {
+            width: 100%;
+            .section-title {
+                width: 100%;
+                padding: 10px 10px;
+                background-color: ${props => props.colors.gray};
+                color: white;
+                font-weight: bold;
+            }
+            .section-content {
+                padding: 0px 20px;
+                
+            }
+            .font-change {
+                & > button {
+                    border: none;
+                    outline: none;
+                }
+            }
         }
     }
 `
