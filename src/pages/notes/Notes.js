@@ -10,7 +10,7 @@ import { Container } from '../../Style.style'
 import Modal from '../../components/Modal'
 import AddIcon from '@mui/icons-material/Add'
 import Button from '@mui/material/Button'
-import { colors } from '../../Style.style'
+// import { colors } from '../../Style.style'
 import TextField from '@mui/material/TextField'
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch } from 'react-redux/es/exports'
@@ -29,6 +29,7 @@ function Notes() {
     const [currentNote, setCurrentNote] = React.useState()
     const [editLoad, setEditLoad] = React.useState(false)
     const [resultData, setResultData] = React.useState([])
+    const colors = data.settings.colors
     const handleAddNoteModalOpen = () => setAddNoteModalOpen(true) 
     const handleAddNoteModalClose = () => setAddNoteModalOpen(false)
     const handleNote = e => setNote(e.target.value) 

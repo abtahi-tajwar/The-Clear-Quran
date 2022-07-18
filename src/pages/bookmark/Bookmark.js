@@ -11,6 +11,7 @@ import { Grid } from '../../Style.style'
 function Bookmark() {
     
     const bookmarks = useSelector(data => data.bookmark)
+    console.log(bookmarks)
   return (
     <div>
         <Navbar />

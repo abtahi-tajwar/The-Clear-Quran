@@ -5,6 +5,7 @@ import Home from './pages/home/home'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import Surah from './pages/surah/Surah'
 import SurahSingle from './pages/surah-single/SurahSingle'
+import SurahSingle2 from "./pages/surah-single/SurahSingle2";
 import { useDispatch } from 'react-redux/es/exports';
 import { init } from './redux/surahSlice';
 import { init as userInit } from './redux/userSlice';
@@ -34,7 +35,6 @@ function App() {
   const dispatch = useDispatch()
   // Exclusively used for saving bookmark to storage if the quran data is fetched from API
   const [isOriginalQuranData, setIsOriginaQuranData] = React.useState(false)
-  console.log(fullQuranData)
   // dispatch(init(quranData.response.chapters));
 
   
@@ -105,6 +105,7 @@ function App() {
                 temp.push({
                     id: paragraph.id,
                     surahId: surah.chapterId,
+                    paragraphId: paragraph.id,
                     titleInEnglish: surah.titleInEnglish,
                     titleInAurabic: surah.titleInAurabic,
                     paragraph: paragraph.title,
@@ -131,7 +132,7 @@ function App() {
             <Routes>
                 <Route path="/" exact element={<Home />} />
                 <Route path="/surah" element={<Surah />} />
-                <Route path="/surah-single/:id" element={<SurahSingle />} /> 
+                <Route path="/surah-single/:id" element={<SurahSingle2 />} /> 
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/notes" element={<Notes />} />
                 <Route path="/profile" element={<Profile />} />

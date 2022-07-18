@@ -16,18 +16,6 @@ function Surah() {
   const data = useSelector((data) => data.surah);
   const [resultData, setResultData] = useState([]);
 
-  var newData = [];
-
-  const combine = (data1, data2) => {
-    for (var i = 0; i < data1.length; i++) {
-      //var pushData = data1[i] + data2[i];
-      var pushData = { ...data1[i], ...data2[i] };
-      newData.push(pushData);
-    }
-    console.log(newData);
-    setResultData(newData);
-  };
-
   React.useEffect(() => {
     combine(data, themeData);
     if (data.length > 0) {

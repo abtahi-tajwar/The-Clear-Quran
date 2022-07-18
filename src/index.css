@@ -1397,7 +1397,7 @@ body {
   overflow-x: hidden;
 }
 .home-page {
-  background-color: #461e27;
+  /* background-color: #461e27; */
   height: 100vh;
   width: 100vw;
   background-image: url(./images/masjid.png);

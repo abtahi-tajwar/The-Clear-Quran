@@ -98,9 +98,8 @@ export default function Masjid() {
       countryCode: code,
       phoneNumber: mobileNo,
     };
-
-    axios
-      .post(routes.registerUser, body, {
+    console.log(routes.registerUser)
+    axios.post(routes.registerUser, body, {
         headers: headers,
       })
       .then((res) => {

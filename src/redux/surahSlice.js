@@ -1,10 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
+import quranicThemes from '../QuranicThemes.json'
 
 export const surahSlice = createSlice({
   name: 'surah',
   initialState: [],
   reducers: {
-    init: (state, action) => action.payload,
+    init: (state, action) => {
+      return action.payload.map((surah, i) => {
+        return {
+          ...surah,
+          hasThemeDoctrine: quranicThemes[i].hasThemeDoctrine,
+          hasThemeUnseen: quranicThemes[i].hasThemeUnseen,
+          hasThemeStories: quranicThemes[i].hasThemeStories
+        }
+      })
+    },
     addBookmark: (state, action) => {
       const newState = state.map(surah => {
         if (surah.titleInEnglish === action.payload.titleInEnglish) {

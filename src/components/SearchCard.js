@@ -1,12 +1,14 @@
 import React from 'react'
 import styled from "styled-components";
 import EditIcon from '@mui/icons-material/Edit';
-import { colors } from '../Style.style';
+// import { colors } from '../Style.style';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 
 function SearchCard({ data }) {
+    const colors = useSelector(data => data.settings.colors)
   return (
-    <Wrapper>
+    <Wrapper colors={colors}>
         <p className="title">{ data.chapter } ({ data.chapterEnglish }) </p>
         { data.verses.map(verse => <Link to={`/surah-single/${verse.chapterId}?verse=${verse.verseId}`}><div className="details">
             <p class="verse-details">{verse.verseInEnglish} <span className="ayat-marking">{verse.verseId}</span></p>
@@ -29,7 +31,7 @@ const Wrapper = styled.div`
     position: relative;
     .title {
         position: absolute;
-        background-color: ${colors.base};
+        background-color: ${props => props.colors.base};
         color: white;
         left: 10px;
         top: -10px;
@@ -66,11 +68,11 @@ const Wrapper = styled.div`
         height: 32px;
         width: 32px;
         border-radius: 50%;
-        background-color: ${colors.base};
+        background-color: ${props => props.colors.base};
         cursor: pointer;
         transition: background .3s ease-out;
         &:hover {
-            background-color: ${colors.baseLight};
+            background-color: ${props => props.colors.baseLight};
         }
     }
 `

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Flex, colors } from '../Style.style'
+import { Container, Flex } from '../Style.style'
 import styled from 'styled-components'
 import QuranInfo from './QuranInfo'
 import GlobalSearch from './GlobalSearch'
@@ -8,14 +8,16 @@ import InfoIcon from '@mui/icons-material/Info';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import PersonIcon from '@mui/icons-material/Person';
 import HomeIcon from '@mui/icons-material/Home';
+import { useSelector } from 'react-redux'
 
 function Navbar() {
   const [isInfoOpen, setIsInfoOpen] = React.useState(false)
   const [search, setSearch] = React.useState("")
   const [globalSearchOpen, setGlobalSearchOpen] = React.useState(false)
+  const colors = useSelector(data => data.settings.colors)
   return (
     <React.Fragment>
-    <Wrapper>      
+    <Wrapper colors={colors}>      
       <Container>
         <Flex gap="30px" className="full-size">
           <Link to="/"><HomeIcon /></Link>
@@ -45,7 +47,7 @@ function Navbar() {
 const Wrapper = styled.div`
   width: 100%;
   height: 94px;
-  background-color: ${colors.base};
+  background-color: ${props => props.colors.base};
   color: white;
   position: -webkit-sticky; /* Safari */
   position: sticky;
@@ -68,7 +70,7 @@ const Wrapper = styled.div`
   .search-container {
     flex: 1;
     border-radius: 35px;
-    background-color: ${colors.dark};
+    background-color: ${props => props.colors.dark};
     box-sizing: border-box;
     padding: 10px 25px;
     display: flex;
