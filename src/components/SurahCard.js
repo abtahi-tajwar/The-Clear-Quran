@@ -5,6 +5,9 @@ import MeccaIcon from "../images/icons/kaaba-mecca.png";
 import MedinaIcon from "../images/icons/mosque.png";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Doctrine from '../images/Doctrine.png'
+import Stories from '../images/Stories.png'
+import Unseen from '../images/Unseen.png'
 
 function SurahCard({ data }) {
   const colors = useSelector(data => data.settings.colors)
@@ -16,6 +19,11 @@ function SurahCard({ data }) {
             <img src={data.isMadina ? MedinaIcon : MeccaIcon} />
           </div>
           <Flex className="verses">{data.totalVersesCount} Verses</Flex>
+        </div>
+        <div className="quranic-icons">
+          {data.hasThemeDoctrine && <img src={Doctrine} /> }
+          {data.hasThemeUnseen && <img src={Stories} /> }
+          {data.hasThemeStories && <img src={Unseen} /> }
         </div>
         <h2 className="title">{data.titleInEnglish}</h2>
         <p className="title-arabic">{data.titleInAurabic}</p>
@@ -40,6 +48,16 @@ export const Wrapper = styled.div`
   .title-arabic {
     font-size: 0.8rem;
     color: #272727;
+  }
+  .quranic-icons {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: flex;
+    gap: 5px;
+    img {
+      height: 16px;
+    }
   }
   .info {
     color: ${props => props.colors.dark};

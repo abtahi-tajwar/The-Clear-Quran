@@ -105,6 +105,7 @@ function App() {
                 temp.push({
                     id: paragraph.id,
                     surahId: surah.chapterId,
+                    paragraphId: paragraph.id,
                     titleInEnglish: surah.titleInEnglish,
                     titleInAurabic: surah.titleInAurabic,
                     paragraph: paragraph.title,

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Navbar from '../../components/Navbar'
 import styled from 'styled-components'
 import IntroductionCard from '../../components/IntroductionCard'
@@ -22,6 +22,14 @@ import IconButton from '@mui/material/IconButton';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import Checkbox from '@mui/material/Checkbox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { useDispatch } from 'react-redux'
+import { add as notesStateAdd } from '../../redux/notesSlice'
+import { add as addBookmarkState } from '../../redux/bookmarkSlice'
+import { addBookmark as addBookmarkToSurah } from '../../redux/surahSlice'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Buttonbtn, Flex } from '../../Style.style'
+import { CircularProgress } from '@mui/material'
+import { useSearchParams } from 'react-router-dom'
 
 function SurahSingle2() {
     const { id } = useParams()
@@ -29,6 +37,8 @@ function SurahSingle2() {
     const allSurah = data.surah
     const userId = data.user ? data.user.userId : -1
     const colors = data.settings.colors
+    const dispatch = useDispatch()
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const [surah, setSurah] = React.useState()
     const [paragraphWiseVerse, setParagraphWiseVerse] = React.useState()
@@ -40,14 +50,28 @@ function SurahSingle2() {
     const [paragraphMode, setParagraphMode] = React.useState(true)
     const [showAurabic, setShowAurabic] = React.useState(true)
     const [showEnglish, setShowEnglish] = React.useState(true)
-    const [ confirmationPopup, setConfirmationPopup ] = React.useState({        
+    const [addNoteLoading, setAddNoteLoading] = React.useState(false)
+    const [confirmationPopup, setConfirmationPopup] = React.useState({        
         isOpen: false,
         text: "",
         error: false
     })
     React.useEffect(() => {
-        setSurah(allSurah.find(s => s.chapterId === parseInt(id)))
+        setSurah(allSurah.find(s => s.chapterId === parseInt(id)))        
     }, [allSurah])
+    React.useEffect(() => {
+        const queryParagraphId = parseInt(searchParams.get("paragraph"))
+        const queryVerseId = parseInt(searchParams.get("verse"))
+        // Load the first paragraph when user enter
+        if (queryParagraphId) {
+            scrollToParagraph(queryParagraphId)
+        } else if(queryVerseId) {
+            if (paragraphWiseVerse) {
+                const initialParagraphId = paragraphWiseVerse.find(p => p.verses.find(v => v.verseId === queryVerseId)).id
+                scrollToParagraph(initialParagraphId)
+            }
+        }
+    }, [paragraphWiseVerse])
     React.useEffect(() => {
         if (surah) {
             let temp = []
@@ -64,26 +88,26 @@ function SurahSingle2() {
             setParagraphWiseVerse(temp)
         }
     }, [surah])
-    React.useEffect(() => {
-        console.log("Paragraph Wise Verse", paragraphWiseVerse)
-    }, [paragraphWiseVerse])
 
-    const scrollToParagraph = (id) => {
+    const scrollToParagraph = (id) => {        
         if (id === -1) {
             var element = document.getElementById(`introduction`);
         } else {
             var element = document.getElementById(`surah-paragraph-${id}`);
+        }        
+        
+        if (element) {
+            var headerOffset = 180;
+            var elementPosition = element.getBoundingClientRect().top;
+            var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
         }
-        var headerOffset = 180;
-        var elementPosition = element.getBoundingClientRect().top;
-        var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-        window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth"
-        });
-
     }
     const handleAddNote = () => {
+        setAddNoteLoading(true)
         axios.post(routes.createNote, {
             id: 0,
             chapterId: surah.chapterId,
@@ -94,6 +118,12 @@ function SurahSingle2() {
             setNote("")
             setAddNoteModalOpen(false)
             if (response.data.status === "Success") {
+                dispatch(notesStateAdd({
+                    ...response.data.response.notes,
+                    paragraph: currentParagraph,
+                    userId: userId
+                }))
+                setAddNoteLoading(false)
                 setConfirmationPopup({ 
                     isOpen: true,
                     text: "Note added successfully",
@@ -130,6 +160,41 @@ function SurahSingle2() {
     const decreaseFontSize = () => {
         setFontSize(fontSize - 1)
     }
+    const addBookmark = (paragraph) => {
+        axios.post(routes.addBookmark, {
+            paragraphId: paragraph.id,
+            userId: userId
+        }).then(response => {
+            if (response.data.status === "Success") {
+                const currentDate = new Date()
+                const timestamp = currentDate.getTime()
+                const newBookmark = {
+                    id: paragraph.id,
+                    paragraphId: paragraph.id,
+                    surahId: surah.chapterId,
+                    titleInEnglish: surah.titleInEnglish,
+                    titleInAurabic: surah.titleInAurabic,
+                    paragraph: paragraph.title,
+                    fromVerseId: paragraph.fromVerseId,
+                    toVerseId: paragraph.toVerseId,
+                    created_at: timestamp
+                }
+                dispatch(addBookmarkState(newBookmark))
+                dispatch(addBookmarkToSurah(newBookmark))
+                setConfirmationPopup({ 
+                    isOpen: true,
+                    text: "Bookmark Added",
+                    error: false
+                })
+            } else {
+                setConfirmationPopup({ 
+                    isOpen: true,
+                    text: "Something went wrong",
+                    error: true
+                })
+            }
+        })
+    }
     return (
         <div>
             {currentParagraph && <Modal 
@@ -146,14 +211,14 @@ function SurahSingle2() {
                     onChange={e => setNote(e.target.value)}
                     style={{ width: '100%'}}
                 />
-                <Button 
-                    variant="contained" 
+                <Buttonbtn 
                     style={{ marginTop: '15px', backgroundColor: colors.base }}
-                    endIcon={<AddIcon />}
+                    disabled={addNoteLoading}
                     onClick={handleAddNote}
-                > Add </Button>
+                > <AddIcon /> Add </Buttonbtn> { addNoteLoading && <CircularProgress size="30px" style={{ marginLeft: '15px' }}/> }
             </Modal> }
             {surah && <Heading colors={colors}>
+                <Link to="/surah" className="back-button"><ArrowBackIcon /></Link>
                 <h1 className="surah-name">{surah.titleInEnglish} ({surah.titleInAurabic})</h1>
                 { paragraphMode && <div className="paragraph-selector">
                     <div className="selector" onClick={() => scrollToParagraph(-1)}>i</div>
@@ -199,7 +264,7 @@ function SurahSingle2() {
                     </div>
                 </div>
             </SettingsContainer>
-            {surah && <Container colors={colors} fontSize={fontSize}>
+            {surah ? <Container colors={colors} fontSize={fontSize}>
                 <div className="section" id="introduction">
                     <IntroductionCard intro={surah.introduction} />
                 </div>
@@ -211,7 +276,7 @@ function SurahSingle2() {
                             <h2 className="paragraph-title">{paragraph.title}</h2>
                             <div className="action-icons">
                                 <button onClick={() => addNoteAction(paragraph)}><img src={AddNoteIcon} /></button>
-                                <button><img src={BookmarkIcon} /></button>
+                                { !paragraph.isUserBookmarked && <button onClick={() => addBookmark(paragraph)}><img src={BookmarkIcon} /></button> }
                             </div>
                             {paragraph.verses.map(verse => verse && <span>
                                 <b>({verse.verseId})</b> {verse.verseInEnglish} &nbsp;
@@ -222,7 +287,7 @@ function SurahSingle2() {
                                 <h2 className="paragraph-title" style={{ textAlign: 'left'}}>{paragraph.title}</h2>
                                 <div className="action-icons">
                                     <button onClick={() => addNoteAction(paragraph)}><img src={AddNoteIcon} /></button>
-                                    <button><img src={BookmarkIcon} /></button>
+                                    { !paragraph.isUserBookmarked && <button onClick={() => addBookmark(paragraph) }><img src={BookmarkIcon} /></button> }
                                 </div></React.Fragment> }
                             {paragraph.verses.map(verse => verse && <span>
                                 &nbsp; {verse.verseInAurabic}<b>({verse.verseId})</b>
@@ -239,11 +304,22 @@ function SurahSingle2() {
                     </div>)}
                 </div>
                 }
-            </Container>}
+            </Container> : 
+            <LoadingContainer>
+                <CircularProgress />
+            </LoadingContainer>}
             <ConfirmationPopup show={confirmationPopup.isOpen} text={confirmationPopup.text} error={confirmationPopup.error} />
         </div>
     )
 }
+const LoadingContainer = styled.div`
+    height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 const Heading = styled.div`
     background-color: ${props => props.colors.base};
     box-sizing: border-box;
@@ -251,6 +327,23 @@ const Heading = styled.div`
     position: sticky;
     top: 0;
     z-index: 900;
+    .back-button {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        color: white;
+        cursor: pointer;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background .2s ease-out;
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    }
     .surah-name {
         text-align: center;
         font-family: "TrajanPro-Regular";
