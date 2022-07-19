@@ -8,22 +8,22 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { TextField } from "@mui/material";
+import themeData from "../../QuranicThemes.json";
 
 function Surah() {
   const [load, setLoad] = useState(true);
   const [search, setSearch] = useState("");
-  const data = useSelector(data => data.surah)
-  const [resultData, setResultData] = useState([])
-  
+  const data = useSelector((data) => data.surah);
+  const [resultData, setResultData] = useState([]);
+
   React.useEffect(() => {
-    setResultData(data)
-    if(data.length > 0) {
+    if (data.length > 0) {
       setLoad(false);
     }
-  }, [data])
+  }, [data]);
   React.useEffect(() => {
-    setResultData(data.filter(item => (item.titleInEnglish.includes(search) || item.titleInAurabic.includes(search))))
-  }, [search])
+    setResultData(data.filter((item) => item.titleInEnglish.includes(search) || item.titleInAurabic.includes(search)));
+  }, [search]);
 
   const override = css`
     margin: 0 auto;
@@ -39,10 +39,10 @@ function Surah() {
         <TextField
           id="outlined-basic"
           label="Search Chapters"
-          style={{ width: '100%', maxWidth: "500px", marginBottom: "40px" }}
+          style={{ width: "100%", maxWidth: "500px", marginBottom: "40px" }}
           variant="outlined"
           name="search"
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
         <Grid width="350px" gap="30px" height={"100%"}>
           {resultData && resultData.map((data, i) => <SurahCard data={data} key={i} />)}

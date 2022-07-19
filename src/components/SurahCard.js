@@ -3,16 +3,20 @@ import styled from "styled-components";
 import { Flex } from "../Style.style";
 import MeccaIcon from "../images/icons/kaaba-mecca.png";
 import MedinaIcon from "../images/icons/mosque.png";
+import docIcon from "../images/Doctrine.png";
+import unseenIcon from "../images/Unseen.png";
+import storiesIcon from "../images/Stories.png";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Doctrine from '../images/Doctrine.png'
-import Stories from '../images/Stories.png'
-import Unseen from '../images/Unseen.png'
+import Doctrine from "../images/Doctrine.png";
+import Stories from "../images/Stories.png";
+import Unseen from "../images/Unseen.png";
 
 function SurahCard({ data }) {
-  const colors = useSelector(data => data.settings.colors)
+  const colors = useSelector((data) => data.settings.colors);
   return (
-    <Link to={"/surah-single/"+data.chapterId} id={`surah_${data.chapterId}`}><Wrapper colors={colors}>
+    <Link to={"/surah-single/" + data.chapterId} id={`surah_${data.chapterId}`}>
+      <Wrapper colors={colors}>
         <div className="info-card">
           <p className="count">{data.chapterId}</p>
           <div className="class">
@@ -21,13 +25,15 @@ function SurahCard({ data }) {
           <Flex className="verses">{data.totalVersesCount} Verses</Flex>
         </div>
         <div className="quranic-icons">
-          {data.hasThemeDoctrine && <img src={Doctrine} /> }
-          {data.hasThemeUnseen && <img src={Stories} /> }
-          {data.hasThemeStories && <img src={Unseen} /> }
+          {data.hasThemeDoctrine && <img src={Doctrine} />}
+          {data.hasThemeUnseen && <img src={Stories} />}
+          {data.hasThemeStories && <img src={Unseen} />}
         </div>
         <h2 className="title">{data.titleInEnglish}</h2>
         <p className="title-arabic">{data.titleInAurabic}</p>
-        <p className="info">{data.paragraphs.length} Paragraph, {data.userNotesCount} Notes</p>
+        <p className="info">
+          {data.paragraphs.length} Paragraph, {data.userNotesCount} Notes
+        </p>
       </Wrapper>
     </Link>
   );
@@ -44,6 +50,15 @@ export const Wrapper = styled.div`
   padding-top: 8px;
   .title {
     font-size: 1.3rem;
+    text-transform: uppercase;
+  }
+  .theme {
+    margin-right: 6px;
+  }
+  .theme img {
+    width: 28px;
+    padding: 3px;
+    position: relative;
   }
   .title-arabic {
     font-size: 0.8rem;
@@ -60,7 +75,7 @@ export const Wrapper = styled.div`
     }
   }
   .info {
-    color: ${props => props.colors.dark};
+    color: ${(props) => props.colors.dark};
     font-size: 0.9rem;
     font-weight: bold;
   }
@@ -86,7 +101,7 @@ export const Wrapper = styled.div`
     left: 0px;
     bottom: 0px;
     right: 0px;
-    background-color: ${props => props.colors.base};
+    background-color: ${(props) => props.colors.base};
     color: white;
     font-weight: bold;
     font-size: 0.8rem;
