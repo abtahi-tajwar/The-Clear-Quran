@@ -10,11 +10,12 @@ import { useDispatch } from "react-redux/es/exports";
 import { init as userInit } from "../../redux/userSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { PhoneInput } from "react-contact-number-input";
 
 export default function Masjid() {
   const dispatch = useDispatch();
   let loggedIn = localStorage.getItem("user") ? true : false;
-  const [countryCode, setCountryCode] = useState([]);
+  const [countryCode, setCountryCode] = useState("");
   const [country, setCountry] = useState([]);
   const [mobileNo, setMobileNo] = useState("");
   const [otp, setOtp] = useState(!loggedIn);
@@ -52,7 +53,7 @@ export default function Masjid() {
   const sendOtp = (e) => {
     e.preventDefault();
     configureCaptcha();
-    const phoneNumber = countryCode.value + mobileNo;
+    const phoneNumber = countryCode + mobileNo;
     console.log(phoneNumber);
     const appVerifier = window.recaptchaVerifier;
     firebase
@@ -91,15 +92,15 @@ export default function Masjid() {
   };
 
   const registerUser = () => {
-    let uCountryCode = countryCode.value;
-    let code = uCountryCode.replace("+", "");
+    let code = countryCode.replace("+", "");
     let body = {
       userId: 0,
       countryCode: code,
       phoneNumber: mobileNo,
     };
-    console.log(routes.registerUser)
-    axios.post(routes.registerUser, body, {
+    console.log(routes.registerUser);
+    axios
+      .post(routes.registerUser, body, {
         headers: headers,
       })
       .then((res) => {
@@ -115,6 +116,15 @@ export default function Masjid() {
   const guest = () => {
     setOtp(false);
     setMenu(true);
+  };
+
+  const getNumber = (e) => {
+    let num = e.phoneNumber;
+    if (num != null && num.length > 4) {
+      let numSet = num.replace("-", "");
+      setMobileNo(numSet);
+    }
+    setCountryCode(e.countryCode);
   };
 
   return (
@@ -197,14 +207,21 @@ export default function Masjid() {
                   <div className={`form-group`}>
                     <label for="phoneNumber">Phone Number:</label>
                     <div className={`input-phone`}>
-                      <Select
+                      {/* <Select
                         name="colors"
                         options={country}
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={(e) => setCountryCode(e)}
                       />
-                      <input type="text" onChange={(e) => setMobileNo(e.target.value)} />
+                      <input type="text" onChange={(e) => setMobileNo(e.target.value)} /> */}
+                      <PhoneInput
+                        disabled={false}
+                        // containerClass={containerClass}
+                        countryCode={"us"}
+                        onChange={(e) => getNumber(e)}
+                        placeholder={"Phone Number"}
+                      />
                     </div>
                   </div>
 

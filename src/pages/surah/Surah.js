@@ -17,7 +17,6 @@ function Surah() {
   const [resultData, setResultData] = useState([]);
 
   React.useEffect(() => {
-    combine(data, themeData);
     if (data.length > 0) {
       setLoad(false);
     }
