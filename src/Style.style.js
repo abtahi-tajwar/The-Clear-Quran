@@ -41,6 +41,7 @@ export const Buttonbtn = styled.button`
     color: ${props => props.color ? props.color : 'white'};
     border-radius: 5px;
     transition: background .2s ease-out;
+    cursor: pointer;
     ${props => props.disabled && `
         pointer-events: none; 
         color: gray;

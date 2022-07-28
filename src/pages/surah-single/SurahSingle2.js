@@ -47,7 +47,7 @@ function SurahSingle2() {
     const [currentParagraph, setCurrentParagraph] = React.useState()
     const [settingsOpen, setSettingsOpen] = React.useState(false)
     const [fontSize, setFontSize] = React.useState(16)
-    const [paragraphMode, setParagraphMode] = React.useState(true)
+    const [paragraphMode, setParagraphMode] = React.useState(userId === -1 ? false : true)
     const [showAurabic, setShowAurabic] = React.useState(true)
     const [showEnglish, setShowEnglish] = React.useState(true)
     const [addNoteLoading, setAddNoteLoading] = React.useState(false)
@@ -57,6 +57,7 @@ function SurahSingle2() {
         error: false
     })
     React.useEffect(() => {
+        console.log("All surah updated")
         setSurah(allSurah.find(s => s.chapterId === parseInt(id)))        
     }, [allSurah])
     React.useEffect(() => {
@@ -259,7 +260,10 @@ function SurahSingle2() {
                     <div className="settings-section">
                         <p className="section-title">Reading Mode</p>
                         <div className="section-content">
-                            <FormControlLabel control={<Checkbox defaultChecked />} label="Paragraph Mode" onChange={() => setParagraphMode(!paragraphMode)} />
+                            {userId === -1 ?
+                                <FormControlLabel control={<Checkbox disabled />} label="Paragraph Mode" onChange={() => setParagraphMode(!paragraphMode)} /> :
+                                <FormControlLabel control={<Checkbox defaultChecked />} label="Paragraph Mode" onChange={() => setParagraphMode(!paragraphMode)} />
+                            }
                         </div>
                     </div>
                 </div>

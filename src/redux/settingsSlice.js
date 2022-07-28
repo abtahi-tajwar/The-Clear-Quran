@@ -5,6 +5,7 @@ export const aboutSlice = createSlice({
   initialState: {
     colors: {
         base: "#461E27",
+        accent: "#F8F682",
         baseLight: '#692937',
         dark: '#210F13',
         gray: '#7d7d7d',

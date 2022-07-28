@@ -8,6 +8,7 @@ import SurahSingle from './pages/surah-single/SurahSingle'
 import SurahSingle2 from "./pages/surah-single/SurahSingle2";
 import { useDispatch } from 'react-redux/es/exports';
 import { init } from './redux/surahSlice';
+import { mergeBookmarkData } from "./redux/surahSlice";
 import { init as userInit } from './redux/userSlice';
 import { init as notesInit } from './redux/notesSlice';
 import { init as aboutInit } from './redux/aboutSlice'
@@ -33,27 +34,32 @@ function App() {
   const surahData = allData.surah
   const quranData = fullQuranData
   const dispatch = useDispatch()
-  // Exclusively used for saving bookmark to storage if the quran data is fetched from API
-  const [isOriginalQuranData, setIsOriginaQuranData] = React.useState(false)
+
   // dispatch(init(quranData.response.chapters));
 
-  
   React.useEffect(() => {
-    if (!userState && loggedIn) {
+    dispatch(init(quranData.response.chapters))
+  }, [])
+  React.useEffect(() => {
+    if (!loggedIn) {
+      console.log("Not Logged In")
+    } else if (!userState && loggedIn) {
       const userInfo = loggedIn ? JSON.parse(localStorage.getItem("user")) : null
       dispatch(userInit(userInfo))
     } else if (userState) {
-      // Get chapters data
+      // Get chapters data      
       dispatch(init(quranData.response.chapters))
+      
       // Initialize bookmark data from chapters
-      handleBookmarksData(quranData.response.chapters, false)
+      if (!bookmarkData) {
+        handleBookmarksData(quranData.response.chapters, false)
+      }
       axios.post(routes.getChapters, {
         userID: userState.userId,
         LastUpdatedTimeTicks: 0,
       }, {
         headers: headers
       }).then((res) => {
-        setIsOriginaQuranData(true)
         // Initialize bookmark data from chapters and write to local storage
         handleBookmarksData(res.data.response.chapters, true)
         dispatch(init(res.data.response.chapters));
@@ -90,6 +96,7 @@ function App() {
       // Initialize bookmarks data
       if (bookmarkData) {
         console.log("Existing bookmarks", bookmarkData)
+        dispatch(mergeBookmarkData(bookmarkData))
         dispatch(bookmarkInit(bookmarkData))      
       }
       ///////////
@@ -133,14 +140,14 @@ function App() {
                 <Route path="/" exact element={<Home />} />
                 <Route path="/surah" element={<Surah />} />
                 <Route path="/surah-single/:id" element={<SurahSingle2 />} /> 
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/notes" element={<Notes />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/edit-profile" element={<EditProfile />} />
+                <Route path="/contact" element={<Contact />} />                
                 <Route path="/payment" element={<Payment />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/bookmarks" element={<Bookmark />} />
+                {loggedIn && <Route path="/notes" element={<Notes />} />}
+                {loggedIn && <Route path="/profile" element={<Profile />} />}
+                {loggedIn && <Route path="/edit-profile" element={<EditProfile />} />}
+                {loggedIn && <Route path="/bookmarks" element={<Bookmark />} />}
             </Routes>
         </React.Fragment>
     </BrowserRouter>

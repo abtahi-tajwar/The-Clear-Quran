@@ -8,7 +8,9 @@ export const routes = {
     updateNote: `${base}/UpdateNote`,
     addBookmark: `${base}/Bookmark`,
     contactUs: `${base}/AddContactUs`,
-    getAboutUs: `${base}/GetAboutUs`
+    getAboutUs: `${base}/GetAboutUs`,
+    getQR: `${base}/getQr`,
+    loginAfterQrVerify: `${base}/LoginWithQr`
 }
 export const headers = {
   "Content-Security-Policy": 1,

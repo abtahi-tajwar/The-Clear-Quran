@@ -20,7 +20,7 @@ export default function Masjid() {
   const [input, setInput] = useState(false);
   const [mInput, setMInput] = useState(true);
   const [code, setCode] = useState("");
-
+  
   const getCountryCode = () => {
     let x = country;
     data.map((e) => {
@@ -29,9 +29,9 @@ export default function Masjid() {
     setCountry(x);
   };
 
-  useEffect(() => {
-    getCountryCode();
-  }, []);
+  // useEffect(() => {
+  //   getCountryCode();
+  // }, []);
 
   const configureCaptcha = () => {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("sign-in-button", {
@@ -112,41 +112,96 @@ export default function Masjid() {
 
   return (
     <div className={`masjid-container`}>
-      {menu && (
-        <>
+      {/* First this React Fragment was embedded with "menu" variable, if menu is true this will show */}
+        { loggedIn ? 
+          <>
+            <div className={`row`}>
+              <div className={`col-md-12 col-sm-12`}>
+                { loggedIn && <Link className={`home-tile`} to="/profile">
+                  <i className={`fa fa-user-o`} aria-hidden="true"></i>
+                  <br />
+                  <span>profile</span>
+                </Link> }
+                <Link className={`home-tile`} to="/surah">
+                  <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
+                  <br />                  
+                  <span>surah</span>                  
+                </Link>
+              </div>
+            </div>
+            <div className={`row`}>
+              <div className={`col-md-12 col-sm-12`}>
+                <div className="home-tile-row">
+                  {loggedIn && <Link className={`home-tile`} to="/notes">
+                    <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
+                    <br />
+                    <span>notes</span>
+                  </Link>}
+                  {loggedIn && <Link className={`home-tile`} to="/bookmarks">
+                    <i className={`fa fa-bookmark-o`} aria-hidden="true"></i>
+                    <br />
+                    <span>bookm.</span>
+                  </Link>}
+                  <Link className={`home-tile`} to="/search">
+                    <i className={`fa fa-search`} aria-hidden="true"></i>
+                    <br />
+                    <span>search</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className={`row`}>
+              <div className={`col-md-12 col-sm-12`}>
+                <a href={`https://alfurqaanfoundation.givingfuel.com/furqaan-project`} className={`home-tile`}>
+                  <i className={`fa fa-gift`} aria-hidden="true"></i>
+                  <br />
+                  <span>donate</span>
+                </a>
+                <a href={`https://theclearquran.org/`} className={`home-tile`}>
+                  <i className={`fa fa-shopping-cart`} aria-hidden="true"></i>
+                  <br />
+                  <span>buy</span>
+                </a>
+                <Link className={`home-tile`} to="/contact">
+                  <i className={`fa fa-phone`} aria-hidden="true"></i>
+                  <br />
+                  <span>contact</span>
+                </Link>
+                <Link className={`home-tile`} to="/about">
+                  <i className={`fa fa-user-circle`} aria-hidden="true"></i>
+                  <br />
+                  <span>about</span>
+                </Link>
+              </div>
+            </div>
+          </> : 
+          <>
           <div className={`row`}>
             <div className={`col-md-12 col-sm-12`}>
-              <Link className={`home-tile`} to="/profile">
-                <i className={`fa fa-user-o`} aria-hidden="true"></i>
-                <br />
-                <span>profile</span>
-              </Link>
-              <a className={`home-tile`}>
-                <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
-                <br />
-                <Link to="/surah">
-                  <span>surah</span>
-                </Link>
-              </a>
+              <div className="home-tile-row" style={{ width: '300px', textAlign: 'right', marginBottom: '16px'}}>                 
+                Please Login to access more exciting features. <b><u>Scan the QR code</u></b> with <u><a href="">Clear Quran</a></u> mobile app, after finish scanning press continue                
+              </div>
             </div>
           </div>
+          
+         
           <div className={`row`}>
             <div className={`col-md-12 col-sm-12`}>
-              <div className="home-tile-row">
-                <Link className={`home-tile`} to="/notes">
-                  <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
+              <div className="home-tile-row">                
+                <Link className={`home-tile`} to="/contact">
+                  <i className={`fa fa-phone`} aria-hidden="true"></i>
                   <br />
-                  <span>notes</span>
-                </Link>
-                <Link className={`home-tile`} to="/bookmarks">
-                  <i className={`fa fa-bookmark-o`} aria-hidden="true"></i>
-                  <br />
-                  <span>bookm.</span>
+                  <span>contact</span>
                 </Link>
                 <Link className={`home-tile`} to="/search">
                   <i className={`fa fa-search`} aria-hidden="true"></i>
                   <br />
                   <span>search</span>
+                </Link>
+                <Link className={`home-tile`} to="/surah">
+                  <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
+                  <br />
+                  <span>surah</span>
                 </Link>
               </div>
             </div>
@@ -163,11 +218,6 @@ export default function Masjid() {
                 <br />
                 <span>buy</span>
               </a>
-              <Link className={`home-tile`} to="/contact">
-                <i className={`fa fa-phone`} aria-hidden="true"></i>
-                <br />
-                <span>contact</span>
-              </Link>
               <Link className={`home-tile`} to="/about">
                 <i className={`fa fa-user-circle`} aria-hidden="true"></i>
                 <br />
@@ -176,9 +226,10 @@ export default function Masjid() {
             </div>
           </div>
         </>
-      )}
+        } 
+      
 
-      {otp && (
+      {/* {otp && (
         <div class="row">
           <div className={`col-md-12 col-sm-12`}>
             <div className={`contact-form-login`}>
@@ -206,9 +257,6 @@ export default function Masjid() {
                       Get OTP
                     </button>
                   </div>
-                  {/* <button type="button" className={`btn tcq-button`} onClick={guest}>
-                    Guest
-                  </button> */}
                 </>
               )}
 
@@ -225,12 +273,10 @@ export default function Masjid() {
                   </div>
                 </>
               )}
-
-              {/* </form> */}
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
