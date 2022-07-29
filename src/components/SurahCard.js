@@ -42,6 +42,7 @@ export const Wrapper = styled.div`
   box-sizing: border-box;
   padding-left: 95px;
   padding-top: 8px;
+  margin-bottom: 45px;
   .title {
     font-size: 1.3rem;
   }

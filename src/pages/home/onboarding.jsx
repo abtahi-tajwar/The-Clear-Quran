@@ -84,7 +84,7 @@ export default function Onboarding() {
             }            
           </div>
         </div>
-        <div class="col-md-2 col-sm-4">
+        <div class="share-container" style={{ position: 'absolute', right: '70px', top: '70px' }}>
           <div class="circle">
             <div class="share">
               <i class="fa fa-share-alt" aria-hidden="true"></i>

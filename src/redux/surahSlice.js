@@ -43,11 +43,26 @@ export const surahSlice = createSlice({
         }
         return { ...surah }
       })
+    },
+    mergeNoteData: (state, action) => {
+      const sortedNotes = [ ...action.payload ]
+      sortedNotes.sort((a, b) => a.chapterId > b.chapterId ? 1 : -1)
+      return state.map(surah => {
+        let notesCount = 0
+        if (sortedNotes.length >= 1) {          
+          while (surah.chapterId === sortedNotes[0].chapterId) {
+            notesCount += 1
+            sortedNotes.shift()
+            if (sortedNotes.length === 0) break;
+          }
+        }        
+        return { ...surah, userNotesCount: notesCount }
+      })
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { init, addBookmark, mergeBookmarkData } = surahSlice.actions
+export const { init, addBookmark, mergeBookmarkData, mergeNoteData } = surahSlice.actions
 
 export default surahSlice.reducer

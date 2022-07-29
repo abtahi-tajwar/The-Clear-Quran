@@ -20,6 +20,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import IconButton from '@mui/material/IconButton';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import InfoIcon from '@mui/icons-material/Info';
 import Checkbox from '@mui/material/Checkbox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useDispatch } from 'react-redux'
@@ -35,11 +36,12 @@ function SurahSingle2() {
     const { id } = useParams()
     const data = useSelector(data => data)
     const allSurah = data.surah
-    const userId = data.user ? data.user.userId : -1
+    
     const colors = data.settings.colors
     const dispatch = useDispatch()
     const [searchParams, setSearchParams] = useSearchParams();
 
+    const [userId, setUserId] = React.useState(data.user ? data.user.userId : -1)
     const [surah, setSurah] = React.useState()
     const [paragraphWiseVerse, setParagraphWiseVerse] = React.useState()
     const [note, setNote] = React.useState()
@@ -57,6 +59,10 @@ function SurahSingle2() {
         error: false
     })
     React.useEffect(() => {
+        setUserId(data.user ? data.user.userId : -1)
+        setParagraphMode(true)
+    }, [data.user])
+    React.useEffect(() => {
         console.log("All surah updated")
         setSurah(allSurah.find(s => s.chapterId === parseInt(id)))        
     }, [allSurah])
@@ -65,11 +71,11 @@ function SurahSingle2() {
         const queryVerseId = parseInt(searchParams.get("verse"))
         // Load the first paragraph when user enter
         if (queryParagraphId) {
-            scrollToParagraph(queryParagraphId)
+            scrollToParagraph(null, queryParagraphId)
         } else if(queryVerseId) {
             if (paragraphWiseVerse) {
                 const initialParagraphId = paragraphWiseVerse.find(p => p.verses.find(v => v.verseId === queryVerseId)).id
-                scrollToParagraph(initialParagraphId)
+                scrollToParagraph(null, initialParagraphId)
             }
         }
     }, [paragraphWiseVerse])
@@ -90,7 +96,14 @@ function SurahSingle2() {
         }
     }, [surah])
 
-    const scrollToParagraph = (id) => {        
+    const scrollToParagraph = (e, id) => {  
+        // Event can be null as the funcion is also called without event 
+        if (e) {
+            document.querySelectorAll(".selector").forEach(item => {
+                item.classList.remove("selected")
+            })         
+            e.target.classList.add("selected")  
+        }   
         if (id === -1) {
             var element = document.getElementById(`introduction`);
         } else {
@@ -161,7 +174,8 @@ function SurahSingle2() {
     const decreaseFontSize = () => {
         setFontSize(fontSize - 1)
     }
-    const addBookmark = (paragraph) => {
+    const addBookmark = (e, paragraph) => {
+        e.target.classList.add("disabled")
         axios.post(routes.addBookmark, {
             paragraphId: paragraph.id,
             userId: userId
@@ -222,9 +236,9 @@ function SurahSingle2() {
                 <Link to="/surah" className="back-button"><ArrowBackIcon /></Link>
                 <h1 className="surah-name">{surah.titleInEnglish} ({surah.titleInAurabic})</h1>
                 { paragraphMode && <div className="paragraph-selector">
-                    <div className="selector" onClick={() => scrollToParagraph(-1)}>i</div>
+                    <div className="selector selected" onClick={e => scrollToParagraph(e, -1)}><InfoIcon /></div>
                     {surah.paragraphs.map(paragraph =>
-                        <div className="selector" onClick={() => scrollToParagraph(paragraph.id)}>
+                        <div className="selector" onClick={e => scrollToParagraph(e, paragraph.id)}>
                             {paragraph.fromVerseId !== paragraph.toVerseId ? `${paragraph.fromVerseId} - ${paragraph.toVerseId}` : paragraph.fromVerseId}
                         </div>
                     )}
@@ -280,7 +294,7 @@ function SurahSingle2() {
                             <h2 className="paragraph-title">{paragraph.title}</h2>
                             <div className="action-icons">
                                 <button onClick={() => addNoteAction(paragraph)}><img src={AddNoteIcon} /></button>
-                                { !paragraph.isUserBookmarked && <button onClick={() => addBookmark(paragraph)}><img src={BookmarkIcon} /></button> }
+                                { !paragraph.isUserBookmarked && <button onClick={e => addBookmark(e, paragraph)}><img src={BookmarkIcon} /></button> }
                             </div>
                             {paragraph.verses.map(verse => verse && <span>
                                 <b>({verse.verseId})</b> {verse.verseInEnglish} &nbsp;
@@ -291,7 +305,7 @@ function SurahSingle2() {
                                 <h2 className="paragraph-title" style={{ textAlign: 'left'}}>{paragraph.title}</h2>
                                 <div className="action-icons">
                                     <button onClick={() => addNoteAction(paragraph)}><img src={AddNoteIcon} /></button>
-                                    { !paragraph.isUserBookmarked && <button onClick={() => addBookmark(paragraph) }><img src={BookmarkIcon} /></button> }
+                                    { !paragraph.isUserBookmarked && <button onClick={e => addBookmark(e, paragraph) }><img src={BookmarkIcon} /></button> }
                                 </div></React.Fragment> }
                             {paragraph.verses.map(verse => verse && <span>
                                 &nbsp; {verse.verseInAurabic}<b>({verse.verseId})</b>
@@ -367,6 +381,7 @@ const Heading = styled.div`
         display: flex;
         gap: 5px;
         overflow-x: scroll;
+        padding-bottom: 5px;
         .selector {
             height: 100%;
             aspect-ratio: 1/1;
@@ -381,8 +396,13 @@ const Heading = styled.div`
                 background-color: rgba(255,255,255,0.7);
             }
         }
+        .selector.selected {
+            border: 3px solid ${props => props.colors.dark};
+            font-weight: bold;
+        }
         ::-webkit-scrollbar {
-            width: 2px;
+            width: 1px;
+            height: 4px;
         }
         /* Track */
         ::-webkit-scrollbar-track {
@@ -390,12 +410,12 @@ const Heading = styled.div`
         }
         /* Handle */
         ::-webkit-scrollbar-thumb {
-            background: ${props => props.colors.dark};
+            background: rgba(255,255,255,0.5);
             border-radius: 10px;
         }
         /* Handle on hover */
         ::-webkit-scrollbar-thumb:hover {
-            background: black;
+            background: rgba(255,255,255,0.7);
         }
     }
 `
@@ -440,14 +460,29 @@ const Container = styled.div`
                 right: 20px;
                 top: 20px;
                 display: flex;
-                gap: 15px;                
+                gap: 5px;                
                 button {
                     border: none;
                     outline: none;
                     background: none;
                     cursor: pointer;
+                    transition: background .2s ease-out;
+                    border-radius: 50%;
+                    height: 40px;
+                    width: 40px;
                     img {
                         height: 25px;
+                        pointer-events: none;
+                    }
+                    &:hover {
+                        background-color: #ededed;
+                    }
+                }
+                button.disabled {
+                    pointer-events: none;
+                    img {
+                        filter: grayscale(100%);
+                        -webkit-filter: grayscale(100%);
                     }
                 }
             }

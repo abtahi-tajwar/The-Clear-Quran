@@ -64,6 +64,7 @@ function Notes() {
         if (data) {
             setResultData(data.notes)
             if (data.notes.length > 0 ) {
+                console.log(data.notes)
                 setLoad(false)
             }
         } 

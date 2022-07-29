@@ -9,6 +9,7 @@ import SurahSingle2 from "./pages/surah-single/SurahSingle2";
 import { useDispatch } from 'react-redux/es/exports';
 import { init } from './redux/surahSlice';
 import { mergeBookmarkData } from "./redux/surahSlice";
+import { mergeNoteData } from "./redux/surahSlice";
 import { init as userInit } from './redux/userSlice';
 import { init as notesInit } from './redux/notesSlice';
 import { init as aboutInit } from './redux/aboutSlice'
@@ -79,6 +80,7 @@ function App() {
         )
         .then((result) => {
           dispatch(notesInit(result.data.response.notes));
+          dispatch(mergeNoteData(result.data.response.notes))
         });
       ///////
 

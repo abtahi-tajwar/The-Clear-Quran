@@ -15,7 +15,7 @@ function GlobalSearch({ search, open, handleClose }) {
     React.useEffect(() => {
         if (open) {
             if (search !== "") {
-                setSurah(surahData.filter(item => (item.titleInEnglish.includes(search) || item.titleInAurabic.includes(search))))
+                setSurah(surahData.filter(item => (item.titleInEnglish.toLowerCase().includes(search.toLowerCase()) || item.titleInAurabic.toLowerCase().includes(search.toLowerCase()))))
                 setNotes(notesData.filter(item => item.note.includes(search)))
             } else {
                 setSurah([])

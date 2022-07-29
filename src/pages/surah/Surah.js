@@ -36,15 +36,16 @@ function Surah() {
     <Wrapper>
       <Navbar />
       <Container style={{ marginTop: "30px" }}>
-        <TextField
+        {/* <TextField
           id="outlined-basic"
           label="Search Chapters"
           style={{ width: '100%', maxWidth: "500px", marginBottom: "40px" }}
           variant="outlined"
           name="search"
           onChange={e => setSearch(e.target.value)}
-        />
-        <Grid width="350px" gap="30px" height={"100%"}>
+        /> */}
+        <h1 className="page-label">All Chapter List</h1>
+        <Grid width="350px" gap="50px" height={"100%"}>
           {resultData && resultData.map((data, i) => <SurahCard data={data} key={i} />)}
           <ClipLoader loading={load} color={"#210F13"} size={100} css={override} />
         </Grid>
@@ -54,5 +55,9 @@ function Surah() {
 }
 const Wrapper = styled.div`
   width: 100%;
+  .page-label {
+    text-align: center;
+    margin-bottom: 35px;
+  }
 `;
 export default Surah;

@@ -31,7 +31,7 @@ function Search() {
                 data.forEach(chapter => {
                     const selectedVerses = chapter.verses.filter(verse => {
                         if (verse.verseInEnglish) {
-                            if (verse.verseInEnglish.includes(" "+keyword) || verse.verseInEnglish.includes(" "+keyword+" ") || verse.verseInEnglish.includes(keyword+" ")) {
+                            if (verse.verseInEnglish.toLowerCase().includes(" "+keyword.toLowerCase()) || verse.verseInEnglish.toLowerCase().includes(" "+keyword.toLowerCase()+" ") || verse.verseInEnglish.toLowerCase().includes(keyword.toLowerCase()+" ")) {
                                 return true
                             }
                         }                    
