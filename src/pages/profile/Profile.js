@@ -10,47 +10,69 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { useDispatch } from 'react-redux/es/exports';
+import { setBaseColor } from '../../redux/settingsSlice';
 
 function Profile() {
     const data = useSelector(data => data)
     const user = data.user
     const notes = data.notes.length
     const colors = data.settings.colors
-
-  return (
-    <Wrapper colors={colors}>
-        <div className="background"></div>
-        <Link className="go-home link-btn" to="/"><ArrowBackIcon /></Link>
-        <Link className="edit-profile link-btn"to="/edit-profile"><EditIcon /></Link>
-        { user ? <div className="details">
-            <div className="main-info">
-                <div className="top-part">
-                    <div className="avatar-container"><img src={BlankDisplayPicture} /></div>
-                    <h2>{user.userName ? user.userName : <i>"Please set your name first"</i>}</h2>
-                    <p><b>{(user.city || user.country) ? `${user.city}, ${user.country}` : <i>"Add your location first"</i>}</b></p>
+    const dispatch = useDispatch()
+    const changeThemeColor = (color) => {
+        console.log("Base color", color)
+        dispatch(setBaseColor(color))
+    }
+    return (
+        <Wrapper colors={colors}>
+            <div className="background"></div>
+            <Link className="go-home link-btn" to="/"><ArrowBackIcon /></Link>
+            <Link className="edit-profile link-btn" to="/edit-profile"><EditIcon /></Link>
+            {user ? <div className="details">
+                <div className="main-info">
+                    <div className="top-part">
+                        <div className="avatar-container"><img src={BlankDisplayPicture} /></div>
+                        <h2>{user.userName ? user.userName : <i>"Please set your name first"</i>}</h2>
+                        <p><b>{(user.city || user.country) ? `${user.city}, ${user.country}` : <i>"Add your location first"</i>}</b></p>
+                    </div>
+                    <div className="bottom-part">
+                        <div className="phone"><PhoneInTalkIcon /><span>+{user.countryCode + user.phoneNumber}</span></div>
+                        <div className="divider"></div>
+                        <div className="email"><MailOutlineIcon /><span>{user.emailId ? user.emailId : <i>"Please add your email first"</i>}</span></div>
+                    </div>
                 </div>
-                <div className="bottom-part">
-                    <div className="phone"><PhoneInTalkIcon /><span>+{user.countryCode+user.phoneNumber}</span></div>
-                    <div className="divider"></div>
-                    <div className="email"><MailOutlineIcon /><span>{user.emailId ? user.emailId : <i>"Please add your email first"</i>}</span></div>
+                <div className="about-yourself">
+                    <h2>About Yourself</h2>
+                    <p>{user.aboutUs ? user.aboutUs : "Tell us something about yourself"}</p>
                 </div>
-            </div>
-            <div className="about-yourself">
-                <h2>About Yourself</h2>
-                <p>{user.aboutUs ? user.aboutUs : "Tell us something about yourself"}</p>
-            </div>
-            <div className="info-box">
-                <div className="box"><span>0</span><span>BOOKMARKS</span></div>
-                <div className="box"><span>{notes}</span><span>NOTES</span></div>
-            </div>
-            <div className="color-theme">
-                <div className="selector">
-                    <div className="color-selector-preview"></div> Theme <ChevronRightIcon style={{ justifySelf: 'flex-end'}} />
+                <div className="info-box">
+                    <div className="box"><span>0</span><span>BOOKMARKS</span></div>
+                    <div className="box"><span>{notes}</span><span>NOTES</span></div>
                 </div>
-            </div>
-        </div> : <ClipLoader />}
-    </Wrapper>
-  )
+                <div className="color-theme">
+                    <div className="selector">
+                        <div className="color-selector-preview"></div> Theme <ChevronRightIcon style={{ justifySelf: 'flex-end' }} />
+                    </div>
+                </div>
+                <div className="color-selector">
+                    <input 
+                        type="radio" 
+                        style={{ backgroundColor: '#461E27' }} 
+                        name="theme-color" 
+                        defaultChecked={colors.base === '#461E27'} 
+                        onClick={() => changeThemeColor('#461E27') }
+                    />
+                    <input 
+                        type="radio" 
+                        style={{ backgroundColor: '#000000' }} 
+                        name="theme-color" 
+                        defaultChecked={colors.base === '#000000'} 
+                        onClick={() => changeThemeColor('#000000') }
+                    />
+                </div>
+            </div> : <ClipLoader />}
+        </Wrapper>
+    )
 }
 const Wrapper = styled.div`
     width: 100%;
@@ -211,6 +233,22 @@ const Wrapper = styled.div`
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+    }
+    .color-selector {
+        margin-top: 20px;
+        display: flex;
+        gap: 7px;
+        & > input {
+            appearance: none;
+            height: 32px;
+            width: 32px;
+            border-radius: 5px;           
+            &:checked {
+                -webkit-box-shadow: inset 0px 0px 0px 1px #FFFFFF; 
+                box-shadow: inset 0px 0px 0px 1px #FFFFFF;
+                border: 3px solid ${props => props.colors.base};
+            }
         }
     }
 `

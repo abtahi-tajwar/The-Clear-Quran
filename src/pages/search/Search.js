@@ -7,6 +7,7 @@ import SearchCard from '../../components/SearchCard';
 function Search() {
     const data = useSelector(data => data.surah)
     const [searchResult, setSearchResult] = React.useState([])
+    const [searchKeyword, setSearchKeyword] = React.useState("")
 
     const debounce = (callback, delay=1000) => {
         let timeout
@@ -19,6 +20,7 @@ function Search() {
     }
     const updateDebounce = debounce(keyword => {
         searchSurah(keyword)
+        setSearchKeyword(keyword)
     })
     const handleSearch = (e) => {
         const keyword = e.target.value.trim()
@@ -39,6 +41,7 @@ function Search() {
                     })
                     if (selectedVerses.length > 0) {
                         result.push({
+                            chapterId: chapter.chapterId,
                             chapter: chapter.titleInAurabic,
                             chapterEnglish: chapter.titleInEnglish,
                             verses: selectedVerses
@@ -66,7 +69,7 @@ function Search() {
                     name="search"
                     onChange={handleSearch}
                 />
-                { searchResult.map(item => <SearchCard data={item} /> ) }
+                { searchResult.map(item => <SearchCard data={item} keyword={searchKeyword} /> ) }
             </Container>
         </div>
     )

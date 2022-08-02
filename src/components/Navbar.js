@@ -8,13 +8,22 @@ import InfoIcon from '@mui/icons-material/Info';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import PersonIcon from '@mui/icons-material/Person';
 import HomeIcon from '@mui/icons-material/Home';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { update as searchUpdate } from '../redux/searchSlice'
 
 function Navbar() {
   const [isInfoOpen, setIsInfoOpen] = React.useState(false)
   const [search, setSearch] = React.useState("")
   const [globalSearchOpen, setGlobalSearchOpen] = React.useState(false)
+  let loggedIn = localStorage.getItem("user") ? true : false;
+  let user = loggedIn ? JSON.parse(localStorage.getItem("user")) : null
   const colors = useSelector(data => data.settings.colors)
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    dispatch(searchUpdate(search))
+  }, [search])
+
   return (
     <React.Fragment>
     <Wrapper colors={colors}>      
@@ -22,7 +31,7 @@ function Navbar() {
         <Flex gap="30px" className="full-size">
           <Link to="/"><HomeIcon /></Link>
           <h1>THE CLEAR QURAN</h1>
-          <div className='search-container'>
+          {!window.location.href.split("/").includes("search") && <div className='search-container'>
               <i className="fa-solid fa-magnifying-glass" onClick={() => setGlobalSearchOpen(true)}></i>
               <input 
                 type="text" 
@@ -30,10 +39,10 @@ function Navbar() {
                 placeholder='Search...' 
                 onChange={e => setSearch(e.target.value)}
               />
-          </div>
+          </div>}
           <Flex className="menu-link" gap="10px">
-            <Link to="/profile"><PersonIcon /> </Link>
-            <Link to="/notes"><NoteAltIcon /></Link>
+            {loggedIn && <Link to="/profile"><PersonIcon /> </Link> }
+            {(loggedIn && user.isPaid) && <Link to="/notes"><NoteAltIcon /></Link> }
             <div className="quran_info" onClick={() => setIsInfoOpen(true)}><InfoIcon /></div>
           </Flex>          
         </Flex>

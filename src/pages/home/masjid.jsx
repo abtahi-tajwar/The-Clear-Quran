@@ -8,10 +8,12 @@ import axios from "axios";
 import { headers, routes } from "../../routes";
 import { useDispatch } from "react-redux/es/exports";
 import { init as userInit } from "../../redux/userSlice";
+import { useSelector } from "react-redux/es/exports";
 
 export default function Masjid() {
   const dispatch = useDispatch();
   let loggedIn = localStorage.getItem("user") ? true : false;
+  let user = loggedIn ? JSON.parse(localStorage.getItem("user")) : null
   const [countryCode, setCountryCode] = useState([]);
   const [country, setCountry] = useState([]);
   const [mobileNo, setMobileNo] = useState("");
@@ -115,28 +117,78 @@ export default function Masjid() {
       {/* First this React Fragment was embedded with "menu" variable, if menu is true this will show */}
         { loggedIn ? 
           <>
-            <div className={`row`}>
-              <div className={`col-md-12 col-sm-12`}>
-                { loggedIn && <Link className={`home-tile`} to="/profile">
-                  <i className={`fa fa-user-o`} aria-hidden="true"></i>
-                  <br />
-                  <span>profile</span>
-                </Link> }
-                <Link className={`home-tile`} to="/surah">
-                  <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
-                  <br />                  
-                  <span>surah</span>                  
-                </Link>
+          {
+            user.isPaid ? 
+            <>
+              <div className={`row`}>
+                <div className={`col-md-12 col-sm-12`}>
+                  { loggedIn && <Link className={`home-tile`} to="/profile">
+                    <i className={`fa fa-user-o`} aria-hidden="true"></i>
+                    <br />
+                    <span>profile</span>
+                  </Link> }
+                  <Link className={`home-tile`} to="/surah">
+                    <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
+                    <br />                  
+                    <span>surah</span>                  
+                  </Link>
+                </div>
               </div>
-            </div>
+              <div className={`row`}>
+                <div className={`col-md-12 col-sm-12`}>
+                  <div className="home-tile-row">
+                    {loggedIn && <Link className={`home-tile`} to="/notes">
+                      <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
+                      <br />
+                      <span>notes</span>
+                    </Link>}
+                    {loggedIn && <Link className={`home-tile`} to="/bookmarks">
+                      <i className={`fa fa-bookmark-o`} aria-hidden="true"></i>
+                      <br />
+                      <span>bookm.</span>
+                    </Link>}
+                    <Link className={`home-tile`} to="/search">
+                      <i className={`fa fa-search`} aria-hidden="true"></i>
+                      <br />
+                      <span>search</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className={`row`}>
+                <div className={`col-md-12 col-sm-12`}>
+                  <a href={`https://alfurqaanfoundation.givingfuel.com/furqaan-project`} className={`home-tile`}>
+                    <i className={`fa fa-gift`} aria-hidden="true"></i>
+                    <br />
+                    <span>donate</span>
+                  </a>
+                  <a href={`https://theclearquran.org/`} className={`home-tile`}>
+                    <i className={`fa fa-shopping-cart`} aria-hidden="true"></i>
+                    <br />
+                    <span>buy</span>
+                  </a>
+                  <Link className={`home-tile`} to="/contact">
+                    <i className={`fa fa-phone`} aria-hidden="true"></i>
+                    <br />
+                    <span>contact</span>
+                  </Link>
+                  <Link className={`home-tile`} to="/about">
+                    <i className={`fa fa-user-circle`} aria-hidden="true"></i>
+                    <br />
+                    <span>about</span>
+                  </Link>
+                </div>
+              </div>
+            </> :
+            <>
             <div className={`row`}>
               <div className={`col-md-12 col-sm-12`}>
                 <div className="home-tile-row">
-                  {loggedIn && <Link className={`home-tile`} to="/notes">
+                  <Link className={`home-tile`} to="/surah">
                     <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
-                    <br />
-                    <span>notes</span>
-                  </Link>}
+                    <br />                  
+                    <span>surah</span>                  
+                  </Link>
                   {loggedIn && <Link className={`home-tile`} to="/bookmarks">
                     <i className={`fa fa-bookmark-o`} aria-hidden="true"></i>
                     <br />
@@ -174,6 +226,8 @@ export default function Masjid() {
                 </Link>
               </div>
             </div>
+            </>
+          }
           </> : 
           <>
           <div className={`row`}>

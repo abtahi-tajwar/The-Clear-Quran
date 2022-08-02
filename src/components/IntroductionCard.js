@@ -40,6 +40,9 @@ const Wrapper = styled.div`
         padding: 20px;
         margin-top: 10px;
         position: relative;
+        .title {
+            color: black;
+        }
         &::before {
             content: "";
             display: block;

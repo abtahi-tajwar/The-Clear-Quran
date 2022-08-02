@@ -5,6 +5,7 @@ import notesSlice from './notesSlice'
 import aboutSlice from './aboutSlice'
 import bookmarkSlice from './bookmarkSlice'
 import settingsSlice from './settingsSlice'
+import searchSlice from './searchSlice'
 
 export default configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export default configureStore({
     notes: notesSlice,
     about: aboutSlice,
     bookmark: bookmarkSlice,
-    settings: settingsSlice
+    settings: settingsSlice,
+    search: searchSlice
   },
 })

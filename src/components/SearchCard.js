@@ -5,13 +5,23 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 
-function SearchCard({ data }) {
+function SearchCard({ data = [], keyword }) {
     const colors = useSelector(data => data.settings.colors)
+
+    const verses = data.verses.map(verse => {
+        const start = verse.verseInEnglish.toLowerCase().indexOf(keyword.toLowerCase())
+        const end = start + keyword.length
+        const result = verse.verseInEnglish.substring(0, start) + '<span class="search-mark">' + verse.verseInEnglish.substring(start, end) + "</span>" + verse.verseInEnglish.substring(end, verse.verseInEnglish.length)
+        return {
+            ...verse,
+            resultText: result
+        }
+    })
   return (
     <Wrapper colors={colors}>
-        <p className="title">{ data.chapter } ({ data.chapterEnglish }) </p>
-        { data.verses.map(verse => <Link to={`/surah-single/${verse.chapterId}?verse=${verse.verseId}`}><div className="details">
-            <p class="verse-details">{verse.verseInEnglish} <span className="ayat-marking">{verse.verseId}</span></p>
+        <p className="title">({ data.chapterId }) { data.chapter } ({ data.chapterEnglish }) </p>
+        { verses.map(verse => <Link to={`/surah-single/${verse.chapterId}?verse=${verse.verseId}`}><div className="details">
+            <p class="verse-details"><div dangerouslySetInnerHTML={{__html: verse.resultText}}></div><span className="ayat-marking">{verse.verseId}</span></p>
             <p class="arabic"><span className="ayat-marking">{verse.verseId}</span> {verse.verseInAurabic}</p>
         </div></Link>) }
     </Wrapper>
@@ -29,6 +39,7 @@ const Wrapper = styled.div`
     padding-right: 20px;
     margin: 20px 0px;
     position: relative;
+    font-size: 18px;
     .title {
         position: absolute;
         background-color: ${props => props.colors.base};
@@ -37,6 +48,9 @@ const Wrapper = styled.div`
         top: -10px;
         padding: 5px 15px;
     }
+    .search-mark {
+        background-color: yellow;
+    }
     .details {
         .verse-details {
             font-weight: bold;
@@ -44,6 +58,7 @@ const Wrapper = styled.div`
         }
         .arabic {
             text-align: right;
+            font-family: "Uthmanic-Hafs";
         }
         .ayat-marking {
             border: 1px solid black;

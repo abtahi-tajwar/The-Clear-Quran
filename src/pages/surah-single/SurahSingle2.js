@@ -47,12 +47,19 @@ function SurahSingle2() {
     const [note, setNote] = React.useState()
     const [addNoteModalOpen, setAddNoteModalOpen] = React.useState(false)
     const [currentParagraph, setCurrentParagraph] = React.useState()
+    const [selectedParagraphId, setSelectedParagraphId] = React.useState(0)
     const [settingsOpen, setSettingsOpen] = React.useState(false)
-    const [fontSize, setFontSize] = React.useState(16)
-    const [paragraphMode, setParagraphMode] = React.useState(userId === -1 ? false : true)
+    const [fontSize, setFontSize] = React.useState(18)
+    const [paragraphMode, setParagraphMode] = React.useState(!data.user ? false : true)
     const [showAurabic, setShowAurabic] = React.useState(true)
     const [showEnglish, setShowEnglish] = React.useState(true)
     const [addNoteLoading, setAddNoteLoading] = React.useState(false)
+    const [footNoteOpen, setFootNoteOpen] = React.useState(false)
+    const [currentFootnote, setCurrentFootnote] = React.useState({
+        serial: 0,
+        text: '',
+        verse: 0
+    })
     const [confirmationPopup, setConfirmationPopup] = React.useState({        
         isOpen: false,
         text: "",
@@ -60,7 +67,14 @@ function SurahSingle2() {
     })
     React.useEffect(() => {
         setUserId(data.user ? data.user.userId : -1)
-        setParagraphMode(true)
+        if (data.user) {
+            // if (data.user.isPaid) {
+            //     setParagraphMode(true)
+            // } else {
+            //     setParagraphMode(false)
+            // }
+            setParagraphMode(true)
+        }        
     }, [data.user])
     React.useEffect(() => {
         console.log("All surah updated")
@@ -96,7 +110,8 @@ function SurahSingle2() {
         }
     }, [surah])
 
-    const scrollToParagraph = (e, id) => {  
+    const scrollToParagraph = (e, id) => { 
+        setSelectedParagraphId(id) 
         // Event can be null as the funcion is also called without event 
         if (e) {
             document.querySelectorAll(".selector").forEach(item => {
@@ -210,6 +225,10 @@ function SurahSingle2() {
             }
         })
     }
+    const showFootnote = (serial, text, verse) => {
+        setCurrentFootnote({ serial, text, verse })
+        setFootNoteOpen(true)
+    }
     return (
         <div>
             {currentParagraph && <Modal 
@@ -232,6 +251,14 @@ function SurahSingle2() {
                     onClick={handleAddNote}
                 > <AddIcon /> Add </Buttonbtn> { addNoteLoading && <CircularProgress size="30px" style={{ marginLeft: '15px' }}/> }
             </Modal> }
+            <Modal
+                open={footNoteOpen}
+                handleClose={() => setFootNoteOpen(false)}
+                title={'FOOTNOTES'}
+            >
+                <p>Verse: {currentFootnote.verse}</p>
+                <p>{currentFootnote.serial}. {currentFootnote.text}</p>
+            </Modal>
             {surah && <Heading colors={colors}>
                 <Link to="/surah" className="back-button"><ArrowBackIcon /></Link>
                 <h1 className="surah-name">{surah.titleInEnglish} ({surah.titleInAurabic})</h1>
@@ -274,7 +301,7 @@ function SurahSingle2() {
                     <div className="settings-section">
                         <p className="section-title">Reading Mode</p>
                         <div className="section-content">
-                            {userId === -1 ?
+                            {userId === -1 || !data.user.isPaid ?
                                 <FormControlLabel control={<Checkbox disabled />} label="Paragraph Mode" onChange={() => setParagraphMode(!paragraphMode)} /> :
                                 <FormControlLabel control={<Checkbox defaultChecked />} label="Paragraph Mode" onChange={() => setParagraphMode(!paragraphMode)} />
                             }
@@ -290,17 +317,17 @@ function SurahSingle2() {
                 <React.Fragment>
                 {paragraphWiseVerse && paragraphWiseVerse.map(paragraph =>
                     <div id={`surah-paragraph-${paragraph.id}`} className="paragraph">
-                        { showEnglish && <div className="verse-card english-verses">
+                        { showEnglish && <div className={"verse-card english-verses " + (paragraph.id === selectedParagraphId ? "selected-paragraph" : "")}>
                             <h2 className="paragraph-title">{paragraph.title}</h2>
                             <div className="action-icons">
                                 <button onClick={() => addNoteAction(paragraph)}><img src={AddNoteIcon} /></button>
                                 { !paragraph.isUserBookmarked && <button onClick={e => addBookmark(e, paragraph)}><img src={BookmarkIcon} /></button> }
                             </div>
                             {paragraph.verses.map(verse => verse && <span>
-                                <b>({verse.verseId})</b> {verse.verseInEnglish} &nbsp;
+                                <b>({verse.verseId})</b> {verse.verseInEnglish} {verse.footNote !== "" && <button onClick={() => showFootnote(verse.footNote, verse.footNoteExplanation, verse.verseId)} className="footnote-btn"><sup>{verse.footNote}</sup></button>} &nbsp;
                             </span>)}
                         </div> }
-                        { showAurabic && <div className="verse-card arabic-verses">
+                        { showAurabic && <div className={"verse-card arabic-verses " + (paragraph.id === selectedParagraphId ? "selected-paragraph" : "") }>
                             { !showEnglish && <React.Fragment>
                                 <h2 className="paragraph-title" style={{ textAlign: 'left'}}>{paragraph.title}</h2>
                                 <div className="action-icons">
@@ -317,7 +344,7 @@ function SurahSingle2() {
                 <div className="no-paragraph">
                     {surah.verses.map(verse => 
                     <div>
-                        { showEnglish && <div className="verse english-verse">{verse.verseId}. {verse.verseInEnglish}</div> }
+                        { showEnglish && <div className="verse english-verse">{verse.verseId}. {verse.verseInEnglish} {verse.footNote !== "" && <button onClick={() => showFootnote(verse.footNote, verse.footNoteExplanation, verse.verseId)} className="footnote-btn"><sup>{verse.footNote}</sup></button>} </div> } 
                         { showAurabic && <div className="verse arabic-verse">{verse.verseInAurabic} .{verse.verseId}</div> }
                     </div>)}
                 </div>
@@ -431,6 +458,9 @@ const Container = styled.div`
     }
     .paragraph {
         margin-bottom: 30px;
+        .selected-paragraph {
+            border: 2px solid ${props => props.colors.base};
+        }
         .verse-card {
             width: 100%;
             box-shadow: 0px 3px 11px rgba(0, 0, 0, 0.08);
@@ -506,6 +536,13 @@ const Container = styled.div`
             text-align: right;
             background-color: ${props => props.colors.lightGray};
         }
+    }
+    .footnote-btn {
+        border: none;
+        outline: none;
+        font-weight: bold;
+        background-color: transparent;
+        text-decoration: underline;
     }
 `
 const SettingsContainer = styled.div`

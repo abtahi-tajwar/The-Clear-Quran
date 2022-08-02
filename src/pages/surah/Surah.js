@@ -11,7 +11,7 @@ import { TextField } from "@mui/material";
 
 function Surah() {
   const [load, setLoad] = useState(true);
-  const [search, setSearch] = useState("");
+  const search = useSelector(data => data.search)
   const data = useSelector(data => data.surah)
   const [resultData, setResultData] = useState([])
   
@@ -22,7 +22,9 @@ function Surah() {
     }
   }, [data])
   React.useEffect(() => {
-    setResultData(data.filter(item => (item.titleInEnglish.includes(search) || item.titleInAurabic.includes(search))))
+    if(data.length > 0) { 
+      setResultData(data.filter(item => (item.titleInEnglish.toLowerCase().includes(search.toLowerCase()) || item.titleInAurabic.toLowerCase().includes(search.toLowerCase()))))
+    }    
   }, [search])
 
   const override = css`

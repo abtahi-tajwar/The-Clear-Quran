@@ -15,6 +15,7 @@ import { init as notesInit } from './redux/notesSlice';
 import { init as aboutInit } from './redux/aboutSlice'
 import { init as bookmarkInit } from "./redux/bookmarkSlice";
 import { initAndStore as bookmarkInitAndStore } from "./redux/bookmarkSlice";
+import { setBaseColor } from "./redux/settingsSlice";
 import Contact from './pages/contact/Contact';
 import { routes, headers } from './routes'
 import { useSelector } from 'react-redux/es/exports';
@@ -29,6 +30,7 @@ import Bookmark from "./pages/bookmark/Bookmark";
 
 function App() {
   let loggedIn = localStorage.getItem("user") ? true : false;
+  let baseColor = localStorage.getItem("basecolor");
   let bookmarkData = localStorage.getItem("bookmarks") ? JSON.parse(localStorage.getItem("bookmarks")) : false
   const allData = useSelector(data => data)
   const userState = allData.user
@@ -40,6 +42,10 @@ function App() {
 
   React.useEffect(() => {
     dispatch(init(quranData.response.chapters))
+    if (baseColor) {
+      console.log(baseColor)
+      dispatch(setBaseColor(baseColor))
+    }
   }, [])
   React.useEffect(() => {
     if (!loggedIn) {

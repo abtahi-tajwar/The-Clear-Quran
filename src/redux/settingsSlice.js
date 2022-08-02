@@ -13,11 +13,14 @@ export const aboutSlice = createSlice({
     }
   },
   reducers: {
-    setBaseColor: (state, action) => ({ ...state, colors: { ...state.colors, base: action.payload } })
+    setBaseColor: (state, action) => { 
+      localStorage.setItem("basecolor", action.payload)
+      return { ...state, colors: { ...state.colors, base: action.payload } }
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setColor } = aboutSlice.actions
+export const { setColor, setBaseColor } = aboutSlice.actions
 
 export default aboutSlice.reducer
