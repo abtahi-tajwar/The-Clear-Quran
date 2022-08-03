@@ -68,12 +68,11 @@ function SurahSingle2() {
     React.useEffect(() => {
         setUserId(data.user ? data.user.userId : -1)
         if (data.user) {
-            // if (data.user.isPaid) {
-            //     setParagraphMode(true)
-            // } else {
-            //     setParagraphMode(false)
-            // }
-            setParagraphMode(true)
+            if (data.user.isPaid) {
+                setParagraphMode(true)
+            } else {
+                setParagraphMode(false)
+            }
         }        
     }, [data.user])
     React.useEffect(() => {
