@@ -23,7 +23,8 @@ function Surah() {
   }, [data])
   React.useEffect(() => {
     if(data.length > 0) { 
-      setResultData(data.filter(item => (item.titleInEnglish.toLowerCase().includes(search.toLowerCase()) || item.titleInAurabic.toLowerCase().includes(search.toLowerCase()))))
+      console.log("Surah data", search)
+      setResultData(data.filter(item => (item.titleInEnglish.toLowerCase().includes(search.toLowerCase()) || item.titleInAurabic.includes(search))))
     }    
   }, [search])
 
