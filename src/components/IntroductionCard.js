@@ -4,7 +4,7 @@ import InfoIcon from '@mui/icons-material/Info';
 // import { colors } from '../Style.style';
 import { useSelector } from 'react-redux';
 
-function IntroductionCard({ intro }) {
+function IntroductionCard({ intro, chapterInfo }) {
     const colors = useSelector(data => data.settings.colors)
     return (
         <Wrapper colors={colors}>
@@ -12,7 +12,7 @@ function IntroductionCard({ intro }) {
                 <InfoIcon />
             </div>
             <div className="intro-card">
-                <h3 className="title">Introduction</h3>
+                <h3 className="title">Introduction - {chapterInfo.chapterId}. {chapterInfo.titleInEnglish} ({chapterInfo.titleInAurabic})</h3>
                 <p className="details">{intro}</p>
             </div>            
         </Wrapper>
@@ -41,7 +41,18 @@ const Wrapper = styled.div`
         margin-top: 10px;
         position: relative;
         .title {
-            color: black;
+            color: ${props => props.colors.base};
+            font-size: 1.2rem;
+            text-transform: capitalize;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",sans-serif;
+            &:after {
+                content: "";
+                display: block;
+                height: 1px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                background-color: lightgray;
+            }
         }
         &::before {
             content: "";

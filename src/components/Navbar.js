@@ -10,6 +10,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import HomeIcon from '@mui/icons-material/Home';
 import { useSelector, useDispatch } from 'react-redux'
 import { update as searchUpdate } from '../redux/searchSlice'
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
 function Navbar() {
   const [isInfoOpen, setIsInfoOpen] = React.useState(false)
@@ -44,6 +45,7 @@ function Navbar() {
             {loggedIn && <Link to="/profile"><PersonIcon /> </Link> }
             {(loggedIn && user.isPaid) && <Link to="/notes"><NoteAltIcon /></Link> }
             <div className="quran_info" onClick={() => setIsInfoOpen(true)}><InfoIcon /></div>
+            <Link to="/contact"><LocalPhoneIcon /></Link>
           </Flex>          
         </Flex>
       </Container>      

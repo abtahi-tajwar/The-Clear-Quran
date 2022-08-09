@@ -1,6 +1,7 @@
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import styled from "styled-components";
 import Select from "react-select";
 import data from "./countries.json";
 import { firebase } from "../../config/firebase";
@@ -9,11 +10,18 @@ import { headers, routes } from "../../routes";
 import { useDispatch } from "react-redux/es/exports";
 import { init as userInit } from "../../redux/userSlice";
 import { useSelector } from "react-redux/es/exports";
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import Modal from '../../components/Modal'
+import { ClipLoader } from "react-spinners";
+
 
 export default function Masjid() {
   const dispatch = useDispatch();
-  let loggedIn = localStorage.getItem("user") ? true : false;
-  let user = loggedIn ? JSON.parse(localStorage.getItem("user")) : null
+  let isLoggedIn = localStorage.getItem("user") ? true : false;
+  let user = isLoggedIn ? JSON.parse(localStorage.getItem("user")) : null
+  const colors = useSelector(data => data.settings.colors)
+  const [loggedIn, setLoggedIn] = useState(isLoggedIn)
   const [countryCode, setCountryCode] = useState([]);
   const [country, setCountry] = useState([]);
   const [mobileNo, setMobileNo] = useState("");
@@ -22,7 +30,52 @@ export default function Masjid() {
   const [input, setInput] = useState(false);
   const [mInput, setMInput] = useState(true);
   const [code, setCode] = useState("");
-  
+  const [qrCode, setQrCode] = useState(null)
+  const [qrId, setQrId] = useState(null)
+  const [loginLoading, setLoginLoading] = useState(false)
+  const [confirmationPopup, setConfirmationPopup] = useState({
+    isOpen: false,
+    text: "",
+    error: false
+  })
+  const [isQrModalOpen, setIsQrModalOpen] = useState(false)
+  const openQRLoginModal = e => {
+    e.preventDefault()
+    setIsQrModalOpen(true)
+    axios.get(routes.getQR).then(result => {
+      console.log(result.data.response.qrId)
+      setQrId(result.data.response.qrId)
+      setQrCode(result.data.response.qrcode)
+    })
+  }
+  const loginWithQRId = () => {
+    setLoginLoading(true)
+    console.log("Login info", { id: qrId })
+    axios.post(routes.loginAfterQrVerify, { id: qrId }).then(res => {
+      console.log("Login response", res.data)
+      if (res.data.status === "Success") {
+        setLoginLoading(false)
+        setLoggedIn(true)
+        const userData = JSON.stringify(res.data.response);
+        localStorage.setItem("user", userData);
+        dispatch(userInit(res.data.response));
+        setIsQrModalOpen(false)
+        setConfirmationPopup({
+          isOpen: true,
+          text: "Successfully Logged In!",
+          error: false
+        })
+      } else {
+        setLoginLoading(false)
+        setConfirmationPopup({
+          isOpen: true,
+          text: "Please verify QR on mobile App first or refresh and try again",
+          error: true
+        })
+      }
+    })
+  }
+
   const getCountryCode = () => {
     let x = country;
     data.map((e) => {
@@ -96,8 +149,8 @@ export default function Masjid() {
     };
     console.log(routes.registerUser)
     axios.post(routes.registerUser, body, {
-        headers: headers,
-      })
+      headers: headers,
+    })
       .then((res) => {
         const userData = JSON.stringify(res.data.response);
         localStorage.setItem("user", userData);
@@ -114,149 +167,178 @@ export default function Masjid() {
 
   return (
     <div className={`masjid-container`}>
+      {!loggedIn && <Modal
+        open={isQrModalOpen}
+        title={`Sync With Mobile App`}
+      >
+        {qrCode ?
+          <QRCode colors={colors}>
+            <button class="close-btn" onClick={() => setIsQrModalOpen(false)}><CancelRoundedIcon /></button>
+            <div class="qr-container">
+              <img src={qrCode} height="100px" />
+              <p>Please Login to access more exciting features. <b><u>Scan the QR code</u></b> with <u><a href="">Clear Quran</a></u> mobile app, after finish scanning press continue  </p>
+            </div>
+            <button className={loginLoading ? "qr-confirm-btn disabled" : "qr-confirm-btn"} onClick={loginWithQRId}>Continue</button>
+            {loginLoading && <p>Login may take a minute! Please wait</p>}
+            <ClipLoader loading={loginLoading} color={colors.base} size={30} />
+          </QRCode> :
+          <ClipLoader />
+        }
+      </Modal>
+      }
       {/* First this React Fragment was embedded with "menu" variable, if menu is true this will show */}
-        { loggedIn ? 
-          <>
+      {loggedIn ?
+        <>
           {
-            user.isPaid ? 
-            <>
-              <div className={`row`}>
-                <div className={`col-md-12 col-sm-12`}>
-                  { loggedIn && <Link className={`home-tile`} to="/profile">
-                    <i className={`fa fa-user-o`} aria-hidden="true"></i>
-                    <br />
-                    <span>profile</span>
-                  </Link> }
-                  <Link className={`home-tile`} to="/surah">
-                    <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
-                    <br />                  
-                    <span>surah</span>                  
-                  </Link>
-                </div>
-              </div>
-              <div className={`row`}>
-                <div className={`col-md-12 col-sm-12`}>
-                  <div className="home-tile-row">
-                    {loggedIn && <Link className={`home-tile`} to="/notes">
+            user.isPaid ?
+              <>
+                <div className={`row`}>
+                  <div className={`col-md-12 col-sm-12`}>
+                    {loggedIn && <Link className={`home-tile`} to="/profile">
+                      <i className={`fa fa-user-o`} aria-hidden="true"></i>
+                      <br />
+                      <span>profile</span>
+                    </Link>}
+                    <Link className={`home-tile`} to="/surah">
                       <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
                       <br />
-                      <span>notes</span>
-                    </Link>}
-                    {loggedIn && <Link className={`home-tile`} to="/bookmarks">
-                      <i className={`fa fa-bookmark-o`} aria-hidden="true"></i>
-                      <br />
-                      <span>bookm.</span>
-                    </Link>}
-                    <Link className={`home-tile`} to="/search">
-                      <i className={`fa fa-search`} aria-hidden="true"></i>
-                      <br />
-                      <span>search</span>
+                      <span>surah</span>
                     </Link>
                   </div>
                 </div>
-              </div>
-              <div className={`row`}>
-                <div className={`col-md-12 col-sm-12`}>
-                  <a href={`https://alfurqaanfoundation.givingfuel.com/furqaan-project`} className={`home-tile`}>
-                    <i className={`fa fa-gift`} aria-hidden="true"></i>
-                    <br />
-                    <span>donate</span>
-                  </a>
-                  <a href={`https://theclearquran.org/`} className={`home-tile`}>
-                    <i className={`fa fa-shopping-cart`} aria-hidden="true"></i>
-                    <br />
-                    <span>buy</span>
-                  </a>
-                  <Link className={`home-tile`} to="/contact">
-                    <i className={`fa fa-phone`} aria-hidden="true"></i>
-                    <br />
-                    <span>contact</span>
-                  </Link>
-                  <Link className={`home-tile`} to="/about">
-                    <i className={`fa fa-user-circle`} aria-hidden="true"></i>
-                    <br />
-                    <span>about</span>
-                  </Link>
+                <div className={`row`}>
+                  <div className={`col-md-12 col-sm-12`}>
+                    <div className="home-tile-row">
+                      {loggedIn && <Link className={`home-tile`} to="/notes">
+                        <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
+                        <br />
+                        <span>notes</span>
+                      </Link>}
+                      {loggedIn && <Link className={`home-tile`} to="/bookmarks">
+                        <i className={`fa fa-bookmark-o`} aria-hidden="true"></i>
+                        <br />
+                        <span>bookm.</span>
+                      </Link>}
+                      <Link className={`home-tile`} to="/search">
+                        <i className={`fa fa-search`} aria-hidden="true"></i>
+                        <br />
+                        <span>search</span>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </> :
-            <>
-            <div className={`row`}>
-              <div className={`col-md-12 col-sm-12`}>
-                <div className="home-tile-row">
-                  <Link className={`home-tile`} to="/surah">
-                    <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
-                    <br />                  
-                    <span>surah</span>                  
-                  </Link>
-                  {loggedIn && <Link className={`home-tile`} to="/bookmarks">
-                    <i className={`fa fa-bookmark-o`} aria-hidden="true"></i>
-                    <br />
-                    <span>bookm.</span>
-                  </Link>}
-                  <Link className={`home-tile`} to="/search">
-                    <i className={`fa fa-search`} aria-hidden="true"></i>
-                    <br />
-                    <span>search</span>
-                  </Link>
+                <div className={`row`}>
+                  <div className={`col-md-12 col-sm-12`}>
+                    <a href={`https://alfurqaanfoundation.givingfuel.com/furqaan-project`} className={`home-tile`}>
+                      <i className={`fa fa-gift`} aria-hidden="true"></i>
+                      <br />
+                      <span>donate</span>
+                    </a>
+                    <a href={`https://theclearquran.org/`} className={`home-tile`}>
+                      <i className={`fa fa-shopping-cart`} aria-hidden="true"></i>
+                      <br />
+                      <span>buy</span>
+                    </a>
+                    <Link className={`home-tile`} to="/contact">
+                      <i className={`fa fa-phone`} aria-hidden="true"></i>
+                      <br />
+                      <span>contact</span>
+                    </Link>
+                    <Link className={`home-tile`} to="/about">
+                      <i className={`fa fa-user-circle`} aria-hidden="true"></i>
+                      <br />
+                      <span>about</span>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className={`row`}>
-              <div className={`col-md-12 col-sm-12`}>
-                <a href={`https://alfurqaanfoundation.givingfuel.com/furqaan-project`} className={`home-tile`}>
-                  <i className={`fa fa-gift`} aria-hidden="true"></i>
-                  <br />
-                  <span>donate</span>
-                </a>
-                <a href={`https://theclearquran.org/`} className={`home-tile`}>
-                  <i className={`fa fa-shopping-cart`} aria-hidden="true"></i>
-                  <br />
-                  <span>buy</span>
-                </a>
-                <Link className={`home-tile`} to="/contact">
-                  <i className={`fa fa-phone`} aria-hidden="true"></i>
-                  <br />
-                  <span>contact</span>
-                </Link>
-                <Link className={`home-tile`} to="/about">
-                  <i className={`fa fa-user-circle`} aria-hidden="true"></i>
-                  <br />
-                  <span>about</span>
-                </Link>
-              </div>
-            </div>
-            </>
+              </> :
+              <>
+                <div className={`row`}>
+                  <div className={`col-md-12 col-sm-12`}>
+                    <div className="home-tile-row">
+                      <Link className={`home-tile`} to="/surah">
+                        <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
+                        <br />
+                        <span>surah</span>
+                      </Link>
+                      {loggedIn && <Link className={`home-tile`} to="/bookmarks">
+                        <i className={`fa fa-bookmark-o`} aria-hidden="true"></i>
+                        <br />
+                        <span>bookm.</span>
+                      </Link>}
+                      <Link className={`home-tile`} to="/search">
+                        <i className={`fa fa-search`} aria-hidden="true"></i>
+                        <br />
+                        <span>search</span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <div className={`row`}>
+                  <div className={`col-md-12 col-sm-12`}>
+                    <a href={`https://alfurqaanfoundation.givingfuel.com/furqaan-project`} className={`home-tile`}>
+                      <i className={`fa fa-gift`} aria-hidden="true"></i>
+                      <br />
+                      <span>donate</span>
+                    </a>
+                    <a href={`https://theclearquran.org/`} className={`home-tile`}>
+                      <i className={`fa fa-shopping-cart`} aria-hidden="true"></i>
+                      <br />
+                      <span>buy</span>
+                    </a>
+                    <Link className={`home-tile`} to="/contact">
+                      <i className={`fa fa-phone`} aria-hidden="true"></i>
+                      <br />
+                      <span>contact</span>
+                    </Link>
+                    <Link className={`home-tile`} to="/about">
+                      <i className={`fa fa-user-circle`} aria-hidden="true"></i>
+                      <br />
+                      <span>about</span>
+                    </Link>
+                  </div>
+                </div>
+              </>
           }
-          </> : 
-          <>
-          <div className={`row`}>
+        </> :
+        <>
+          {/* <div className={`row`}>
             <div className={`col-md-12 col-sm-12`}>
               <div className="home-tile-row" style={{ width: '300px', textAlign: 'right', marginBottom: '16px'}}>                 
                 Please Login to access more exciting features. <b><u>Scan the QR code</u></b> with <u><a href="">Clear Quran</a></u> mobile app, after finish scanning press continue                
               </div>
             </div>
-          </div>
-          
-         
+          </div> */}
+
           <div className={`row`}>
             <div className={`col-md-12 col-sm-12`}>
-              <div className="home-tile-row">                
-                <Link className={`home-tile`} to="/contact">
-                  <i className={`fa fa-phone`} aria-hidden="true"></i>
-                  <br />
-                  <span>contact</span>
-                </Link>
-                <Link className={`home-tile`} to="/search">
-                  <i className={`fa fa-search`} aria-hidden="true"></i>
-                  <br />
-                  <span>search</span>
-                </Link>
+              <div className="home-tile-row">
                 <Link className={`home-tile`} to="/surah">
                   <i className={`fa fa-file-text-o`} aria-hidden="true"></i>
                   <br />
                   <span>surah</span>
                 </Link>
+              </div>
+            </div>
+          </div>
+          <div className={`row`}>
+            <div className={`col-md-12 col-sm-12`}>
+              <div className="home-tile-row">
+                {/* <Link className={`home-tile`} to="/contact">
+                  <i className={`fa fa-phone`} aria-hidden="true"></i>
+                  <br />
+                  <span>contact</span>
+                </Link> */}
+                <Link className={`home-tile`} to="/search">
+                  <i className={`fa fa-search`} aria-hidden="true"></i>
+                  <br />
+                  <span>search</span>
+                </Link>
+                <a className={`home-tile`} href="#" onClick={openQRLoginModal}>
+                  <QrCodeScannerIcon />
+                  <br />
+                  <span>Login</span>
+                </a>
               </div>
             </div>
           </div>
@@ -280,8 +362,8 @@ export default function Masjid() {
             </div>
           </div>
         </>
-        } 
-      
+      }
+
 
       {/* {otp && (
         <div class="row">
@@ -334,3 +416,51 @@ export default function Masjid() {
     </div>
   );
 }
+
+const QRCode = styled.div`  
+  margin-top: 20px;  
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  .qr-container {
+    display: flex;
+    gap: 25px;
+    & > img {
+      padding: 20px;
+      width: 250px;
+      height: 250px;
+      border: 1px solid ${props => props.colors.base};
+    }
+    p {
+      flex: 1;
+      font-size: 1.2rem;
+    }
+  }
+  .qr-confirm-btn {
+    border: none;
+    outline: none;
+    color: white;
+    background-color: ${props => props.colors.base};
+    padding: 9px 16px;
+    cursor: pointer;
+    transition: background .2s ease-out;
+    &:hover {
+      background-color: ${props => props.colors.dark};
+    }
+  }
+  .qr-confirm-btn.disabled {
+    pointer-events: none;
+    color: gray;
+  }
+  .close-btn {
+    position: absolute;
+    height: 64px;
+    top: 0px;
+    right: 20px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }
+`

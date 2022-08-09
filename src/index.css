@@ -1114,7 +1114,16 @@ h6 {
   position: relative;
   margin: 0;
 }
-
+.new-quran > h1 > .registered {
+  font-weight: 100;
+}
+.new-quran > .series-text {
+  font-size: 1.2rem;
+  margin-left: 280px;
+  margin-bottom: 15px;
+  font-style: italic;
+  margin-top: -10px;
+}
 @media screen and (max-width: 1023px) {
   .new-quran h6 {
     font-size: 22px;
@@ -1140,6 +1149,13 @@ h6 {
 
   .get-paid-message p {
     font-size: 12px;
+  }
+  .new-quran > .series-text {
+    font-size: 0.8rem;
+    margin-left: 125px;
+    margin-bottom: 15px;
+    font-style: italic;
+    margin-top: -10px;
   }
 }
 

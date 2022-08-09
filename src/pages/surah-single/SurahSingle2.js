@@ -29,7 +29,7 @@ import { add as addBookmarkState } from '../../redux/bookmarkSlice'
 import { addBookmark as addBookmarkToSurah } from '../../redux/surahSlice'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Buttonbtn, Flex } from '../../Style.style'
-import { CircularProgress } from '@mui/material'
+import { CircularProgress, colors } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
 
 function SurahSingle2() {
@@ -260,7 +260,7 @@ function SurahSingle2() {
             </Modal>
             {surah && <Heading colors={colors}>
                 <Link to="/surah" className="back-button"><ArrowBackIcon /></Link>
-                <h1 className="surah-name">{surah.titleInEnglish} ({surah.titleInAurabic})</h1>
+                <h1 className="surah-name">The Clear Quran<span className="registered">&reg;</span></h1>
                 { paragraphMode && <div className="paragraph-selector">
                     <div className="selector selected" onClick={e => scrollToParagraph(e, -1)}><InfoIcon /></div>
                     {surah.paragraphs.map(paragraph =>
@@ -269,9 +269,10 @@ function SurahSingle2() {
                         </div>
                     )}
                 </div> }
+                <button className="settings-button" onClick={() => setSettingsOpen(true)}><SettingsIcon /></button>
             </Heading>}
             <SettingsContainer open={settingsOpen} colors={colors}>
-                <button className="settingsOpenBtn" onClick={() => setSettingsOpen(true)}><SettingsIcon /></button>
+                {/* <button className="settingsOpenBtn" onClick={() => setSettingsOpen(true)}><SettingsIcon /></button> */}
                 <div className="settings-container">
                     <h2>Settings</h2>
                     <div className="close-icon" onClick={() => setSettingsOpen(false)}><CloseIcon /></div>
@@ -310,8 +311,21 @@ function SurahSingle2() {
             </SettingsContainer>
             {surah ? <Container colors={colors} fontSize={fontSize}>
                 <div className="section" id="introduction">
-                    <IntroductionCard intro={surah.introduction} />
+                    <IntroductionCard 
+                        intro={surah.introduction} 
+                        chapterInfo={{
+                            chapterId: surah.chapterId,
+                            titleInEnglish: surah.titleInEnglish,
+                            titleInAurabic: surah.titleInAurabic
+                        }} 
+                    />
                 </div>
+                {(surah.chapterId !== 1 && surah.chapterId !== 9) && <React.Fragment>
+                    <div className="bismillah">
+                        <div className="arabic">بِسْمِ ٱللّٰهِ ٱلرَّحْمٰنِ ٱلرَّحِيمِ</div>
+                        <div className="english">In the name of God, the Merciful, the Compassionate</div>
+                    </div>
+                </React.Fragment>}
                 { paragraphMode ? 
                 <React.Fragment>
                 {paragraphWiseVerse && paragraphWiseVerse.map(paragraph =>
@@ -343,8 +357,8 @@ function SurahSingle2() {
                 <div className="no-paragraph">
                     {surah.verses.map(verse => 
                     <div>
+                        { showAurabic && <div className="verse arabic-verse">{verse.verseInAurabic}  <p style={{ display: 'inline-block'}}>.{verse.verseId}</p></div> }
                         { showEnglish && <div className="verse english-verse">{verse.verseId}. {verse.verseInEnglish} {verse.footNote !== "" && <button onClick={() => showFootnote(verse.footNote, verse.footNoteExplanation, verse.verseId)} className="footnote-btn"><sup>{verse.footNote}</sup></button>} </div> } 
-                        { showAurabic && <div className="verse arabic-verse">{verse.verseInAurabic} .{verse.verseId}</div> }
                     </div>)}
                 </div>
                 }
@@ -371,12 +385,34 @@ const Heading = styled.div`
     position: sticky;
     top: 0;
     z-index: 900;
+    .registered {
+        font-size: 3rem;
+    }
     .back-button {
         position: absolute;
         left: 10px;
         top: 10px;
         color: white;
         cursor: pointer;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background .2s ease-out;
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    }
+    .settings-button {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        position: absolute;
+        right: 15px;
+        top: 20px;
+        color: white;
         height: 40px;
         width: 40px;
         border-radius: 50%;
@@ -454,6 +490,13 @@ const Container = styled.div`
     .section {
         margin-top: 7px;
         margin-bottom: 7px;
+    }
+    .bismillah {
+        text-align: center;
+        margin-bottom: 10px;
+        .arabic {
+            font-family: "Uthmanic-Hafs";
+        }
     }
     .paragraph {
         margin-bottom: 30px;
@@ -534,6 +577,9 @@ const Container = styled.div`
             font-family: "Uthmanic-Hafs";
             text-align: right;
             background-color: ${props => props.colors.lightGray};
+        }
+        .english-verse {
+            color: ${props => props.colors.gray};
         }
     }
     .footnote-btn {

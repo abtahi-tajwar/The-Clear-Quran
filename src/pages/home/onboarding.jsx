@@ -10,6 +10,8 @@ import ConfirmationPopup from "../../components/ConfirmationPopup";
 import { useDispatch } from "react-redux";
 import { init as userInit } from "../../redux/userSlice";
 import { ClipLoader } from "react-spinners";
+import Modal from '../../components/Modal'
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
 export default function Onboarding() {
   let user = localStorage.getItem("user") ? true : false;
@@ -23,7 +25,17 @@ export default function Onboarding() {
       text: "",
       error: false
   })
+  const [isQrModalOpen, setIsQrModalOpen] = React.useState(false)
+  const [premiumModalOpen, setPremiumModalOpen] = React.useState(false)
   const dispatch = useDispatch()
+  const openQRLoginModal = () => {
+    setIsQrModalOpen(true)
+    axios.get(routes.getQR).then(result => {
+      console.log(result.data.response.qrId)
+      setQrId(result.data.response.qrId)
+      setQrCode(result.data.response.qrcode)
+    })
+  }
   const loginWithQRId = () => {
     setLoginLoading(true)
     console.log("Login info", { id: qrId })
@@ -35,6 +47,7 @@ export default function Onboarding() {
         const userData = JSON.stringify(res.data.response);
         localStorage.setItem("user", userData);
         dispatch(userInit(res.data.response));
+        setIsQrModalOpen(false)
         setConfirmationPopup({
           isOpen: true,
           text: "Successfully Logged In!",
@@ -50,38 +63,56 @@ export default function Onboarding() {
       }
     })
   }
-  React.useEffect(() => {
-    if (!loggedIn) {
-      axios.get(routes.getQR).then(result => {
-        console.log(result.data.response.qrId)
-        setQrId(result.data.response.qrId)
-        setQrCode(result.data.response.qrcode)
-      })
-    }      
-  }, [])
+  // React.useEffect(() => {
+  //   if (!loggedIn) {
+      
+  //   }      
+  // }, [])
   
   return (
     <>
+      <Modal
+        open={premiumModalOpen}
+        title={'Upgrade to premium'}
+        handleClose={() => setPremiumModalOpen(false)}
+      >
+        <p>Donation & Payment system coming soon!</p>
+      </Modal>
       <div className={`row`}>
         <div className={`col-md-6 col-sm-8`}>
           <div className={`new-quran`}>
             <h6>The Clear</h6>
-            <h1>Quran&trade;</h1>
+            <h1>Quran<span className="registered">&reg;</span></h1>
+            <h1 className="series-text">Series</h1>
             <h4>Translated By</h4>
             <h3>Dr.Mustafa Khattab</h3>
             {/* <PaidMessage /> */}
             {!loggedIn && 
               <React.Fragment>
-                {qrCode && 
-                  <QRCode colors={colors}>
-                    <img src={qrCode} height="100px"/>
-                    <button className={loginLoading ? "qr-confirm-btn disabled" : "qr-confirm-btn"} onClick={loginWithQRId}>Continue</button>
-                    {loginLoading && <p style={{ color: 'white' }}>Login may take a minute! Please wait</p> }
-                    <ClipLoader loading={loginLoading} color={colors.accent} size={30}/>
-                  </QRCode>
-                }
+                
+                  <React.Fragment>
+                    <Modal 
+                        open={isQrModalOpen} 
+                        title={`Sync With Mobile App`}
+                    > 
+                      <p>Please Login to access more exciting features. <b><u>Scan the QR code</u></b> with <u><a href="">Clear Quran</a></u> mobile app, after finish scanning press continue  </p>              
+                      {qrCode && <QRCode colors={colors}>
+                        <button class="close-btn" onClick={() => setIsQrModalOpen(false)}><CancelRoundedIcon /></button>
+                        <img src={qrCode} height="100px"/>
+                        <button className={loginLoading ? "qr-confirm-btn disabled" : "qr-confirm-btn"} onClick={loginWithQRId}>Continue</button>
+                        {loginLoading && <p>Login may take a minute! Please wait</p> }
+                        <ClipLoader loading={loginLoading} color={colors.base} size={30}/>
+                      </QRCode>}
+                    </Modal>
+                  </React.Fragment> 
               </React.Fragment>
-            }            
+            }  
+            <Buttonbtn 
+                bgColor={colors.accent}
+                hoverBgColor="#ebe83b"
+                color="#000000"
+                onClick={() => setPremiumModalOpen(true)}>Upgrade To Premium
+            </Buttonbtn>          
           </div>
         </div>
         <div class="share-container" style={{ position: 'absolute', right: '70px', top: '70px' }}>
@@ -130,22 +161,31 @@ const QRCode = styled.div`
     padding: 20px;
     width: 20vh;
     height: 20vh;
-    border: 1px solid ${props => props.colors.accent};
+    border: 1px solid ${props => props.colors.base};
   }
   .qr-confirm-btn {
     border: none;
     outline: none;
-    color: black;
-    background-color: ${props => props.colors.accent};
+    color: white;
+    background-color: ${props => props.colors.base};
     padding: 9px 16px;
     cursor: pointer;
     transition: background .2s ease-out;
     &:hover {
-      background-color: #cfcc2d;
+      background-color: ${props => props.colors.dark};
     }
   }
   .qr-confirm-btn.disabled {
     pointer-events: none;
     color: gray;
+  }
+  .close-btn {
+    position: absolute;
+    height: 64px;
+    top: 0px;
+    right: 20px;
+    border: none;
+    outline: none;
+    background-color: transparent;
   }
 `
