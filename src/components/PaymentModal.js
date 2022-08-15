@@ -38,7 +38,7 @@ function PaymentModal({ open, setOpen }) {
   const colors = useSelector(data => data.settings.colors)
   const dispatch = useDispatch()
   const totalSteps = 4;
-  const [currentStep, setCurrentStep] = React.useState(4)
+  const [currentStep, setCurrentStep] = React.useState(1)
   const [dialCode, setDialCode] = React.useState("+880")
   const [phoneNumber, setPhoneNumber] = React.useState("")
   const [sendOtpLoading, setSendOtpLoading] = React.useState(false)
