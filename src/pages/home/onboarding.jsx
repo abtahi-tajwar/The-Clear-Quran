@@ -12,6 +12,7 @@ import { init as userInit } from "../../redux/userSlice";
 import { ClipLoader } from "react-spinners";
 import Modal from '../../components/Modal'
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import PaymentModal from "../../components/PaymentModal";
 
 export default function Onboarding() {
   let user = localStorage.getItem("user") ? true : false;
@@ -20,13 +21,15 @@ export default function Onboarding() {
   const [qrId, setQrId] = React.useState(null)
   const colors = useSelector(data => data.settings.colors)
   const [loginLoading, setLoginLoading] = React.useState(false)
+  const [isQrModalOpen, setIsQrModalOpen] = React.useState(false)
+  const [premiumModalOpen, setPremiumModalOpen] = React.useState(false)
+  const [openPaymentModal, setOpenPaymentModal] = React.useState(false)
   const [confirmationPopup, setConfirmationPopup] = React.useState({        
       isOpen: false,
       text: "",
       error: false
   })
-  const [isQrModalOpen, setIsQrModalOpen] = React.useState(false)
-  const [premiumModalOpen, setPremiumModalOpen] = React.useState(false)
+  
   const dispatch = useDispatch()
   const openQRLoginModal = () => {
     setIsQrModalOpen(true)
@@ -78,6 +81,7 @@ export default function Onboarding() {
       >
         <p>Donation & Payment system coming soon!</p>
       </Modal>
+      <PaymentModal open={openPaymentModal} setOpen={setOpenPaymentModal}/>
       <div className={`row`}>
         <div className={`col-md-6 col-sm-8`}>
           <div className={`new-quran`}>
@@ -88,8 +92,7 @@ export default function Onboarding() {
             <h3>Dr.Mustafa Khattab</h3>
             {/* <PaidMessage /> */}
             {!loggedIn && 
-              <React.Fragment>
-                
+              <React.Fragment>                
                   <React.Fragment>
                     <Modal 
                         open={isQrModalOpen} 
@@ -111,7 +114,7 @@ export default function Onboarding() {
                 bgColor={colors.accent}
                 hoverBgColor="#ebe83b"
                 color="#000000"
-                onClick={() => setPremiumModalOpen(true)}>Upgrade To Premium
+                onClick={() => setOpenPaymentModal(true)}>UPGRADE TO PREMIUM
             </Buttonbtn>          
           </div>
         </div>
