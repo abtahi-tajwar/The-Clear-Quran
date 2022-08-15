@@ -7,18 +7,19 @@ import styled from 'styled-components'
 
 function NumberWithCountryCode({ setDialCode }) {
     const [currentCountry, setCurrentCountry] = React.useState({ 
-        name: "Bangladesh", 
-        flag: "🇧🇩", 
-        code: "BD", 
-        dial_code: "+880" 
+        name: "India", 
+        flag: "🇮🇳", 
+        code: "IN", 
+        dial_code: "+91" 
     })
     const options = countryCodes.map(c => ({ 
         value: c.name.toLowerCase(), 
         label: <div><ReactCountryFlag countryCode={c.code} svg /> {c.name}</div> 
     }))
     const handleChange = (option) => {
-        setCurrentCountry(countryCodes.find(country => country.name.toLocaleLowerCase() === option.value))
-        setDialCode(currentCountry.dial_code)
+        const country = countryCodes.find(country => country.name.toLocaleLowerCase() === option.value)
+        setCurrentCountry(country)
+        setDialCode(country.dial_code)
     }
   return (
     <Wrapper> 

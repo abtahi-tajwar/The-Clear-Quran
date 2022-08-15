@@ -226,6 +226,8 @@ function PaymentModal({ open, setOpen }) {
                 onChange={e => setPhoneNumber(e.target.value)}
               />
             </div>
+            <p>OTP will be sent to</p>
+            <b>{dialCode}{phoneNumber}</b>
             <div className="input-container" >
               <Buttonbtn onClick={completeStep1} disabled={sendOtpLoading}>Next</Buttonbtn>
             </div>
