@@ -39,7 +39,7 @@ function PaymentModal({ open, setOpen }) {
   const dispatch = useDispatch()
   const totalSteps = 4;
   const [currentStep, setCurrentStep] = React.useState(1)
-  const [dialCode, setDialCode] = React.useState("+880")
+  const [dialCode, setDialCode] = React.useState("+91")
   const [phoneNumber, setPhoneNumber] = React.useState("")
   const [sendOtpLoading, setSendOtpLoading] = React.useState(false)
   const [uid, setUid] = React.useState()
@@ -62,7 +62,7 @@ function PaymentModal({ open, setOpen }) {
         sendOtp();
         console.log("Recaptca verified:", response);
       },
-      defaultCountry: "BD",
+      defaultCountry: "IN",
     });
   };
 
