@@ -14,6 +14,8 @@ import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import Modal from '../../components/Modal'
 import { ClipLoader } from "react-spinners";
+import QRModal from "../../components/QRModal";
+import ConfirmationPopup from "../../components/ConfirmationPopup";
 
 
 export default function Masjid() {
@@ -33,6 +35,10 @@ export default function Masjid() {
   const [qrCode, setQrCode] = useState(null)
   const [qrId, setQrId] = useState(null)
   const [loginLoading, setLoginLoading] = useState(false)
+  const [loginError, setLoginError] = useState({
+    error: false,
+    message: ""
+  })
   const [confirmationPopup, setConfirmationPopup] = useState({
     isOpen: false,
     text: "",
@@ -40,6 +46,10 @@ export default function Masjid() {
   })
   const [isQrModalOpen, setIsQrModalOpen] = useState(false)
   const openQRLoginModal = e => {
+    setLoginError({
+      messsage: "Please verify QR on mobile App first or refresh and try again",
+      error: false
+    })
     e.preventDefault()
     setIsQrModalOpen(true)
     axios.get(routes.getQR).then(result => {
@@ -54,12 +64,13 @@ export default function Masjid() {
     axios.post(routes.loginAfterQrVerify, { id: qrId }).then(res => {
       console.log("Login response", res.data)
       if (res.data.status === "Success") {
-        setLoginLoading(false)
-        setLoggedIn(true)
+        user = res.data.response
         const userData = JSON.stringify(res.data.response);
         localStorage.setItem("user", userData);
         dispatch(userInit(res.data.response));
         setIsQrModalOpen(false)
+        setLoginLoading(false)
+        setLoggedIn(true)
         setConfirmationPopup({
           isOpen: true,
           text: "Successfully Logged In!",
@@ -67,9 +78,8 @@ export default function Masjid() {
         })
       } else {
         setLoginLoading(false)
-        setConfirmationPopup({
-          isOpen: true,
-          text: "Please verify QR on mobile App first or refresh and try again",
+        setLoginError({
+          messsage: "Please verify QR on mobile App first or refresh and try again",
           error: true
         })
       }
@@ -167,24 +177,33 @@ export default function Masjid() {
 
   return (
     <div className={`masjid-container`}>
-      {!loggedIn && <Modal
-        open={isQrModalOpen}
-        title={`Sync With Mobile App`}
-      >
-        {qrCode ?
-          <QRCode colors={colors}>
-            <button class="close-btn" onClick={() => setIsQrModalOpen(false)}><CancelRoundedIcon /></button>
-            <div class="qr-container">
-              <img src={qrCode} height="100px" />
-              <p>Please Login to access more exciting features. <b><u>Scan the QR code</u></b> with <u><a href="">Clear Quran</a></u> mobile app, after finish scanning press continue  </p>
-            </div>
-            <button className={loginLoading ? "qr-confirm-btn disabled" : "qr-confirm-btn"} onClick={loginWithQRId}>Continue</button>
-            {loginLoading && <p>Login may take a minute! Please wait</p>}
-            <ClipLoader loading={loginLoading} color={colors.base} size={30} />
-          </QRCode> :
-          <ClipLoader />
-        }
-      </Modal>
+      {!loggedIn && 
+      // <Modal
+      //   open={isQrModalOpen}
+      //   title={`Sync With Mobile App`}
+      // >
+      //   {qrCode ?
+      //     <QRCode colors={colors}>
+      //       <button class="close-btn" onClick={() => setIsQrModalOpen(false)}><CancelRoundedIcon /></button>
+      //       <div class="qr-container">
+      //         <img src={qrCode} height="100px" />
+      //         <p>Please Login to access more exciting features. <b><u>Scan the QR code</u></b> with <u><a href="">Clear Quran</a></u> mobile app, after finish scanning press continue  </p>
+      //       </div>
+      //       <button className={loginLoading ? "qr-confirm-btn disabled" : "qr-confirm-btn"} onClick={loginWithQRId}>Continue</button>
+      //       {loginLoading && <p>Login may take a minute! Please wait</p>}
+      //       <ClipLoader loading={loginLoading} color={colors.base} size={30} />
+      //     </QRCode> :
+      //     <ClipLoader />
+      //   }
+      // </Modal>
+        <QRModal 
+          open={isQrModalOpen} 
+          setOpen={setIsQrModalOpen} 
+          qrCode={qrCode} 
+          loginWithQRId={loginWithQRId} 
+          loginLoading={loginLoading} 
+          error={loginError}
+        />
       }
       {/* First this React Fragment was embedded with "menu" variable, if menu is true this will show */}
       {loggedIn ?
@@ -413,6 +432,7 @@ export default function Masjid() {
           </div>
         </div>
       )} */}
+      <ConfirmationPopup show={confirmationPopup.isOpen} text={confirmationPopup.text} error={confirmationPopup.error} />
     </div>
   );
 }

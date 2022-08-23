@@ -23,7 +23,7 @@ const Wrapper = styled.div`
     left: 50%;
     bottom: 40px;
     transition: .2s ease-in;
-    z-index: 20000;
+    z-index: 30002;
     transform: ${props => props.show ? `translateX(-50%)` : `translate(-50%, 200%)`};
 `
 export default ConfirmationPopup
