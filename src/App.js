@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import './App.css'
+import './config/firebase'
 import Home from './pages/home/home'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import Surah from './pages/surah/Surah'

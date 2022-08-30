@@ -7,7 +7,7 @@ import NumberWithCountryCode from './NumberWithCountryCode';
 import { Buttonbtn } from '../Style.style';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import axios from "axios";
-import { firebase } from "../config/firebase";
+// import { firebase } from "../config/firebase";
 import { headers, routes } from "../routes";
 import { ClipLoader } from "react-spinners";
 import MessageGif from '../images/messages.gif'
@@ -16,6 +16,7 @@ import LoadingGif from '../images/loading.gif'
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import { init as userInit } from '../redux/userSlice';
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber  } from "firebase/auth";
 
 const style = {
   position: 'absolute',
@@ -38,6 +39,7 @@ function PaymentModal({ open, setOpen }) {
   const colors = useSelector(data => data.settings.colors)
   const dispatch = useDispatch()
   const totalSteps = 4;
+  const auth = getAuth()
   const [currentStep, setCurrentStep] = React.useState(1)
   const [dialCode, setDialCode] = React.useState("+91")
   const [phoneNumber, setPhoneNumber] = React.useState("")
@@ -55,7 +57,7 @@ function PaymentModal({ open, setOpen }) {
   })
 
   const configureCaptcha = () => {
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
+    window.recaptchaVerifier = new RecaptchaVerifier("recaptcha-container", {
       size: "invisible",
       callback: (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
@@ -73,9 +75,7 @@ function PaymentModal({ open, setOpen }) {
       const finalNumber = dialCode + phoneNumber;
       console.log(finalNumber);
       const appVerifier = window.recaptchaVerifier;
-      firebase
-        .auth()
-        .signInWithPhoneNumber(finalNumber, appVerifier)
+      signInWithPhoneNumber(auth, finalNumber, appVerifier)
         .then((confirmationResult) => {
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).

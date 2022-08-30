@@ -1,10 +1,11 @@
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Select from "react-select";
 import data from "./countries.json";
-import { firebase } from "../../config/firebase";
+// import { firebase } from "../../config/firebase";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber  } from "firebase/auth";
 import axios from "axios";
 import { headers, routes } from "../../routes";
 import { useDispatch } from "react-redux/es/exports";
@@ -16,6 +17,8 @@ import Modal from '../../components/Modal'
 import { ClipLoader } from "react-spinners";
 import QRModal from "../../components/QRModal";
 import ConfirmationPopup from "../../components/ConfirmationPopup";
+import LoginModal from "../../components/LoginModal";
+import usePrevious from '../../hooks/usePrevious'
 
 
 export default function Masjid() {
@@ -23,6 +26,7 @@ export default function Masjid() {
   let isLoggedIn = localStorage.getItem("user") ? true : false;
   let user = isLoggedIn ? JSON.parse(localStorage.getItem("user")) : null
   const colors = useSelector(data => data.settings.colors)
+  const auth = getAuth();
   const [loggedIn, setLoggedIn] = useState(isLoggedIn)
   const [countryCode, setCountryCode] = useState([]);
   const [country, setCountry] = useState([]);
@@ -45,6 +49,11 @@ export default function Masjid() {
     error: false
   })
   const [isQrModalOpen, setIsQrModalOpen] = useState(false)
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const openLoginModal = e => {
+    e.preventDefault()
+    setIsLoginModalOpen(true)
+  }
   const openQRLoginModal = e => {
     setLoginError({
       messsage: "Please verify QR on mobile App first or refresh and try again",
@@ -99,7 +108,7 @@ export default function Masjid() {
   // }, []);
 
   const configureCaptcha = () => {
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("sign-in-button", {
+    window.recaptchaVerifier = new RecaptchaVerifier("sign-in-button", {
       size: "invisible",
       callback: (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
@@ -107,7 +116,7 @@ export default function Masjid() {
         console.log("Recaptca varified:", response);
       },
       defaultCountry: "IN",
-    });
+    }, auth);
   };
 
   const sendOtp = (e) => {
@@ -116,9 +125,7 @@ export default function Masjid() {
     const phoneNumber = countryCode.value + mobileNo;
     console.log(phoneNumber);
     const appVerifier = window.recaptchaVerifier;
-    firebase
-      .auth()
-      .signInWithPhoneNumber(phoneNumber, appVerifier)
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
@@ -196,14 +203,21 @@ export default function Masjid() {
       //     <ClipLoader />
       //   }
       // </Modal>
-        <QRModal 
-          open={isQrModalOpen} 
-          setOpen={setIsQrModalOpen} 
-          qrCode={qrCode} 
-          loginWithQRId={loginWithQRId} 
-          loginLoading={loginLoading} 
-          error={loginError}
-        />
+        <React.Fragment>
+          <QRModal 
+            open={isQrModalOpen} 
+            setOpen={setIsQrModalOpen} 
+            qrCode={qrCode} 
+            loginWithQRId={loginWithQRId} 
+            loginLoading={loginLoading} 
+            error={loginError}
+          />
+          <LoginModal 
+            open={isLoginModalOpen}
+            setOpen={setIsLoginModalOpen}
+            setLoggedIn={setLoggedIn}
+          />
+        </React.Fragment>
       }
       {/* First this React Fragment was embedded with "menu" variable, if menu is true this will show */}
       {loggedIn ?
@@ -353,7 +367,7 @@ export default function Masjid() {
                   <br />
                   <span>search</span>
                 </Link>
-                <a className={`home-tile`} href="#" onClick={openQRLoginModal}>
+                <a className={`home-tile`} href="#" onClick={openLoginModal}>
                   <QrCodeScannerIcon />
                   <br />
                   <span>Login</span>

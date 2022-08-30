@@ -10,7 +10,8 @@ export const routes = {
     contactUs: `${base}/AddContactUs`,
     getAboutUs: `${base}/GetAboutUs`,
     getQR: `${base}/getQr`,
-    loginAfterQrVerify: `${base}/LoginWithQr`
+    loginAfterQrVerify: `${base}/LoginWithQr`,
+    externalAuth: `${base}/externalAuth`
 }
 export const headers = {
   "Content-Security-Policy": 1,
