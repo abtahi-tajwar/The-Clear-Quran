@@ -12,30 +12,45 @@ import { init as userInit } from '../redux/userSlice';
 import { useDispatch } from 'react-redux';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from "axios";
-import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider  } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import LoadingGif from '../images/loading.gif'
 import CompletedGif from '../images/completed.gif'
 import { Buttonbtn } from '../Style.style';
+import { HomeContext } from '../pages/home/home';
+import MessageIcon from '@mui/icons-material/Message';
+import NumberWithCountryCode from './NumberWithCountryCode';
+import MessageGif from '../images/messages.gif'
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 function LoginModal({ open, setOpen, setLoggedIn }) {
+  const contextValues = React.useContext(HomeContext)
   const colors = useSelector(data => data.settings.colors)
   const dispatch = useDispatch()
   const googleProvider = new GoogleAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
   const auth = getAuth();
+  const { redirectLogin, setRedirectLogin } = contextValues.stateRedirectLogin
+  const setOpenPaymentModal = contextValues.stateOpenPaymentModal.setOpenPaymentModal
   /*
     - login (Login screen at the start)
     - qr (QR code scan screen)
     - loading (Login loading screen)
+    - otp (OTP login process screen)
   */
   const [currentScreen, setCurrentScreen] = React.useState("login")
+  const [otpLoginStep, setOtpLoginStep] = React.useState(0)
   const [qrCode, setQrCode] = React.useState(null)
   const [qrId, setQrId] = React.useState(null)
   const [loginLoading, setLoginLoading] = React.useState(false)
+  const [dialCode, setDialCode] = React.useState("+91")
+  const [phoneNumber, setPhoneNumber] = React.useState("")
+  const [sendOtpLoading, setSendOtpLoading] = React.useState(false)
+  const [otp, setOtp] = React.useState("")
+  const [submitOtpLoading, setSubmitOtpLoading] = React.useState(false)
   const [loginError, setLoginError] = React.useState({
     error: false,
     message: ""
-  }) 
+  })
 
   const openQRLoginModal = () => {
     setCurrentScreen("qr")
@@ -58,6 +73,9 @@ function LoginModal({ open, setOpen, setLoggedIn }) {
         setOpen(false)
         setLoginLoading(false)
         setLoggedIn(true)
+        if (redirectLogin) {
+          setOpenPaymentModal(true)
+        }
       } else {
         setLoginLoading(false)
         setLoginError({
@@ -71,7 +89,7 @@ function LoginModal({ open, setOpen, setLoggedIn }) {
     setLoginLoading(true)
     setCurrentScreen("loading")
     axios.post(routes.externalAuth, {
-      name: user.name ? user.name: "",
+      name: user.displayName ? user.name : "",
       email: user.email,
       idToken: user.accessToken
     }).then(result => {
@@ -80,6 +98,9 @@ function LoginModal({ open, setOpen, setLoggedIn }) {
       setLoginLoading(false)
       dispatch(userInit(result.data.response));
       setLoggedIn(true);
+      if (redirectLogin) {
+        setOpenPaymentModal(true)
+      }
     })
   }
   const handleLoginWithGoogle = () => {
@@ -126,7 +147,105 @@ function LoginModal({ open, setOpen, setLoggedIn }) {
         // ...
       });
   }
+  const configureCaptcha = () => {
+    const auth = getAuth()
+    window.recaptchaVerifier = new RecaptchaVerifier("recaptcha-container", {
+      size: "invisible",
+      callback: (response) => {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        sendOtp();
+        console.log("Recaptca verified:", response);
+      },
+      defaultCountry: "IN",
+    }, auth);
+  };
+
+  const sendOtp = () => {
+    const promise = new Promise((resolve, reject) => {
+      setSendOtpLoading(true)
+      configureCaptcha();
+      const finalNumber = dialCode + phoneNumber;
+      console.log(finalNumber);
+      const appVerifier = window.recaptchaVerifier;
+      signInWithPhoneNumber(auth, finalNumber, appVerifier)
+        .then((confirmationResult) => {
+          // SMS sent. Prompt user to type the code from the message, then sign the
+          // user in with confirmationResult.confirm(code).
+          window.confirmationResult = confirmationResult;
+          setSendOtpLoading(false)
+          console.log(confirmationResult)
+          resolve(confirmationResult)
+        })
+        .catch((error) => {
+          console.log(error);
+          setSendOtpLoading(false)
+          resolve(error)
+        });
+      }
+    )
+    return promise
+  };
+  const submitOTP = () => {
+    setSubmitOtpLoading(true)
+    const promise = new Promise((resolve, reject) => {
+      window.confirmationResult
+        .confirm(otp)
+        .then((result) => {
+          // User signed in successfully.
+          setSubmitOtpLoading(false)
+          resolve(result)
+        })
+        .catch((error) => {
+          // User couldn't sign in (bad verification code?)
+          // ...
+          setSubmitOtpLoading(false)
+          reject(error)
+        });
+    })
+    return promise
+  };
+  const registerUserWithOtp = () => {
+    setLoginLoading(true)
+    const promise = new Promise((resolve, reject) => {
+      let uCountryCode = dialCode;
+      let code = uCountryCode.replace("+", "");
+      let body = {
+        userId: 0,
+        countryCode: code,
+        phoneNumber: phoneNumber,
+      };
+      console.log(routes.registerUser)
+      axios.post(routes.registerUser, body)
+      .then((res) => {
+        const userData = JSON.stringify(res.data.response);
+        localStorage.setItem("user", userData);
+        dispatch(userInit(res.data.response));
+        resolve(res.data.response)
+        setLoggedIn(true)
+        setLoginLoading(false)
+      });
+    })
+    return promise
+  };
+  const handleOtpLogin = () => {
+    if (otpLoginStep === 0) {
+      setCurrentScreen('otp')
+      setOtpLoginStep(1)
+    } else if(otpLoginStep === 1) {
+      sendOtp().then(result => {
+        setOtpLoginStep(2)
+      })      
+    } else if (otpLoginStep === 2) {
+      submitOTP().then(result => {
+        registerUserWithOtp()
+        setCurrentScreen("loading")
+      }).catch(error => {
+        console.log(error)
+      })
+    }
+  }
   const handleModalClose = () => {
+    setRedirectLogin(false)
     setCurrentScreen("login")
     setOpen(false)
   }
@@ -139,18 +258,20 @@ function LoginModal({ open, setOpen, setLoggedIn }) {
       handleClose={handleModalClose}
       heading="Login"
     >
-      { currentScreen === 'login' && 
-      <Container>
-        <LoginButton bgColor="#DB4437" hoverColor="#c33e32" onClick={handleLoginWithGoogle}> <GoogleIcon/> Login with google</LoginButton>
-        <LoginButton bgColor="#4267B2" hoverColor="#32508b" onClick={handleLoginWithFacebook}> <FacebookOutlinedIcon/> Login with facebook</LoginButton>
-        <div className="divider-or"></div>
-        <LoginButton onClick={openQRLoginModal}> <QrCodeScannerOutlinedIcon/> Sync With Mobile App</LoginButton>
-      </Container> }  
-      { currentScreen === 'qr' && 
+      {currentScreen === 'login' &&
         <Container>
-          { qrCode ? <QRCode colors={colors}>
+          {redirectLogin && <span className="info">Please login first for upgrading to premium!</span>}
+          <LoginButton bgColor="#DB4437" hoverColor="#c33e32" onClick={handleLoginWithGoogle}> <GoogleIcon /> Login with google</LoginButton>
+          <LoginButton bgColor="#4267B2" hoverColor="#32508b" onClick={handleLoginWithFacebook}> <FacebookOutlinedIcon /> Login with facebook</LoginButton>
+          <LoginButton bgColor={colors.base} hoverColor={colors.dark} onClick={handleOtpLogin}><MessageIcon /> Login with OTP</LoginButton>
+          <div className="divider-or"></div>
+          <LoginButton onClick={openQRLoginModal}> <QrCodeScannerOutlinedIcon /> Sync With Mobile App</LoginButton>
+        </Container>}
+      {currentScreen === 'qr' &&
+        <Container>
+          {qrCode ? <QRCode colors={colors}>
             <button className="back-btn" onClick={goBackFromQrLoginMenu}><ArrowBackIcon /> Go Back</button>
-            { loginError.error && <p className="error">Scane the current QR with mobile first, if still not working refresh and try again</p> }
+            {loginError.error && <p className="error">Scane the current QR with mobile first, if still not working refresh and try again</p>}
             <div className="qr-container">
               <img src={qrCode} height="100px" />
               <p>Please Login to access more exciting features. <b><u>Scan the QR code</u></b> with <u><a href="">Clear Quran</a></u> mobile app, after finish scanning press continue  </p>
@@ -159,29 +280,73 @@ function LoginModal({ open, setOpen, setLoggedIn }) {
             {loginLoading && <p>Login may take a minute! Please wait</p>}
             <ClipLoader loading={loginLoading} color={colors.base} size={30} />
           </QRCode> :
-          <Loading>
-            <ClipLoader />
-          </Loading> }
+            <Loading>
+              <ClipLoader />
+            </Loading>}
         </Container>
-        
-      }   
-      { currentScreen === 'loading' && 
+
+      }
+      {currentScreen === 'loading' &&
         <Container>
           <div className="finish">
-            { loginLoading ? <React.Fragment>
+            {loginLoading ? <React.Fragment>
               <img src={LoadingGif} height="200px" />
               <p>Wait till we log you in. It could take upto a minute</p>
             </React.Fragment> :
-            <React.Fragment>
-              <img src={CompletedGif} height="200px" />
-              <Buttonbtn onClick={() => setOpen(false)}>You are successfully logged in!</Buttonbtn>
-            </React.Fragment> }
+              <React.Fragment>
+                <img src={CompletedGif} height="200px" />
+                <Buttonbtn onClick={() => setOpen(false)}>You are successfully logged in!</Buttonbtn>
+              </React.Fragment>}
           </div>
+        </Container>
+      }
+      {currentScreen === 'otp' &&
+        <Container>
+          {otpLoginStep === 1 &&
+            <div className="number-input">
+              <b>Select the country code and write your rest of the number excluding the country code</b>
+              <div className="input-container">
+                <label>Select Country Code</label>
+                <NumberWithCountryCode setDialCode={setDialCode} />
+              </div>
+              <div className="input-container">
+                <label>Write your number</label>
+                <input
+                  type="text"
+                  placeholder="Enter your number"
+                  value={phoneNumber}
+                  onChange={e => setPhoneNumber(e.target.value)}
+                />
+              </div>
+              <p>OTP will be sent to</p>
+              <b>{dialCode}{phoneNumber}</b>
+              <div className="input-container" >
+                <Buttonbtn onClick={handleOtpLogin} disabled={sendOtpLoading}>Next</Buttonbtn>
+              </div>
+              <div id="recaptcha-container"></div>
+            </div>}
+          {otpLoginStep === 2 &&
+            <div className="submit-otp">
+            <img src={MessageGif} height="200px" />
+            <div className="input-container">
+              <label>You will receive a 6 digit code through text message to your given number. Write down the code to confirm your phone number.</label>
+              <input
+                type="text"
+                placeholder="Enter your OTP code here"
+                value={otp}
+                onChange={e => setOtp(e.target.value)}
+              />
+              <div className="input-container" >
+                <Buttonbtn onClick={handleOtpLogin} disabled={submitOtpLoading}>Verify OTP</Buttonbtn>
+              </div>
+            </div>
+          </div>
+          }
         </Container>
       }
     </Modal2>
   )
-}  
+}
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -190,6 +355,13 @@ const Container = styled.div`
   align-items: center;
   gap: 10px;
   animation: slideIn .3s ease-out forwards;
+  .info {
+    color: #ffe81c;
+    border: 1px solid #ffe81c;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgba(255, 232, 28, 0.1);
+  }
   .divider-or {
     height: 0.5px;
     width: 100%;
@@ -206,6 +378,28 @@ const Container = styled.div`
       top: 50%;
       transform: translate(-50%, -50%);
       font-weight: bold;
+    }
+  }
+  .input-container {
+      margin-top: 15px;
+      input {
+        outline: none;
+        border: 0.5px solid hsl(0, 0%, 80%);
+        padding: 5px 8px;
+        border-radius: 4px;
+        display: block;
+        width: 100%;
+      }
+  }
+    
+  .number-input {
+    height: 350px;
+  }
+  .submit-otp {
+    display: flex;
+    flex-direction: column;
+    img {
+      margin: 0 auto;
     }
   }
   .finish {
@@ -234,7 +428,7 @@ const LoginButton = styled.button`
   color: ${props => props.color ? props.color : 'white'};
   transition: background .2s ease-out;
   &:hover {
-    background-color: ${props => props.hoverColor ? props.hoverColor: '#383838' };
+    background-color: ${props => props.hoverColor ? props.hoverColor : '#383838'};
   }
 `
 const QRCode = styled.div`  

@@ -18,11 +18,12 @@ export const userSlice = createSlice({
         }
         localStorage.setItem("user", JSON.stringify(resultState))
         return resultState
-      }
+      },
+      makeUserPaid: (state, action) => ({ ...state, isPaid: true })
     },
   })
   
   // Action creators are generated for each case reducer function
-  export const { init, update } = userSlice.actions
+  export const { init, update, makeUserPaid } = userSlice.actions
   
   export default userSlice.reducer

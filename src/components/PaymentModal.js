@@ -17,6 +17,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import { init as userInit } from '../redux/userSlice';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber  } from "firebase/auth";
+import { makeUserPaid } from '../redux/userSlice';
 
 const style = {
   position: 'absolute',
@@ -38,8 +39,9 @@ const style = {
 function PaymentModal({ open, setOpen }) {
   const colors = useSelector(data => data.settings.colors)
   const dispatch = useDispatch()
-  const totalSteps = 4;
+  const totalSteps = 1;
   const auth = getAuth()
+  
   const [currentStep, setCurrentStep] = React.useState(1)
   const [dialCode, setDialCode] = React.useState("+91")
   const [phoneNumber, setPhoneNumber] = React.useState("")
@@ -176,9 +178,10 @@ function PaymentModal({ open, setOpen }) {
   };
   React.useEffect(() => {
     if (paymentSuccess) {
-      registerUser().then(() => {
-        setCurrentStep(4)
-      })      
+      // registerUser().then(() => {
+      //   setCurrentStep(4)
+      // })      
+      dispatch(makeUserPaid())
     }
   }, [paymentSuccess])
   const completeStep1 = () => {
@@ -208,9 +211,9 @@ function PaymentModal({ open, setOpen }) {
         <ProgessBar step={currentStep} totalSteps={totalSteps} colors={colors}>
           <div className="bar"></div>
         </ProgessBar>
-        <div style={{ padding: '15px 30px', }}><i>Step {currentStep} / {totalSteps}</i></div>
+        {/* <div style={{ padding: '15px 30px', }}><i>Step {currentStep} / {totalSteps}</i></div> */}
         <Details currentStep={currentStep} totalSteps={totalSteps}>
-          {currentStep === 1 && <div className="number-input">
+          {/* {currentStep === 1 && <div className="number-input">
 
             <b>Select the country code and write your rest of the number excluding the country code</b>
             <div className="input-container">
@@ -247,8 +250,8 @@ function PaymentModal({ open, setOpen }) {
                 <Buttonbtn onClick={completeStep2} disabled={submitOtpLoading}>Verify OTP</Buttonbtn>
               </div>
             </div>
-          </div>}
-          {currentStep === 3 && <div className="payment-select">
+          </div>} */}
+          {currentStep === 1 && <div className="payment-select">
             <p>Buy premium subscription for Clear Quran at <b>4.99$</b></p>
             <PayPalScriptProvider options={{ "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID }}>
               <PayPalButtons
@@ -258,7 +261,7 @@ function PaymentModal({ open, setOpen }) {
               />
             </PayPalScriptProvider>
           </div>}
-          {currentStep === 4 && 
+          {/* {currentStep === 2 && 
           <div className="finish">
             { loginLoading ? <React.Fragment>
               <img src={LoadingGif} height="200px" />
@@ -268,7 +271,7 @@ function PaymentModal({ open, setOpen }) {
               <img src={CompletedGif} height="200px" />
               <Buttonbtn onClick={() => setOpen(false)}>Enjoy Premium Clear Quran!</Buttonbtn>
             </React.Fragment> }
-          </div>}
+          </div>} */}
         </Details>
       </Box>
     </ModalContainer>
