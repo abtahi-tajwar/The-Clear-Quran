@@ -69,8 +69,11 @@ function App() {
         headers: headers
       }).then((res) => {
         // Initialize bookmark data from chapters and write to local storage
+        console.log("Chapter reinitialized")
         handleBookmarksData(res.data.response.chapters, true)
         dispatch(init(res.data.response.chapters));
+      }).catch(e => {
+        console.log("Chapters failed to reinitialize", e)
       });
       ///////////////
 

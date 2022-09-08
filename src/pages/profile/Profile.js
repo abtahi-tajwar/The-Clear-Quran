@@ -32,11 +32,11 @@ function Profile() {
                 <div className="main-info">
                     <div className="top-part">
                         <div className="avatar-container"><img src={BlankDisplayPicture} /></div>
-                        <h2>{user.userName ? user.userName : <i>"Please set your name first"</i>}</h2>
-                        <p><b>{(user.city || user.country) ? `${user.city}, ${user.country}` : <i>"Add your location first"</i>}</b></p>
+                        <h2>{(user.userName && user.userName !== "") ? user.userName : <i>"Please set your name first"</i>}</h2>
+                        <p><b>{(user.address && user.address !== "") ? `${user.address}` : <i>"Add your location first"</i>}</b></p>
                     </div>
                     <div className="bottom-part">
-                        <div className="phone"><PhoneInTalkIcon /><span>+{user.countryCode + user.phoneNumber}</span></div>
+                        <div className="phone"><PhoneInTalkIcon /><span>{((user.phoneNumber && user.phoneNumber !== "") && (user.countryCode && user.countryCode !== "")) ? `+${user.countryCode + user.phoneNumber}` : "Add Phone Number first"}</span></div>
                         <div className="divider"></div>
                         <div className="email"><MailOutlineIcon /><span>{user.emailId ? user.emailId : <i>"Please add your email first"</i>}</span></div>
                     </div>

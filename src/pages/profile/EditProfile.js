@@ -9,6 +9,8 @@ import axios from 'axios';
 import { routes } from '../../routes';
 import { useDispatch } from 'react-redux/es/exports';
 import { update as userUpdate } from '../../redux/userSlice';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Link } from 'react-router-dom';
 
 
 function EditProfile() {
@@ -83,6 +85,7 @@ function EditProfile() {
     <div>
       <Navbar />
       <Container>
+        <Link className="go-back-btn" to="/profile"><ArrowBackIcon /> Go Back</Link>
         <h1 className="page-title">Edit Profile</h1>
         <TextField 
           id="outlined-basic" 
@@ -161,6 +164,18 @@ const Container = styled.div`
   max-width: 960px;
   margin: 0 auto;
   margin-top: 30px;
+  .go-back-btn {
+    background: transparent;
+    text-decoration: none;
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    transition: background .2s ease-out;
+    border-radius: 4px;
+    &:hover {
+        background: rgba(0, 0, 0, 0.1);
+    }
+  }
   .MuiFormControl-root {
     width: 100%;
   }
