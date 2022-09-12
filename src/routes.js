@@ -11,7 +11,8 @@ export const routes = {
     getAboutUs: `${base}/GetAboutUs`,
     getQR: `${base}/getQr`,
     loginAfterQrVerify: `${base}/LoginWithQr`,
-    externalAuth: `${base}/externalAuth`
+    externalAuth: `${base}/externalAuth`,
+    confirmUsersPayment: `${base}/UpdateUserPayment`
 }
 export const headers = {
   "Content-Security-Policy": 1,

@@ -49,7 +49,7 @@ export default function Onboarding() {
                   onClick={handleOpenPremiumModal}>UPGRADE TO PREMIUM
               </Buttonbtn> :
               <React.Fragment>
-                {!user.isPaid && <Buttonbtn 
+                {user.isPaid !== true && <Buttonbtn 
                   bgColor={colors.accent}
                   hoverBgColor="#ebe83b"
                   color="#000000"

@@ -52,11 +52,19 @@ function PaymentModal({ open, setOpen }) {
   const [paymentSuccess, setPaymentSuccess] = React.useState(false);
   const [orderID, setOrderID] = React.useState(false);
   const [loginLoading, setLoginLoading] = React.useState(false)
+  const [paymentSuccessResult, setPaymentSuccessResult] = React.useState()
+  const [paymentError, setPaymentError] = React.useState(null)
   const [confirmationPopup, setConfirmationPopup] = React.useState({
     isOpen: false,
     text: "",
     error: false
   })
+
+  const paypalInitialOptions = {
+    "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
+    currency: "USD",
+    intent: "capture"
+  };
 
   const configureCaptcha = () => {
     window.recaptchaVerifier = new RecaptchaVerifier("recaptcha-container", {
@@ -165,6 +173,7 @@ function PaymentModal({ open, setOpen }) {
   const onApprove = (data, actions) => {
     return actions.order.capture().then(function (details) {
       const { payer } = details;
+      setPaymentSuccessResult(payer)
       setPaymentSuccess(true);
     });
   };
@@ -181,9 +190,36 @@ function PaymentModal({ open, setOpen }) {
       // registerUser().then(() => {
       //   setCurrentStep(4)
       // })      
-      dispatch(makeUserPaid())
+      axios.post(routes.confirmUsersPayment,
+        {
+            "userId": 32096,
+            "isPaid": true,
+            "paidAmount": "4.99",
+            "transactionId": orderID,
+            "paymentMadeDeviceType": "Browser"
+        }
+      ).then((response) => {
+        setOpen(false)
+        console.log(response.data)
+        if (response.data.status === "Fail") {
+          console.log(response.data)
+          setPaymentError("Something went wrong! If you are charged please contact use at example@gmail.com immidiately")
+        } else {
+          const userData = JSON.stringify(response.data.response);
+          localStorage.setItem("user", userData);
+          setLoginLoading(false)
+          dispatch(makeUserPaid())
+          setOpen(false)
+        }
+        
+      })
     }
   }, [paymentSuccess])
+  React.useEffect(() => {
+    if (!open) {
+      setPaymentError(null)
+    }
+  }, [open])
   const completeStep1 = () => {
     sendOtp().then(result => {
       setCurrentStep(2)
@@ -252,8 +288,9 @@ function PaymentModal({ open, setOpen }) {
             </div>
           </div>} */}
           {currentStep === 1 && <div className="payment-select">
+            {paymentError && <span className="error">{paymentError}</span>}
             <p>Buy premium subscription for Clear Quran at <b>4.99$</b></p>
-            <PayPalScriptProvider options={{ "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID }}>
+            <PayPalScriptProvider options={paypalInitialOptions}>
               <PayPalButtons
                 style={{ layout: "vertical" }}
                 createOrder={createOrder}
@@ -315,6 +352,13 @@ const Details = styled.div`
     margin-top: 30px;
   & > div {
     animation: slideIn .3s ease-out forwards;
+  }
+  .error {
+    color: red;
+    background-color: rgba(255, 0, 0, 0.1);
+    padding: 5px;
+    border: 1px solid red;
+    border-radius: 2.5px;
   }
   .input-container {
       margin-top: 15px;
