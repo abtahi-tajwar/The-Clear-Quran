@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 // import { colors } from '../Style.style';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
+import ArabicVerseNumber from './ArabicVerseNumber';
 
 function SearchCard({ data = [], keyword }) {
     const colors = useSelector(data => data.settings.colors)
@@ -22,7 +23,7 @@ function SearchCard({ data = [], keyword }) {
         <p className="title">({ data.chapterId }) { data.chapter } ({ data.chapterEnglish }) </p>
         { verses.map(verse => <Link to={`/surah-single/${verse.chapterId}?verse=${verse.verseId}`}><div className="details">
             <p class="verse-details"><div dangerouslySetInnerHTML={{__html: verse.resultText}}></div><span className="ayat-marking">{verse.verseId}</span></p>
-            <p class="arabic"><span className="ayat-marking">{verse.verseId}</span> {verse.verseInAurabic}</p>
+            <p class="arabic"> {verse.verseInAurabic} <ArabicVerseNumber number={verse.verseId}/></p>
         </div></Link>) }
     </Wrapper>
   )
@@ -59,6 +60,7 @@ const Wrapper = styled.div`
         .arabic {
             text-align: right;
             font-family: "Uthmanic-Hafs";
+            font-size: 1.5em;
         }
         .ayat-marking {
             border: 1px solid black;

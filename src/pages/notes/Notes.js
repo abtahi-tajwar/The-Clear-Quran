@@ -63,7 +63,7 @@ function Notes() {
     React.useEffect(() => {
         if (data) {
             setResultData(data.notes)
-            if (data.notes.length > 0 ) {
+            if (data.notes) {
                 console.log(data.notes)
                 setLoad(false)
             }

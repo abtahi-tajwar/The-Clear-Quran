@@ -2,10 +2,10 @@ import React from "react";
 import styled from 'styled-components'
 import { useSelector } from "react-redux";
 import { Buttonbtn } from "../../Style.style";
-import Modal from '../../components/Modal'
 import PaymentModal from "../../components/PaymentModal";
 import { HomeContext } from "./home";
-import LogoutIcon from '@mui/icons-material/Logout';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import PremiumHelpModal from "../../components/PremiumHelpModal";
 
 
 export default function Onboarding() {
@@ -17,6 +17,9 @@ export default function Onboarding() {
   const {openPaymentModal, setOpenPaymentModal} = contextValues.stateOpenPaymentModal
   const setIsLoginModalOpen = contextValues.stateIsLoginModalOpen.setIsLoginModalOpen
   const {redirectLogin, setRedirectLogin} = contextValues.stateRedirectLogin
+  
+  const [isHelpModalOpen, setIsHelpModalOpen] = React.useState(false)
+
   const handleOpenPremiumModal = () => {
     if (!loggedIn) {
       setRedirectLogin(true)
@@ -32,6 +35,7 @@ export default function Onboarding() {
   return (
     <>
       <PaymentModal open={openPaymentModal} setOpen={setOpenPaymentModal}/>
+      <PremiumHelpModal open={isHelpModalOpen} setOpen={setIsHelpModalOpen} />
       <div className={`row`}>
         <div className={`col-md-6 col-sm-8`}>
           <div className={`new-quran`}>
@@ -40,23 +44,17 @@ export default function Onboarding() {
             <h1 className="series-text">Series</h1>
             <h4>Translated By</h4>
             <h3>Dr.Mustafa Khattab</h3>
-            
-            { !user ? 
-              <Buttonbtn 
-                  bgColor={colors.accent}
-                  hoverBgColor="#ebe83b"
-                  color="#000000"
-                  onClick={handleOpenPremiumModal}>UPGRADE TO PREMIUM
-              </Buttonbtn> :
-              <React.Fragment>
-                {user.isPaid !== true && <Buttonbtn 
-                  bgColor={colors.accent}
-                  hoverBgColor="#ebe83b"
-                  color="#000000"
-                  onClick={handleOpenPremiumModal}>UPGRADE TO PREMIUM
-                </Buttonbtn>}
-              </React.Fragment>
-            }      
+              { (!user || user.isPaid !== true) && 
+                <PremiumButtonContainer colors={colors}>
+                  <Buttonbtn 
+                      bgColor={colors.accent}
+                      hoverBgColor="#ebe83b"
+                      color="#000000"
+                      onClick={handleOpenPremiumModal}>UPGRADE TO PREMIUM
+                  </Buttonbtn>
+                  <button className="help-btn" onClick={() => setIsHelpModalOpen(true)}><QuestionMarkIcon /></button>
+                </PremiumButtonContainer> 
+              }               
           </div>
         </div>
         <div className="share-container" style={{ position: 'absolute', right: '70px', top: '70px' }}>
@@ -92,6 +90,28 @@ export default function Onboarding() {
     </>
   );
 }
+const PremiumButtonContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+  align-items: center;
+  .help-btn {
+    border: none;
+    outline: none;
+
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    background-color: ${props => props.colors.accent};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color .3s ease-out;
+    &:hover {
+      background-color: ${props => props.colors.accentHover};
+    }
+  }
+`
 const QRCode = styled.div`  
   margin-top: 20px;  
   display: flex;

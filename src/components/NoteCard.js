@@ -10,16 +10,16 @@ function NoteCard({ data, action }) {
     const surahData = stateData.surah
     const colors = stateData.settings.colors
     const surah = surahData.find(s => s.chapterId === data.chapterId )
-  return (
-    <Wrapper id={`notes_${data.id}`} colors={colors}>
-        <p className="title">{data.paragraph.title} ({ surah.titleInAurabic })</p>
-        <div className="details">
-            <p class="verse-details">Verse {data.paragraph.fromVerseId} - {data.paragraph.toVerseId}</p>
-            <p>{data.note}</p>
-        </div>
-        <button className='action-button' onClick={() => action(data)}><EditIcon /></button>
-    </Wrapper>
-  )
+    return (
+        <Wrapper id={`notes_${data.id}`} colors={colors}>
+            <p className="title">{data.paragraph.title} ({ surah.titleInAurabic })</p>
+            <div className="details">
+                <p class="verse-details">Verse {data.paragraph.fromVerseId} - {data.paragraph.toVerseId}</p>
+                <p>{data.note}</p>
+            </div>
+            <button className='action-button' onClick={() => action(data)}><EditIcon /></button>
+        </Wrapper>
+    )
 }
 const Wrapper = styled.div`
     width: 100%;

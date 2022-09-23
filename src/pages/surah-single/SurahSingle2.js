@@ -28,9 +28,14 @@ import { add as notesStateAdd } from '../../redux/notesSlice'
 import { add as addBookmarkState } from '../../redux/bookmarkSlice'
 import { addBookmark as addBookmarkToSurah } from '../../redux/surahSlice'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Buttonbtn, Flex } from '../../Style.style'
 import { CircularProgress, colors } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
+import NotesModal from '../../components/NotesModal'
+import NotesIcon from '@mui/icons-material/Notes';
+import ArabicVerseNumber from '../../components/ArabicVerseNumber'
+
 
 function SurahSingle2() {
     const { id } = useParams()
@@ -50,7 +55,7 @@ function SurahSingle2() {
     const [addNoteModalOpen, setAddNoteModalOpen] = React.useState(false)
     const [currentParagraph, setCurrentParagraph] = React.useState()
     const [currentScrolledParagraph, setCurrentScrolledParagraph] = React.useState(-1)
-    const [selectedParagraphId, setSelectedParagraphId] = React.useState(0)
+    const [selectedParagraphId, setSelectedParagraphId] = React.useState()
     const [settingsOpen, setSettingsOpen] = React.useState(false)
     const [fontSize, setFontSize] = React.useState(18)
     const [paragraphMode, setParagraphMode] = React.useState(!data.user ? false : true)
@@ -58,6 +63,9 @@ function SurahSingle2() {
     const [showEnglish, setShowEnglish] = React.useState(true)
     const [addNoteLoading, setAddNoteLoading] = React.useState(false)
     const [footNoteOpen, setFootNoteOpen] = React.useState(false)
+    const [isFirstParagraph, setIsFirstParagraph] = React.useState(false)
+    const [isLastParagraph, setIsLastParagraph] = React.useState(false)
+    const [isNotesModalOpen, setIsNotesModalOpen] = React.useState(false)
     const [currentFootnote, setCurrentFootnote] = React.useState({
         serial: 0,
         text: '',
@@ -77,13 +85,21 @@ function SurahSingle2() {
                 paragraphOffsets = paragraphs.map(p => p.offsetTop)
             }
             const screenOffset = window.pageYOffset+300
-            if (paragraphMode && versesDOM.current) {
+            if (versesDOM.current) {
                 let introductionParagraph = true
                 for (let i = 0; i < paragraphOffsets.length; i++) {
-                    if (screenOffset >= paragraphOffsets[i] && screenOffset < paragraphOffsets[i+1]) {
-                        introductionParagraph = false
-                        setCurrentScrolledParagraph(i)
-                        break
+                    if (i === paragraphOffsets.length - 1) {
+                        if (screenOffset >= paragraphOffsets[i]) {
+                            introductionParagraph = false
+                            setCurrentScrolledParagraph(i)
+                            break
+                        }
+                    } else {
+                        if (screenOffset >= paragraphOffsets[i] && screenOffset < paragraphOffsets[i+1]) {
+                            introductionParagraph = false
+                            setCurrentScrolledParagraph(i)
+                            break
+                        }
                     }
                 }
                 if (introductionParagraph) {
@@ -96,7 +112,7 @@ function SurahSingle2() {
             window.removeEventListener('scroll', updateCurrentParagraphViewState);
         }
     }, [])
-    // This block of code is used for paragraph selector highlighting based of scroll position
+    // This block of code is used for scroll the paragraph selector based on where the box is highlighted
     React.useEffect(() => {
         /* Strategy to device automatic scrolling based on scroll highlight paragraph selector position
             - First the distance between scrollbar and highlighted box distance
@@ -107,7 +123,7 @@ function SurahSingle2() {
                 - Scroll to left by calculating how left the box is outside
         */
         // First it is important to check if it is in paragraph mode and dom reference is not null
-        if (paragraphMode && paragraphSelectorDom.current) {
+        if (paragraphSelectorDom.current) {
             // Left offset means the distance between sliders left corner to left screen
             const leftOffset = paragraphSelectorDom.current.getBoundingClientRect().left
             const selectors = [ ...paragraphSelectorDom.current.querySelectorAll(".selector") ]
@@ -115,7 +131,7 @@ function SurahSingle2() {
             const farDistance = (selectors[currentScrolledParagraph+1].getBoundingClientRect().left + selectors[currentScrolledParagraph+1].offsetWidth) - leftOffset
             if (paragraphSelectorDom.current.offsetWidth < farDistance ) {
                 const leftScrollAmount = paragraphSelectorDom.current.scrollLeft + (farDistance - paragraphSelectorDom.current.offsetWidth)
-                paragraphSelectorDom.current.scrollTo({ left: leftScrollAmount, behavior: 'smooth' })
+                paragraphSelectorDom.current.scrollTo({ left: leftScrollAmount - 2, behavior: 'smooth' })
             } else if (selectors[currentScrolledParagraph+1].getBoundingClientRect().left < paragraphSelectorDom.current.getBoundingClientRect().left) {
                 const rightScrollAmount = paragraphSelectorDom.current.scrollLeft - (paragraphSelectorDom.current.getBoundingClientRect().left - selectors[currentScrolledParagraph+1].getBoundingClientRect().left)
                 paragraphSelectorDom.current.scrollTo({ left: rightScrollAmount, behavior: 'smooth' })
@@ -133,7 +149,6 @@ function SurahSingle2() {
         }        
     }, [data.user])
     React.useEffect(() => {
-        console.log("All surah updated")
         setSurah(allSurah.find(s => s.chapterId === parseInt(id)))        
     }, [allSurah])
     React.useEffect(() => {
@@ -165,15 +180,29 @@ function SurahSingle2() {
             setParagraphWiseVerse(temp)
         }
     }, [surah])
-    const scrollToParagraph = (e, id) => { 
-        setSelectedParagraphId(id) 
-        // Event can be null as the funcion is also called without event 
-        if (e) {
-            document.querySelectorAll(".selector").forEach(item => {
-                item.classList.remove("selected")
-            })         
-            e.target.classList.add("selected")  
-        }   
+    React.useEffect(() => {
+        if (paragraphWiseVerse) {
+            let currentParagraphIndex = -1
+            for (let i = 0; i < paragraphWiseVerse.length; i++) {
+                if (paragraphWiseVerse[i].id === selectedParagraphId) {
+                    currentParagraphIndex = i
+                }
+            }
+            console.log("Current Paragraph Index", currentParagraphIndex)
+            if (currentParagraphIndex === 0) {
+                setIsFirstParagraph(true)
+            }
+            else if (currentParagraphIndex === paragraphWiseVerse.length - 1) {
+                setIsLastParagraph(true)
+            } else {
+                setIsFirstParagraph(false)
+                setIsLastParagraph(false)
+            }
+        }
+        
+    }, [selectedParagraphId])
+    const scrollToParagraph = (id) => { 
+        setSelectedParagraphId(id)         
         if (id === -1) {
             var element = document.getElementById(`introduction`);
         } else {
@@ -188,6 +217,36 @@ function SurahSingle2() {
                 top: offsetPosition,
                 behavior: "smooth"
             });
+        }
+    }
+    const navigateToNextParagraph = () => {
+        let currentParagraphIndex = -1;
+        if (!selectedParagraphId) {
+            scrollToParagraph(paragraphWiseVerse[0].id)
+            return
+        }
+        for(let i = 0; i < paragraphWiseVerse.length; i++) {
+            if (paragraphWiseVerse[i].id === selectedParagraphId) {
+                currentParagraphIndex = i;
+            }
+        }
+        if (currentParagraphIndex < paragraphWiseVerse.length - 1 && currentParagraphIndex > -1) {
+            scrollToParagraph(paragraphWiseVerse[currentParagraphIndex+1].id)
+        }
+    }
+    const navigateToPreviousParagraph = () => {
+        let currentParagraphIndex = -1;
+        if (!selectedParagraphId) {
+            scrollToParagraph(paragraphWiseVerse[0].id)
+            return
+        }
+        for(let i = 0; i < paragraphWiseVerse.length; i++) {
+            if (paragraphWiseVerse[i].id === selectedParagraphId) {
+                currentParagraphIndex = i;
+            }
+        }
+        if (currentParagraphIndex !== 0 && currentParagraphIndex > -1) {
+            scrollToParagraph(paragraphWiseVerse[currentParagraphIndex-1].id)
         }
     }
     const handleAddNote = () => {
@@ -314,29 +373,39 @@ function SurahSingle2() {
                 <p>Verse: {currentFootnote.verse}</p>
                 <p>{currentFootnote.serial}. {currentFootnote.text}</p>
             </Modal>
+            { surah && <NotesModal
+                open={isNotesModalOpen}
+                setOpen={setIsNotesModalOpen}
+                surah={surah}
+            /> }
             {surah && <Heading colors={colors}>
                 <Link to="/surah" className="back-button"><ArrowBackIcon /></Link>
-                <h1 className="surah-name">The Clear Quran<span className="registered">&reg;</span></h1>
-                { paragraphMode && <div className="paragraph-selector" ref={paragraphSelectorDom}>
-                    {currentScrolledParagraph === -1 ?
-                        <div className="selector selected scrolled" onClick={e => scrollToParagraph(e, -1)}><InfoIcon /></div> :
-                        <div className="selector selected" onClick={e => scrollToParagraph(e, -1)}><InfoIcon /></div>
-                    }
-                    {surah.paragraphs.map((paragraph, i) =>
-                        <React.Fragment>
-                            {i === currentScrolledParagraph ?
-                                <div className="selector scrolled" onClick={e => scrollToParagraph(e, paragraph.id)}>
-                                    {paragraph.fromVerseId !== paragraph.toVerseId ? `${paragraph.fromVerseId} - ${paragraph.toVerseId}` : paragraph.fromVerseId}
-                                </div> :
-                                <div className="selector" onClick={e => scrollToParagraph(e, paragraph.id)}>
-                                    {paragraph.fromVerseId !== paragraph.toVerseId ? `${paragraph.fromVerseId} - ${paragraph.toVerseId}` : paragraph.fromVerseId}
-                                </div>
-                            }
-                        </React.Fragment>
+                <h1 className="surah-name">{surah.titleInAurabic}({surah.titleInEnglish})</h1>
+                { paragraphMode && 
+                <div className="paragraph-selector-container">
+                    <div className="paragraph-selector" ref={paragraphSelectorDom}>
+                        {currentScrolledParagraph === -1 ?
+                            <div className="selector selected scrolled" onClick={() => scrollToParagraph(-1)}><InfoIcon /></div> :
+                            <div className="selector selected" onClick={() => scrollToParagraph(-1)}><InfoIcon /></div>
+                        }
+                        {surah.paragraphs.map((paragraph, i) =>
+                            <React.Fragment>
+                                
+                                    <div className={`selector ${paragraph.id === selectedParagraphId ? 'selected' : '' } ${i === currentScrolledParagraph ? 'scrolled' : ''}`} onClick={() => scrollToParagraph(paragraph.id)}>
+                                        {paragraph.fromVerseId !== paragraph.toVerseId ? `${paragraph.fromVerseId} - ${paragraph.toVerseId}` : paragraph.fromVerseId}
+                                    </div> 
+                            </React.Fragment>
 
-                    )}
-                </div> }
-                <button className="settings-button" onClick={() => setSettingsOpen(true)}><SettingsIcon /></button>
+                        )}
+                    </div> 
+                    <button className={`navigate previous ${isFirstParagraph && 'disabled'}`} onClick={navigateToPreviousParagraph}><ArrowBackIcon /></button>
+                    <button className={`navigate next ${isLastParagraph && 'disabled'}`} onClick={navigateToNextParagraph}><ArrowForwardIcon /></button>
+                </div>
+                }
+                <div className="heading-buttons">
+                    <button className="action-button" onClick={() => setIsNotesModalOpen(true)}><NotesIcon /></button>
+                    <button className="action-button" onClick={() => setSettingsOpen(true)}><SettingsIcon /></button>                    
+                </div>
             </Heading>}
             <SettingsContainer open={settingsOpen} colors={colors}>
                 {/* <button className="settingsOpenBtn" onClick={() => setSettingsOpen(true)}><SettingsIcon /></button> */}
@@ -370,7 +439,7 @@ function SurahSingle2() {
                         <div className="section-content">
                             {userId === -1 || !data.user.isPaid ?
                                 <FormControlLabel control={<Checkbox disabled />} label="Paragraph Mode" onChange={() => setParagraphMode(!paragraphMode)} /> :
-                                <FormControlLabel control={<Checkbox defaultChecked />} label="Paragraph Mode" onChange={() => setParagraphMode(!paragraphMode)} />
+                                <FormControlLabel control={<Checkbox checked={paragraphMode} />} label="Paragraph Mode" onChange={() => setParagraphMode(!paragraphMode)} />
                             }
                         </div>
                     </div>
@@ -407,7 +476,7 @@ function SurahSingle2() {
                                 <b>({verse.verseId})</b> {verse.verseInEnglish} {verse.footNote !== "" && <button onClick={() => showFootnote(verse.footNote, verse.footNoteExplanation, verse.verseId)} className="footnote-btn"><sup>{verse.footNote}</sup></button>} &nbsp;
                             </span>)}
                         </div> }
-                        { showAurabic && <div className={"verse-card arabic-verses " + (paragraph.id === selectedParagraphId ? "selected-paragraph" : "") + (currentScrolledParagraph === i && 'scrolled') }>
+                        { showAurabic && <div className={"verse-card arabic-verses " + (paragraph.id === selectedParagraphId ? "selected-paragraph " : "") + (currentScrolledParagraph === i && 'scrolled') }>
                             { !showEnglish && <React.Fragment>
                                 <h2 className="paragraph-title" style={{ textAlign: 'left'}}>{paragraph.title}</h2>
                                 <div className="action-icons">
@@ -415,7 +484,7 @@ function SurahSingle2() {
                                     { !paragraph.isUserBookmarked && <button onClick={e => addBookmark(e, paragraph) }><img src={BookmarkIcon} /></button> }
                                 </div></React.Fragment> }
                             {paragraph.verses.map(verse => verse && <span>
-                                &nbsp; {verse.verseInAurabic}<b>({verse.verseId})</b>
+                                &nbsp; {verse.verseInAurabic}<b><ArabicVerseNumber number={verse.verseId}/></b>
                             </span>)}
                         </div> }
                     </div>
@@ -424,7 +493,7 @@ function SurahSingle2() {
                 <div className="no-paragraph">
                     {surah.verses.map(verse => 
                     <div>
-                        { showAurabic && <div className="verse arabic-verse">{verse.verseInAurabic}  <p style={{ display: 'inline-block'}}>.{verse.verseId}</p></div> }
+                        { showAurabic && <div className="verse arabic-verse">{verse.verseInAurabic}  <ArabicVerseNumber number={verse.verseId}/></div> }
                         { showEnglish && <div className="verse english-verse">{verse.verseId}. {verse.verseInEnglish} {verse.footNote !== "" && <button onClick={() => showFootnote(verse.footNote, verse.footNoteExplanation, verse.verseId)} className="footnote-btn"><sup>{verse.footNote}</sup></button>} </div> } 
                     </div>)}
                 </div>
@@ -455,6 +524,29 @@ const Heading = styled.div`
     .registered {
         font-size: 3rem;
     }
+    .heading-buttons {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        display: flex;
+        gap: 10px;
+        .action-button {
+            border: none;
+            outline: none;
+            background-color: transparent;            
+            color: white;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background .2s ease-out;
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+    }
     .back-button {
         position: absolute;
         left: 10px;
@@ -472,45 +564,80 @@ const Heading = styled.div`
             background-color: rgba(255, 255, 255, 0.2);
         }
     }
-    .settings-button {
-        border: none;
-        outline: none;
-        background-color: transparent;
-        position: absolute;
-        right: 15px;
-        top: 20px;
-        color: white;
-        height: 40px;
-        width: 40px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: background .2s ease-out;
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-    }
+    
     .surah-name {
         text-align: center;
         font-family: "TrajanPro-Regular";
         color: white;
+        /* margin-right: 100px; */
+        margin: 0px 40px;
+    }
+    @media screen and (max-width: 560px) {
+        .back-button {
+            display: none;
+        }
+        .surah-name {
+            text-align: left;
+            margin-right: 100px;
+        }        
     }
     @media screen and (max-width: 800px) {
         .surah-name {
-            font-size: 1.8rem;
+            font-size: 5vw;
         }
     }
-    .paragraph-selector {
-        width: 90%;
+    .paragraph-selector-container {
+        position: relative;
+        width: 80%;
         max-width: 960px;
         margin: 0 auto;
         margin-top: 10px;
         height: 80px;
+        padding-bottom: 5px;
+        position: relative;
+        .navigate {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            outline: none;
+            background-color: rgba(255,255,255,0.5);;
+            color: ${props => props.colors.base};
+            height: 32px;
+            width: 32px;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color .3s ease-out;
+            &:hover {
+                background-color: rgba(255,255,255,0.7);
+            }
+        }
+        .navigate.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .navigate.previous {
+            left: -40px;
+        }
+        .navigate.next {
+            right: -40px;
+        }
+    }
+    @media screen and (max-width: 450px) {
+        .paragraph-selector-container {
+            height: 65px;
+        }
+    }
+    .paragraph-selector {
+        width: 100%;
+        height: 100%;
         display: flex;
         gap: 5px;
         overflow-x: scroll;
-        padding-bottom: 5px;
         .selector {
             height: 100%;
             aspect-ratio: 1/1;
@@ -525,6 +652,7 @@ const Heading = styled.div`
                 background-color: rgba(255,255,255,0.7);
             }
         }
+        
         .selector.selected {
             border: 3px solid ${props => props.colors.dark};
             font-weight: bold;
@@ -598,6 +726,7 @@ const Container = styled.div`
             .paragraph-title {
                 font-size: 1.5rem;
                 margin-bottom: 15px;
+                margin-right: 100px;
             }
             .action-icons {
                 position: absolute;
@@ -653,6 +782,7 @@ const Container = styled.div`
             font-family: "Uthmanic-Hafs";
             text-align: right;
             background-color: ${props => props.colors.lightGray};
+            font-size: 1.5em;
         }
         .english-verse {
             color: ${props => props.colors.gray};

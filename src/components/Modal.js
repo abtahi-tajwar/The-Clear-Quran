@@ -31,8 +31,8 @@ export default function Modal({ open, handleClose, children, title }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            {title}
+          <Typography style={{ textAlign: 'center' }} id="modal-modal-title" variant="h6" component="h2">
+            <b>{title}</b>
           </Typography>
           <div style={{ marginTop: '15px' }}>
             {children}

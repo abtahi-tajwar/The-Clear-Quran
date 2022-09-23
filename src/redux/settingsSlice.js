@@ -7,6 +7,7 @@ export const aboutSlice = createSlice({
         base: "#461E27",
         accent: "#F8F682",
         baseLight: '#692937',
+        accentHover: '#ebe83b',
         dark: '#210F13',
         gray: '#7d7d7d',
         lightGray: '#f7f7f7'
