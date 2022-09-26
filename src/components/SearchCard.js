@@ -23,7 +23,7 @@ function SearchCard({ data = [], keyword }) {
         <p className="title">({ data.chapterId }) { data.chapter } ({ data.chapterEnglish }) </p>
         { verses.map(verse => <Link to={`/surah-single/${verse.chapterId}?verse=${verse.verseId}`}><div className="details">
             <p class="verse-details"><div dangerouslySetInnerHTML={{__html: verse.resultText}}></div><span className="ayat-marking">{verse.verseId}</span></p>
-            <p class="arabic"> {verse.verseInAurabic} <ArabicVerseNumber number={verse.verseId}/></p>
+            <p class="arabic"> {verse.verseInArabic2} <ArabicVerseNumber number={verse.verseId}/></p>
         </div></Link>) }
     </Wrapper>
   )

@@ -336,7 +336,7 @@ function SurahSingle() {
                         { (showAurabic && showEnglish) && <div className="content">
                             { verses && 
                             verses.map(verse => <div key={verse.verseId}>
-                                <div className="arabic"><span className="ayat-marking">{verse.verseId}</span> {verse.verseInAurabic} </div>
+                                <div className="arabic"><span className="ayat-marking">{verse.verseId}</span> {verse.verseInArabic2} </div>
                                 <div className="english">{verse.verseInEnglish} <span className="ayat-marking">{verse.verseId}</span> </div>
                             </div>) }
                         </div> }
@@ -344,7 +344,7 @@ function SurahSingle() {
                             <div className="arabic reading">
                                 { verses && 
                                 verses.map(verse => <React.Fragment key={verse.verseId}>
-                                    <span className="ayat-marking">{verse.verseId}</span> {verse.verseInAurabic}
+                                    <span className="ayat-marking">{verse.verseId}</span> {verse.verseInArabic2}
                                 </React.Fragment>) }
                             </div>
                         </div> }
@@ -363,7 +363,7 @@ function SurahSingle() {
                     { (showAurabic && showEnglish) && <div className="content">
                         { surah && 
                         surah.verses.map(verse => <div key={verse.verseId}>
-                            <div className="arabic"><span className="ayat-marking">{verse.verseId}</span> {verse.verseInAurabic} </div>
+                            <div className="arabic"><span className="ayat-marking">{verse.verseId}</span> {verse.verseInArabic2} </div>
                             <div className="english">{verse.verseInEnglish} <span className="ayat-marking">{verse.verseId}</span> </div>
                         </div>) }
                     </div> }
@@ -371,7 +371,7 @@ function SurahSingle() {
                         <div className="arabic reading">
                             { surah && 
                             surah.verses.map(verse => <React.Fragment key={verse.verseId}>
-                                {verse.verseInAurabic}<span className="ayat-marking">{verse.verseId}</span>
+                                {verse.verseInArabic2}<span className="ayat-marking">{verse.verseId}</span>
                             </React.Fragment>) }
                         </div>
                         

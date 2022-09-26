@@ -3,6 +3,7 @@ import styled from "styled-components";
 import EditIcon from '@mui/icons-material/Edit';
 // import { colors } from '../Style.style';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { Link } from 'react-router-dom';
 
 
 function NoteCard({ data, action }) {
@@ -11,12 +12,12 @@ function NoteCard({ data, action }) {
     const colors = stateData.settings.colors
     const surah = surahData.find(s => s.chapterId === data.chapterId )
     return (
-        <Wrapper id={`notes_${data.id}`} colors={colors}>
+        <Wrapper colors={colors}>
             <p className="title">{data.paragraph.title} ({ surah.titleInAurabic })</p>
-            <div className="details">
+            <Link to={`/surah-single/${surah.chapterId}?paragraph=${data.paragraph.id}`}><div className="details">
                 <p class="verse-details">Verse {data.paragraph.fromVerseId} - {data.paragraph.toVerseId}</p>
                 <p>{data.note}</p>
-            </div>
+            </div></Link>
             <button className='action-button' onClick={() => action(data)}><EditIcon /></button>
         </Wrapper>
     )

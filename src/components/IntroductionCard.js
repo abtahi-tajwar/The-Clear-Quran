@@ -12,7 +12,7 @@ function IntroductionCard({ intro, chapterInfo }) {
                 <InfoIcon />
             </div>
             <div className="intro-card">
-                <h3 className="title">Introduction - {chapterInfo.chapterId}. {chapterInfo.titleInEnglish} ({chapterInfo.titleInAurabic})</h3>
+                <h3 className="title">Introduction</h3>
                 <p className="details">{intro}</p>
             </div>            
         </Wrapper>

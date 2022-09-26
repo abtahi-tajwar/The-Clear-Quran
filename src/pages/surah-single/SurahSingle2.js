@@ -156,11 +156,11 @@ function SurahSingle2() {
         const queryVerseId = parseInt(searchParams.get("verse"))
         // Load the first paragraph when user enter
         if (queryParagraphId) {
-            scrollToParagraph(null, queryParagraphId)
+            scrollToParagraph(queryParagraphId)
         } else if(queryVerseId) {
             if (paragraphWiseVerse) {
                 const initialParagraphId = paragraphWiseVerse.find(p => p.verses.find(v => v.verseId === queryVerseId)).id
-                scrollToParagraph(null, initialParagraphId)
+                scrollToParagraph(initialParagraphId)
             }
         }
     }, [paragraphWiseVerse])
@@ -176,6 +176,9 @@ function SurahSingle2() {
                     ...paragraph,
                     verses: temp_verses
                 })
+            })
+            temp.sort((a,b) => {
+                return a.toVerseId - b.toVerseId
             })
             setParagraphWiseVerse(temp)
         }
@@ -380,7 +383,7 @@ function SurahSingle2() {
             /> }
             {surah && <Heading colors={colors}>
                 <Link to="/surah" className="back-button"><ArrowBackIcon /></Link>
-                <h1 className="surah-name">{surah.titleInAurabic}({surah.titleInEnglish})</h1>
+                <h1 className="surah-name">{surah.chapterId}. {surah.titleInAurabic}({surah.titleInEnglish})</h1>
                 { paragraphMode && 
                 <div className="paragraph-selector-container">
                     <div className="paragraph-selector" ref={paragraphSelectorDom}>
@@ -388,7 +391,7 @@ function SurahSingle2() {
                             <div className="selector selected scrolled" onClick={() => scrollToParagraph(-1)}><InfoIcon /></div> :
                             <div className="selector selected" onClick={() => scrollToParagraph(-1)}><InfoIcon /></div>
                         }
-                        {surah.paragraphs.map((paragraph, i) =>
+                        {paragraphWiseVerse &&  paragraphWiseVerse.map((paragraph, i) =>
                             <React.Fragment>
                                 
                                     <div className={`selector ${paragraph.id === selectedParagraphId ? 'selected' : '' } ${i === currentScrolledParagraph ? 'scrolled' : ''}`} onClick={() => scrollToParagraph(paragraph.id)}>
@@ -484,7 +487,7 @@ function SurahSingle2() {
                                     { !paragraph.isUserBookmarked && <button onClick={e => addBookmark(e, paragraph) }><img src={BookmarkIcon} /></button> }
                                 </div></React.Fragment> }
                             {paragraph.verses.map(verse => verse && <span>
-                                &nbsp; {verse.verseInAurabic}<b><ArabicVerseNumber number={verse.verseId}/></b>
+                                &nbsp; {verse.verseInArabic2}<b><ArabicVerseNumber number={verse.verseId}/></b>
                             </span>)}
                         </div> }
                     </div>
@@ -493,7 +496,7 @@ function SurahSingle2() {
                 <div className="no-paragraph">
                     {surah.verses.map(verse => 
                     <div>
-                        { showAurabic && <div className="verse arabic-verse">{verse.verseInAurabic}  <ArabicVerseNumber number={verse.verseId}/></div> }
+                        { showAurabic && <div className="verse arabic-verse">{verse.verseInArabic2}  <ArabicVerseNumber number={verse.verseId}/></div> }
                         { showEnglish && <div className="verse english-verse">{verse.verseId}. {verse.verseInEnglish} {verse.footNote !== "" && <button onClick={() => showFootnote(verse.footNote, verse.footNoteExplanation, verse.verseId)} className="footnote-btn"><sup>{verse.footNote}</sup></button>} </div> } 
                     </div>)}
                 </div>
