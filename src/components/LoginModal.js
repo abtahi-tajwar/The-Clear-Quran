@@ -73,7 +73,7 @@ function LoginModal({ open, setOpen, setLoggedIn }) {
         setOpen(false)
         setLoginLoading(false)
         setLoggedIn(true)
-        if (redirectLogin) {
+        if (!res.data.response.isPaid && redirectLogin) {
           setOpenPaymentModal(true)
         }
       } else {
@@ -98,7 +98,7 @@ function LoginModal({ open, setOpen, setLoggedIn }) {
       setLoginLoading(false)
       dispatch(userInit(result.data.response));
       setLoggedIn(true);
-      if (redirectLogin) {
+      if (!result.data.response.isPaid && redirectLogin) {
         setOpenPaymentModal(true)
       }
     })

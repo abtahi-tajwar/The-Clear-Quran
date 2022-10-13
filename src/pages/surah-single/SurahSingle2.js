@@ -59,8 +59,10 @@ function SurahSingle2() {
     const [settingsOpen, setSettingsOpen] = React.useState(false)
     const [fontSize, setFontSize] = React.useState(18)
     const [paragraphMode, setParagraphMode] = React.useState(!data.user ? false : true)
-    const [showAurabic, setShowAurabic] = React.useState(true)
-    const [showEnglish, setShowEnglish] = React.useState(true)
+    const [showScript, setShowScript] = React.useState(true)
+    const [script, setScript] = React.useState("othmani")
+    const [showTranslation, setShowTranslation] = React.useState(true)
+    const [translation, setTranslation] = React.useState("english")
     const [addNoteLoading, setAddNoteLoading] = React.useState(false)
     const [footNoteOpen, setFootNoteOpen] = React.useState(false)
     const [isFirstParagraph, setIsFirstParagraph] = React.useState(false)
@@ -204,6 +206,12 @@ function SurahSingle2() {
         }
         
     }, [selectedParagraphId])
+    React.useEffect(() => {
+        console.log(translation, script)
+    }, [translation, script])
+    React.useEffect(() => {
+        console.log(showTranslation)
+    }, [showTranslation])
     const scrollToParagraph = (id) => { 
         setSelectedParagraphId(id)         
         if (id === -1) {
@@ -289,15 +297,30 @@ function SurahSingle2() {
         setAddNoteModalOpen(true)
     }
     const handleTranslation = e => {
-        if (e.target.value === 'both') {
-            setShowAurabic(true)
-            setShowEnglish(true)
-        } else if(e.target.value === 'tcq') {
-            setShowAurabic(false)
-            setShowEnglish(true)
+        // if (e.target.value === 'both') {
+        //     setShowScript(true)
+        //     setShowTranslation(true)
+        // } else if(e.target.value === 'tcq') {
+        //     setShowScript(false)
+        //     setShowTranslation(true)
+        // } else {
+        //     setShowScript(true)
+        //     setShowTranslation(false)
+        // }
+        console.log(e.target.value)
+        if (e.target.value === 'none') { 
+            setShowTranslation(false)
+        } else if (e.target.value === 'english') {
+            setShowTranslation(true)
+            setTranslation('english')
+        }
+    }
+    const handleScript = e => {
+        if (e.target.value === 'none') { 
+            setShowScript(false)
         } else {
-            setShowAurabic(true)
-            setShowEnglish(false)
+            setShowScript(true)
+            setScript(e.target.value)
         }
     }
     const increaseFontSize = () => {
@@ -398,7 +421,6 @@ function SurahSingle2() {
                                         {paragraph.fromVerseId !== paragraph.toVerseId ? `${paragraph.fromVerseId} - ${paragraph.toVerseId}` : paragraph.fromVerseId}
                                     </div> 
                             </React.Fragment>
-
                         )}
                     </div> 
                     <button className={`navigate previous ${isFirstParagraph && 'disabled'}`} onClick={navigateToPreviousParagraph}><ArrowBackIcon /></button>
@@ -420,6 +442,34 @@ function SurahSingle2() {
                         <div className="section-content">
                             <RadioGroup
                                 aria-labelledby="demo-radio-buttons-group-label"
+                                defaultValue="english"
+                                name="radio-buttons-group"
+                            >
+                                <FormControlLabel value="none" control={<Radio />} label="None" onChange={handleTranslation} />
+                                <FormControlLabel value="english" control={<Radio />} label="English" onChange={handleTranslation} />
+                                <FormControlLabel value="spanish" control={<Radio disabled />} label="Spanish (Coming Soon)" onChange={handleTranslation} />
+                            </RadioGroup>
+                        </div>                        
+                    </div>
+                    <div className="settings-section">
+                        <p className="section-title">Quran Scripts</p>
+                        <div className="section-content">
+                            <RadioGroup
+                                aria-labelledby="demo-radio-buttons-group-label"
+                                defaultValue="othmani"
+                                name="radio-buttons-group"
+                            >
+                                <FormControlLabel value="none" control={<Radio />} label="None" onChange={handleScript} />
+                                <FormControlLabel value="othmani" control={<Radio />} label="Othmani" onChange={handleScript} />
+                                <FormControlLabel value="majeedi" control={<Radio disabled />} label="Majeedi Indo Pak (Coming Soon)" onChange={handleScript} />
+                            </RadioGroup>
+                        </div>                        
+                    </div>
+                    {/* <div className="settings-section">
+                        <p className="section-title">Translations</p>
+                        <div className="section-content">
+                            <RadioGroup
+                                aria-labelledby="demo-radio-buttons-group-label"
                                 defaultValue="both"
                                 name="radio-buttons-group"
                             >
@@ -428,7 +478,7 @@ function SurahSingle2() {
                                 <FormControlLabel value="uthmani" control={<Radio />} label="Uthmani Script" onChange={handleTranslation} />
                             </RadioGroup>
                         </div>                        
-                    </div>
+                    </div> */}
                     <div className="settings-section">
                         <p className="section-title">Font Size</p>
                         <div className="section-content font-change">
@@ -469,25 +519,25 @@ function SurahSingle2() {
                 <div ref={versesDOM}>
                 {paragraphWiseVerse && paragraphWiseVerse.map((paragraph, i) =>
                     <div id={`surah-paragraph-${paragraph.id}`} className={`paragraph`} key={paragraph.id}>
-                        { showEnglish && <div className={"verse-card english-verses " + (paragraph.id === selectedParagraphId ? "selected-paragraph " : "") + (currentScrolledParagraph === i && 'scrolled')}>
+                        { showTranslation && <div className={"verse-card english-verses " + (paragraph.id === selectedParagraphId ? "selected-paragraph " : "") + (currentScrolledParagraph === i && 'scrolled')}>
                             <h2 className="paragraph-title">{paragraph.title}</h2>
                             <div className="action-icons">
                                 <button onClick={() => addNoteAction(paragraph)}><img src={AddNoteIcon} /></button>
                                 { !paragraph.isUserBookmarked && <button onClick={e => addBookmark(e, paragraph)}><img src={BookmarkIcon} /></button> }
                             </div>
                             {paragraph.verses.map(verse => verse && <span>
-                                <b>({verse.verseId})</b> {verse.verseInEnglish} {verse.footNote !== "" && <button onClick={() => showFootnote(verse.footNote, verse.footNoteExplanation, verse.verseId)} className="footnote-btn"><sup>{verse.footNote}</sup></button>} &nbsp;
+                                <b>({verse.verseId})</b> { translation === 'english' && verse.verseInEnglish} {verse.footNote !== "" && <button onClick={() => showFootnote(verse.footNote, verse.footNoteExplanation, verse.verseId)} className="footnote-btn"><sup>{verse.footNote}</sup></button>} &nbsp;
                             </span>)}
                         </div> }
-                        { showAurabic && <div className={"verse-card arabic-verses " + (paragraph.id === selectedParagraphId ? "selected-paragraph " : "") + (currentScrolledParagraph === i && 'scrolled') }>
-                            { !showEnglish && <React.Fragment>
+                        { showScript && <div className={"verse-card arabic-verses " + (paragraph.id === selectedParagraphId ? "selected-paragraph " : "") + (currentScrolledParagraph === i && 'scrolled') }>
+                            { !showTranslation && <React.Fragment>
                                 <h2 className="paragraph-title" style={{ textAlign: 'left'}}>{paragraph.title}</h2>
                                 <div className="action-icons">
                                     <button onClick={() => addNoteAction(paragraph)}><img src={AddNoteIcon} /></button>
                                     { !paragraph.isUserBookmarked && <button onClick={e => addBookmark(e, paragraph) }><img src={BookmarkIcon} /></button> }
                                 </div></React.Fragment> }
                             {paragraph.verses.map(verse => verse && <span>
-                                &nbsp; {verse.verseInArabic2}<b><ArabicVerseNumber number={verse.verseId}/></b>
+                                &nbsp; { script === 'othmani' && verse.verseInArabic2}<b><ArabicVerseNumber number={verse.verseId}/></b>
                             </span>)}
                         </div> }
                     </div>
@@ -496,8 +546,8 @@ function SurahSingle2() {
                 <div className="no-paragraph">
                     {surah.verses.map(verse => 
                     <div>
-                        { showAurabic && <div className="verse arabic-verse">{verse.verseInArabic2}  <ArabicVerseNumber number={verse.verseId}/></div> }
-                        { showEnglish && <div className="verse english-verse">{verse.verseId}. {verse.verseInEnglish} {verse.footNote !== "" && <button onClick={() => showFootnote(verse.footNote, verse.footNoteExplanation, verse.verseId)} className="footnote-btn"><sup>{verse.footNote}</sup></button>} </div> } 
+                        { showScript && <div className="verse arabic-verse">{verse.verseInArabic2}  <ArabicVerseNumber number={verse.verseId}/></div> }
+                        { showTranslation && <div className="verse english-verse">{verse.verseId}. {verse.verseInEnglish} {verse.footNote !== "" && <button onClick={() => showFootnote(verse.footNote, verse.footNoteExplanation, verse.verseId)} className="footnote-btn"><sup>{verse.footNote}</sup></button>} </div> } 
                     </div>)}
                 </div>
                 }
@@ -570,7 +620,9 @@ const Heading = styled.div`
     
     .surah-name {
         text-align: center;
-        font-family: "TrajanPro-Regular";
+        // font-family: "TrajanPro-Regular";
+        font-family: "me_quran";
+        
         color: white;
         /* margin-right: 100px; */
         margin: 0px 40px;
@@ -697,7 +749,8 @@ const Container = styled.div`
         margin-bottom: 10px;
         .arabic {
             font-size: 1.5rem;
-            font-family: "Uthmanic-Hafs";
+            // font-family: "Uthmanic-Hafs";
+            font-family: "me_quran";
         }
     }
     .paragraph {
@@ -768,7 +821,8 @@ const Container = styled.div`
         }
         .arabic-verses {
             text-align: right;
-            font-family: "Uthmanic-Hafs";
+            // font-family: "Uthmanic-Hafs";
+            font-family: "me_quran";
             font-size: 1.5em;
             &::before {            
                 left: unset;
@@ -782,7 +836,8 @@ const Container = styled.div`
             padding: 10px;
         }
         .arabic-verse {
-            font-family: "Uthmanic-Hafs";
+            // font-family: "Uthmanic-Hafs";
+            font-family: "me_quran";
             text-align: right;
             background-color: ${props => props.colors.lightGray};
             font-size: 1.5em;

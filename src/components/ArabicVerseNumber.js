@@ -10,7 +10,7 @@ function ArabicVerseNumber({ number }) {
         currentNumber = parseInt(currentNumber/10)
     }
   return (
-    <b>{ finalNumber }</b>
+    <b style={{ fontFamily: 'Uthmanic-Hafs'}}>{ finalNumber }</b>
   )
 }
 

@@ -41,6 +41,23 @@ code {
   font-family: "Uthmanic-Hafs";
   src: url("/src/css/webfont/UthmanicHafs1 Ver09 (1).otf") format("opentype");
 }
+@font-face {
+  font-family: "p1-v1";
+  src: local(QCF_P001),
+    url("https://previous.quran.com/assets/quran_fonts/v1/woff2/p1-fef387a1551fc2be17bc673844f7fc6fb7c2801799d5409ea349ea75cefb987f.woff2")
+      format("woff2"),
+    url("https://previous.quran.com/assets/quran_fonts/v1/woff/p1-8696f4a054599301793b224cd3a6c50f2936cf816b8c750c6ced0fc17a81a39f.woff")
+      format("woff"),
+    url("https://previous.quran.com/assets/quran_fonts/v1/ttf/p1-2ddf21ab6285a363cf0ee9bc9f5b71c86dcf716e01325b07e92b752b4d4f0648.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "me_quran";
+  src: url("/src/css/webfont/me_quran.ttf");
+  font-display: swap;
+}
 * {
   margin: 0;
   padding: 0;

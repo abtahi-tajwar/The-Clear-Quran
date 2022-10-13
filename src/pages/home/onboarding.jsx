@@ -52,7 +52,11 @@ export default function Onboarding() {
                       color="#000000"
                       onClick={handleOpenPremiumModal}>UPGRADE TO PREMIUM
                   </Buttonbtn>
-                  <button className="help-btn" onClick={() => setIsHelpModalOpen(true)}><QuestionMarkIcon /></button>
+                  <Buttonbtn 
+                    bgColor={colors.accent}
+                    hoverBgColor="#ebe83b"
+                    color="#000000"
+                    onClick={() => setIsHelpModalOpen(true)}>Why Should I?</Buttonbtn>
                 </PremiumButtonContainer> 
               }               
           </div>
@@ -94,7 +98,9 @@ const PremiumButtonContainer = styled.div`
   display: flex;
   gap: 20px;
   margin-top: 30px;
-  align-items: center;
+  // align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
   .help-btn {
     border: none;
     outline: none;

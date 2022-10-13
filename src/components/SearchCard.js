@@ -59,7 +59,7 @@ const Wrapper = styled.div`
         }
         .arabic {
             text-align: right;
-            font-family: "Uthmanic-Hafs";
+            font-family: "me_quran";
             font-size: 1.5em;
         }
         .ayat-marking {
