@@ -27,7 +27,7 @@ function SurahCard({ data }) {
         </div>
         <h2 className="title">{data.titleInEnglish}</h2>
         <p className="title-arabic">{data.titleInAurabic}</p>
-        <p className="info">{data.paragraphs.length} Paragraph, {data.userNotesCount} Notes</p>
+        <p className="info">{data.paragraphs.length} {data.paragraphs.length === 1 ? 'Paragraph' : 'Paragraphs' }, {data.userNotesCount} {data.userNotesCount === 1 ? 'Note' : 'Notes' }</p>
       </Wrapper>
     </Link>
   );

@@ -52,11 +52,11 @@ export default function Onboarding() {
                       color="#000000"
                       onClick={handleOpenPremiumModal}>UPGRADE TO PREMIUM
                   </Buttonbtn>
-                  <Buttonbtn 
-                    bgColor={colors.accent}
-                    hoverBgColor="#ebe83b"
-                    color="#000000"
-                    onClick={() => setIsHelpModalOpen(true)}>Why Should I?</Buttonbtn>
+                  <button 
+                    className="help-btn-2"
+                    onClick={() => setIsHelpModalOpen(true)}>
+                    Why Should I?
+                  </button>
                 </PremiumButtonContainer> 
               }               
           </div>
@@ -96,7 +96,7 @@ export default function Onboarding() {
 }
 const PremiumButtonContainer = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 5px;
   margin-top: 30px;
   // align-items: center;
   align-items: flex-start;
@@ -116,6 +116,14 @@ const PremiumButtonContainer = styled.div`
     &:hover {
       background-color: ${props => props.colors.accentHover};
     }
+  }
+  .help-btn-2 {
+    border: none;
+    outline: none;
+    background-color: transparent;
+
+    color: ${props => props.colors.accent};
+    text-decoration: underline;
   }
 `
 const QRCode = styled.div`  

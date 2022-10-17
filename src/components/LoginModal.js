@@ -356,11 +356,11 @@ const Container = styled.div`
   gap: 10px;
   animation: slideIn .3s ease-out forwards;
   .info {
-    color: #ffe81c;
-    border: 1px solid #ffe81c;
+    color: #595959;
+    border: 1px solid #595959;
     border-radius: 5px;
     padding: 10px;
-    background-color: rgba(255, 232, 28, 0.1);
+    background-color: #59595910;
   }
   .divider-or {
     height: 0.5px;
