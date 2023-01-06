@@ -156,7 +156,7 @@ function PaymentModal({ open, setOpen }) {
             description: "The Clear Quran Premium",
             amount: {
               currency_code: "USD",
-              value: 4.99,
+              value: 5.99,
             },
           },
         ],
@@ -289,7 +289,7 @@ function PaymentModal({ open, setOpen }) {
           </div>} */}
           {currentStep === 1 && <div className="payment-select">
             {paymentError && <span className="error">{paymentError}</span>}
-            <p>Buy premium subscription for Clear Quran at <b>4.99$</b></p>
+            <p>Buy premium subscription for Clear Quran at <b>5.99$</b></p>
             <PayPalScriptProvider options={paypalInitialOptions}>
               <PayPalButtons
                 style={{ layout: "vertical" }}
